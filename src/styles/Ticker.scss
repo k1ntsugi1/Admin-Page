@@ -1,0 +1,63 @@
+@mixin ticker {
+  position: absolute;
+  top: 50%;
+  width: 100%;
+
+  display: flex;
+  justify-content: center;
+  transform: translateY(-50%);
+}
+
+.container-ticker {
+  height: 100px;
+  position: relative;
+  overflow: hidden;
+  .first-element-of-ticker {
+    @include ticker();
+    left: 0;
+  }
+
+  .second-element-of-ticker {
+    @include ticker();
+    left: 100%;
+    cursor: pointer;
+  }
+
+  &:hover {
+    .first-element-of-ticker {
+      animation: run-left-from-0perc ease 2s forwards;
+    }
+
+    .second-element-of-ticker {
+      animation: run-left-from-100perc ease 2s forwards;
+    }
+  }
+
+  .first-element-of-ticker {
+    animation: run-left-from-100perc ease 2s forwards;
+  }
+
+  .second-element-of-ticker {
+    animation: run-left-from-0perc ease 2s forwards;
+  }
+}
+
+@keyframes run-left-from-0perc {
+  from {
+    left: 0;
+  }
+
+  to {
+    left: -100%;
+  }
+}
+
+@keyframes run-left-from-100perc {
+  from {
+    left: 100%;
+  }
+
+  to {
+    left: 0;
+  }
+}

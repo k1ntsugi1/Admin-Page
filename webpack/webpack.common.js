@@ -13,7 +13,7 @@ module.exports = {
   },
   target: "web",
   resolve: {
-    extensions: [".ts", ".tsx", ".js", ".jsx"],
+    extensions: [".ts", ".tsx", ".scss", ".js", ".jsx"],
   },
   module: {
     rules: [
@@ -23,10 +23,18 @@ module.exports = {
         type: "asset/resource",
       },
       {
-        test: /\.s[ac]ss$/i,
+        test: /\.(c|s[ac])ss$/i,
         use: [
           "style-loader",
           "css-loader",
+          // {
+          //   loader: 'css-loader',
+          //   options: {
+          //     modules: {
+          //       localIdentName: '[hash:base64:5]--[local]'
+          //     }
+          //   }
+          // },
           "sass-loader",
         ],
       },

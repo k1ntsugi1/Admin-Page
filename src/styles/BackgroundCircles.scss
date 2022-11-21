@@ -1,0 +1,161 @@
+@mixin circle {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.95;
+  background: rgb(236, 82, 82);
+  border: 2px solid white;
+}
+
+.backgroundCircles {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -10;
+  overflow: hidden;
+  background: linear-gradient(145deg, white 40%, rgb(236, 82, 82));
+}
+.backgroundCircles__circlesContainer {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  animation: Rotate 10s linear infinite;
+}
+
+.backgroundCircles__circle-1 {
+  @include circle;
+  width: 350px;
+  height: 350px;
+  right: 10%;
+  bottom: 10%;
+  animation: run-3 5s linear infinite;
+  transform-origin: 40% 40%;
+}
+
+.backgroundCircles__circle-2 {
+  @include circle;
+  width: 300px;
+  height: 300px;
+  right: 10%;
+  bottom: 10%;
+
+  animation: rotate 5s linear infinite;
+  transform-origin: 60% 60%;
+}
+
+.backgroundCircles__circle-3 {
+  @include circle;
+  width: 250px;
+  height: 250px;
+  right: 10%;
+  bottom: 10%;
+
+  animation: rotate 5s linear infinite;
+  transform-origin: 30% 30%;
+}
+
+.backgroundCircles__circle-4 {
+  @include circle;
+  width: 200px;
+  height: 200px;
+  right: 5%;
+  bottom: 10%;
+
+  animation: run-4 5s linear infinite alternate;
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(-360deg);
+  }
+}
+
+@keyframes run-1 {
+  0% {
+    right: 0;
+    bottom: 0;
+  }
+
+  25% {
+    right: 10%;
+    bottom: 10%;
+  }
+
+  50% {
+    right: 15%;
+    bottom: 25%;
+  }
+
+  75% {
+    right: 10%;
+    bottom: 30%;
+  }
+
+  100% {
+    right: 0%;
+    bottom: 25%;
+  }
+}
+
+@keyframes run-2 {
+  0% {
+    right: 15%;
+    bottom: 0;
+  }
+
+  25% {
+    right: 10%;
+    bottom: 5%;
+  }
+
+  50% {
+    right: 5%;
+    bottom: 10%;
+  }
+
+  75% {
+    right: 0%;
+    bottom: 15%;
+  }
+
+  100% {
+    right: 0%;
+    bottom: 20%;
+  }
+}
+
+@keyframes run-3 {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes run-4 {
+  0% {
+    right: 5%;
+    bottom: 10%;
+  }
+
+  50% {
+    right: 5%;
+    bottom: 20%;
+  }
+
+  100% {
+    right: 5%;
+    bottom: 30%;
+  }
+}

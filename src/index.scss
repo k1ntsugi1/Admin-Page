@@ -1,0 +1,50 @@
+@import "./styles/BackgroundCircles.scss";
+@import "./styles/BackgroundGlass.scss";
+@import "./styles/SidebarToggler.scss";
+@import "./styles/Ticker.scss";
+.transition-opacity {
+    transition: opacity 0.3s ease;
+}
+
+.opacity-0 {
+    opacity: 0;
+}
+
+.opacity-100 {
+    opacity: 100;
+}
+
+.w-100px {
+    width: 70px;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.hover:hover {
+    padding: 2px;
+    transform: scale(1.2);
+    border-radius: 25%;
+    border: 1px solid gray;
+}
+
+.z-index-1000 {
+    z-index: 1000;
+}
+
+.links-contacts-container {
+    position: relative;
+    max-width: 600px;
+    max-height: 500px;
+    min-width: 300px;
+    min-height: 450px;
+}
+
+.transcription-card-container {
+    position: relative;
+    max-width: 500px;
+    max-height: 500px;
+    min-width: 300px;
+    min-height: 450px;
+}
