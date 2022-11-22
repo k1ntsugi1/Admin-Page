@@ -1,6 +1,10 @@
 import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
+
 import { IThunkAPI } from '../interfaces';
+
+import { urls } from '../../../utils/constants';
+
 export interface IComment {
   postId: number;
   id: number;
@@ -17,9 +21,9 @@ export const fetchGetComments = createAsyncThunk<IResponse, string | number, ITh
   'fetchComments',
   async (postId, thunkAPI) => {
     try {
-      const { data } = await axios.get<IComment[]>(
-        `https://jsonplaceholder.typicode.com/posts/${postId}/comments`
-      );
+      const url = urls.comments.byPostId(postId);
+      const { data } = await axios.get<IComment[]>(url);
+      
       return { comments: data };
     } catch (error) {
       return thunkAPI.rejectWithValue({ error: 'serverError' });

@@ -1,25 +1,37 @@
 import React, { useRef, useEffect } from 'react';
-import { Routes, Route } from 'react-router-dom';
-import { BackgroundCircles } from '../components/BackgroundCircles/BackgroundCircles';
-import { BackgroundGlass } from '../components/BackgroundGlass/BackgroundGlass';
-import { Sidebar } from '../components/Sidebar/Sidebar';
-import { SidebarToggler } from '../components/SidebarToggler/SidebarToggler';
+import { Routes, Route, useLocation } from 'react-router-dom';
+
 import { HomePage } from '../pages/HomePage';
 import { PostsPage } from '../pages/PostsPage';
-import { ElementOfScrollProgress } from '../components/ElementOfScrollProgress/ElementOfScrollProgress';
-import { useAppDispatch } from '../store/hooks';
-import { scrollHandler } from '../utils/scrollHandler';
 import { PostPage } from '../pages/PostPage';
-import { FormOfPost } from '../components/FormOfPost/FormOfPost';
+import { UpdatePostPage } from '../pages/UpdatePostPage/UpdatePostPage';
+
+import { ElementOfScrollProgress } from '../components/ElementOfScrollProgress/ElementOfScrollProgress';
+
+import { BackgroundCircles } from '../components/BackgroundCircles/BackgroundCircles';
+import { BackgroundGlass } from '../components/BackgroundGlass/BackgroundGlass';
+
+import { Sidebar } from '../components/Sidebar/Sidebar';
+import { SidebarToggler } from '../components/SidebarToggler/SidebarToggler';
+
 import { Notification } from '../components/Notifications/Notifications';
-import { useAppSelector } from '../store/hooks';
 import { ModalInfo } from '../components/ModalInfo/ModalInfo';
+
+import { useAppDispatch } from '../store/hooks';
+
+import { scrollHandler } from '../utils/scrollHandler';
+
 export const App: React.FC = () => {
+  const dispatch = useAppDispatch();
+  const { pathname } = useLocation();
+
   const upperBlockRef = useRef<HTMLDivElement>(null);
   const scrollElementRef = useRef<HTMLDivElement>(null);
-  const dispatch = useAppDispatch();
+
   useEffect(() => {
-    const scrollElement = scrollElementRef.current!;
+    if (!scrollElementRef.current) return;
+
+    const scrollElement = scrollElementRef.current;
 
     scrollHandler(scrollElement, dispatch);
 
@@ -28,30 +40,36 @@ export const App: React.FC = () => {
     };
 
     scrollElement.addEventListener('scroll', scrollListener);
-
     return () => {
       scrollElement.removeEventListener('scroll', scrollListener);
     };
   }, []);
+
   return (
     <div className="vh-100 vw-100 overflow-hidden">
-      <Sidebar sizeOfNavItems="s" />
-      <SidebarToggler sizeOfToggler="m" />
       <div className="h-100 w-100 overflow-auto" ref={scrollElementRef}>
-        <div className="w-100" style={{ height: '1px' }} ref={upperBlockRef}></div>
+        <div className="w-100 h-1px" ref={upperBlockRef}></div>
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/posts" element={<PostsPage />}/>
-          <Route path="/posts/create" element={<FormOfPost />} />
+          <Route path="/posts" element={<PostsPage />} />
+          <Route path="/posts/create" element={<UpdatePostPage />} />
           <Route path="/posts/:postId" element={<PostPage />} />
-          <Route path="/posts/:postId/edit" element={<FormOfPost />} />
+          <Route path="/posts/:postId/edit" element={<UpdatePostPage />} />
         </Routes>
-        <ElementOfScrollProgress elementOfBreakPoint={upperBlockRef} />
+
+        {!pathname.match(/create|edit/gi) && (
+          <ElementOfScrollProgress elementOfBreakPoint={upperBlockRef} />
+        )}
       </div>
+
+      <Sidebar sizeOfNavItems="s" />
+      <SidebarToggler sizeOfToggler="m" />
+
+      <ModalInfo />
+      <Notification />
+
       <BackgroundCircles />
       <BackgroundGlass />
-      <Notification />
-      <ModalInfo />
     </div>
   );
 };

@@ -1,15 +1,13 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import cn from 'classnames';
-import { useEffect } from 'react';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
 
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { actionsNotification } from '../../store/slices/uiNotificationSlice';
 
-
 export const Notification: React.FC = () => {
- const  { message, statusOfVisibility, type } = useAppSelector(store => store.uiNotification)
+  const dispatch = useAppDispatch();
 
-  const appDispatch = useAppDispatch();
+  const { message, statusOfVisibility, type } = useAppSelector((store) => store.uiNotification);
 
   const classnamesOfParentContainer = cn('notification bg-white', {
     'notification-success': type === 'success' ? true : false,
@@ -18,11 +16,11 @@ export const Notification: React.FC = () => {
   });
 
   useEffect(() => {
-    const id = setTimeout(() => {
-      appDispatch(actionsNotification.hide());
+    const idTimeout = setTimeout(() => {
+      dispatch(actionsNotification.hide());
     }, 1000);
     return () => {
-      clearTimeout(id);
+      clearTimeout(idTimeout);
     };
   });
 

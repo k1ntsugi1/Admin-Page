@@ -1,14 +1,18 @@
 import React from 'react';
 import { Modal, Button } from 'react-bootstrap';
+
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { actionsModalInfo } from '../../store/slices/uiModalInfoSlice';
 
 export const ModalInfo: React.FC = () => {
   const dispatch = useAppDispatch();
+
   const { message, show, proceedHandler } = useAppSelector((store) => store.uiModalInfo);
+
   const handleClose = () => {
     dispatch(actionsModalInfo.close());
   };
+
   return (
     <Modal show={show} onHide={handleClose} centered aria-labelledby="modal-info">
       <Modal.Body>{message}</Modal.Body>
@@ -17,7 +21,7 @@ export const ModalInfo: React.FC = () => {
           Закрыть
         </Button>
         <Button
-        className="border-bottom"
+          className="border-bottom"
           variant=""
           onClick={() => {
             handleClose();

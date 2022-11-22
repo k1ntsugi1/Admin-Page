@@ -1,21 +1,24 @@
 import React from 'react';
-import Ticker from '../components/Ticker/Ticker';
+import cn from 'classnames';
+
+import { Ticker } from '../components/Ticker/Ticker';
+import { BackgroundGlass } from '../components/BackgroundGlass/BackgroundGlass';
+
+import { sizesOfIcons } from '../utils/constants';
+
 import GithubIcon from '../assets/svg/github.svg';
 import TelegramIcon from '../assets/svg/telegram.svg';
 import MailIcon from '../assets/svg/mail.svg';
 import ArrowIcon from '../assets/svg/arrow-up-right-square-fill.svg';
-import { sizesOfIcons } from '../utils/constants';
-import cn from 'classnames';
-import { BackgroundGlass } from '../components/BackgroundGlass/BackgroundGlass';
-import { useAppDispatch } from '../store/hooks';
 
 export const HomePage: React.FC = () => {
-    const dispatch = useAppDispatch();
   const { width, height } = sizesOfIcons.l;
-  const openLinkHandler = (link: string) => {
+
+  const classNameOfTicker = cn('border-bottom flex-grow-1 rounded z-index-1000');
+
+  const openLinkHandler = (link: string) => () => {
     window.open(link);
   };
-  const classNameOfTicker = cn('border-bottom flex-grow-1 rounded z-index-1000');
 
   return (
     <div className="w-100 h-100 d-flex flex-wrap justify-content-center align-items-center gap-4 rounded">
@@ -32,10 +35,11 @@ export const HomePage: React.FC = () => {
         </div>
         <BackgroundGlass className="rounded" />
       </div>
+
       <div className="links-contacts-container w-50 h-75 d-flex flex-column border rounded">
         <Ticker
           className={classNameOfTicker}
-          onClickHandler={() => openLinkHandler('https://github.com/k1ntsugi1')}
+          onClickHandler={openLinkHandler('https://github.com/k1ntsugi1')}
         >
           <img src={GithubIcon} width={width} height={height} />
           <img src={ArrowIcon} width={width} height={height} />
@@ -43,18 +47,17 @@ export const HomePage: React.FC = () => {
 
         <Ticker
           className={classNameOfTicker}
-          onClickHandler={() => openLinkHandler('https://t.me/bmasalimov')}
+          onClickHandler={openLinkHandler('https://t.me/bmasalimov')}
         >
           <img src={TelegramIcon} width={width} height={height} />
           <img src={ArrowIcon} width={width} height={height} />
         </Ticker>
-        <Ticker
-          className={classNameOfTicker}
-          onClickHandler={() => openLinkHandler('https://github.com/k1ntsugi1')}
-        >
+
+        <Ticker className={classNameOfTicker}>
           <img src={MailIcon} width={width} height={height} />
           <span>bmasalimov5@yandex.ru</span>
         </Ticker>
+
         <BackgroundGlass className="rounded" />
       </div>
     </div>

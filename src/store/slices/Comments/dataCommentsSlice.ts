@@ -1,8 +1,11 @@
 import { createSlice, createEntityAdapter } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
-import { LoadingStatuses } from '../../../utils/constants';
+
 import { RootState } from '../../index';
+
 import { fetchGetComments, IComment } from './fetchGetComments';
+
+import { LoadingStatuses } from '../../../utils/constants';
 
 interface IInitialState {
   postIdsOfLoadedComments: (string | number)[]

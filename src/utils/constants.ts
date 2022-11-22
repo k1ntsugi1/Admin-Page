@@ -20,10 +20,19 @@ export const LoadingStatuses = {
   rejected: 'rejected'
 };
 
-
 export const urls = {
-    posts: {
-        all: () => 'https://jsonplaceholder.typicode.com/posts',
-        byPostId: (postId: string | number) => `https://jsonplaceholder.typicode.com/posts/${postId}`
-    }
+  posts: {
+    all: () => 'https://jsonplaceholder.typicode.com/posts',
+    byPostId: (postId: string | number) => `https://jsonplaceholder.typicode.com/posts/${postId}`
+  },
+  comments: {
+    byPostId: (postId: string | number) => `https://jsonplaceholder.typicode.com/posts/${postId}/comments`
+  }
+};
+
+
+export const dataOfNavBtns = {
+  'postsPage': [{text: 'Создать', path: '/posts/create'}],
+  'postPage': [{text: 'К постам', path: '/posts'}, {text: 'Редактировать', path: 'edit'}],
+  'updatePostPage': [{text: 'Вернуться', path: '/posts'}],
 }

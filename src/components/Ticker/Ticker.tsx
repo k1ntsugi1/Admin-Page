@@ -7,7 +7,7 @@ interface IProps {
   onClickHandler?: () => void;
 }
 
-const Ticker: React.FC<IProps> = (props) => {
+export const Ticker: React.FC<IProps> = (props) => {
   const { className, children, onClickHandler } = props;
 
   const classNamesOfContainer = cn('container-ticker', className);
@@ -16,14 +16,11 @@ const Ticker: React.FC<IProps> = (props) => {
 
   return (
     <div className={classNamesOfContainer} onClick={onClickHandler}>
-      {React.Children.map(children, (child, index) => {
-        return (
-          <div className={index === 0 ? classNamesOfFrontElement : classNamesOfBackElement}>
-            {child}
-          </div>
-        );
-      })}
+      {React.Children.map(children, (child, index) => (
+        <div className={index === 0 ? classNamesOfFrontElement : classNamesOfBackElement}>
+          {child}
+        </div>
+      ))}
     </div>
   );
 };
-export default Ticker;

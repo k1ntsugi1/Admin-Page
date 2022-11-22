@@ -3,6 +3,7 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 import { IPost, fetchPosts } from './fetchPosts';
 import { LoadingStatuses } from '../../../utils/constants';
 import { RootState } from '../../index';
+import { useNavigate } from 'react-router-dom';
 
 interface IInitialState {
   activePostId: string | number | null;

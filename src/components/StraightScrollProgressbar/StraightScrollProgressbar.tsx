@@ -2,8 +2,10 @@ import React from 'react';
 import { useAppSelector } from '../../store/hooks';
 
 export const StraightScrollProgressbar: React.FC = () => {
+
   const { percentOfFilling } = useAppSelector((store) => store.uiProgressbar);
-  const style = { height: percentOfFilling + '%' } as React.CSSProperties;
+  const style = { "height": percentOfFilling + '%' };
+
   return (
     <div className="wrapper-straight-progress-bar">
       <div className="progress-container">

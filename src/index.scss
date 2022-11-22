@@ -79,3 +79,32 @@
 .bg-transparent {
     background: transparent;
 }
+
+.title-page {
+    margin: 1rem 0 1rem 0;
+    padding-top: 1rem;
+    padding-bottom: 1.5rem;
+    display: flex;
+    justify-content: center;
+    border-bottom: 2px solid lightgray;
+}
+
+.contianer-page {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 3rem;
+}
+
+.nav-btns-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-wrap: nowrap;
+    gap: 1rem;
+}
+
+.h-1px {
+    height: 1px;
+}
