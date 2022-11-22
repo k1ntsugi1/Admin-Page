@@ -37,7 +37,6 @@ const dataPostsSlice = createSlice({
       })
       .addCase(fetchPosts.fulfilled, (state, { payload }) => {
         const { posts } = payload;
-        console.log(posts)
         state.statusOfLoading = LoadingStatuses.fulfilled;
         postsEntityAdapter.upsertMany(state, posts);
       })

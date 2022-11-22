@@ -1,0 +1,89 @@
+.notification {
+    opacity: 1;
+    border: 1px solid black;
+    border-radius: 4px;
+    -webkit-animation: fadeOut 0.1s linear;
+    animation: fadeOut 0.1s linear;
+    display: none;
+    position: fixed;
+    right: 75px;
+    bottom: 75px;
+    z-index: 10000;
+
+    &.show {
+        display: block;
+        -webkit-animation: fadeIn 0.1s linear;
+        animation: fadeIn 0.1s linear;
+    }
+
+    &.notification-success,
+    &.notification-error {
+        .notification-content {
+            padding: 16px 24px 16px 64px;
+            font-size: 16px;
+            line-height: 20px;
+            color: black;
+            position: relative;
+            &::after {
+              content: "";
+              position: absolute;
+              left: 24px;
+              top: 50%;
+              width: 24px;
+              height: 24px;
+              transform: translate(0, -50%);
+              background-size: 24px 24px;
+            }
+        }
+    }
+
+    &.notification-success {
+        .notification-content::after {
+            background: url(../assets/svg/check-all.svg) center no-repeat;
+            background-size: 25px 25px;
+        }
+    }
+
+    &.notification-error {
+        .notification-content::after {
+            background: url(../assets/svg/heartbreak.svg) center no-repeat;
+            background-size: 25px 25px;
+        }
+    }
+}
+
+@-webkit-keyframes fadeOut {
+    from {
+      opacity: 0.8;
+    }
+    to {
+      opacity: 0;
+    }
+  }
+  
+  @keyframes fadeOut {
+    from {
+      opacity: 0.8;
+    }
+    to {
+      opacity: 0;
+    }
+  }
+  
+  @-webkit-keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 0.8;
+    }
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 0.8;
+    }
+  }

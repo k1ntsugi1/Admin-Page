@@ -9,6 +9,7 @@ import { CardOfComment } from '../components/CardOfComment/CardOfComment';
 import { LoadingStatuses } from '../utils/constants';
 import { MagnifyingGlassSpinner } from '../components/MagnifyingGlassSpinner/MagnifyingGlassSpinner';
 import { actionsComments } from '../store/slices/Comments/dataCommentsSlice';
+import { BackgroundGlass } from '../components/BackgroundGlass/BackgroundGlass';
 export const PostPage: React.FC = () => {
   const dispatch = useAppDispatch();
   const { postId }  = useParams();
@@ -31,23 +32,24 @@ export const PostPage: React.FC = () => {
     return () => {dispatch(actionsPosts.setActivePostId({ id: null }))};
   }, [])
   return (
-    <>
-      <div className="w-100">
-        <Button variant="" className="mx-auto" onClick={moveToNewPagePageHandler('/posts')}>
+    <div className="h-100 p-5">
+      <div className="d-flex flex-nowrap gap-3 justify-content-center">
+        <Button variant="" className="border-bottom" onClick={moveToNewPagePageHandler('/posts')}>
           К постам
         </Button>
-        <Button variant="" className="mx-auto" onClick={moveToNewPagePageHandler('edit')}>
+        <Button variant="" className="border-bottom" onClick={moveToNewPagePageHandler('edit')}>
           Редактировать
         </Button>
       </div>
-      <p className="w-100 h3 border-bottom">Пост:</p>
+      <p className="my-3 pt-3 pb-4 h3 border-bottom d-flex justify-content-center"><span>Пост:</span></p>
       <div>
-        <div className="p-3 bg-white border rounded">
+        <div className="position-relative p-3 border rounded">
           <p className="h3">{post?.title}</p>
           <p>{post?.body}</p>
+          <BackgroundGlass />
         </div>
         <div className="d-flex flex-column">
-          <p className="w-100 h3 border-bottom">Комментарии:</p>
+          <p className="my-3 pt-3 pb-4 h3 border-bottom d-flex justify-content-center"><span>Комментарии:</span></p>
           {statusOfLoading === LoadingStatuses.pending && <MagnifyingGlassSpinner />}
           {statusOfLoading === LoadingStatuses.fulfilled &&
             comments.length > 0 &&
@@ -57,6 +59,6 @@ export const PostPage: React.FC = () => {
             })}
         </div>
       </div>
-    </>
+    </div>
   );
 };

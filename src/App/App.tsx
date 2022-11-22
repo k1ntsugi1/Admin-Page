@@ -10,7 +10,10 @@ import { ElementOfScrollProgress } from '../components/ElementOfScrollProgress/E
 import { useAppDispatch } from '../store/hooks';
 import { scrollHandler } from '../utils/scrollHandler';
 import { PostPage } from '../pages/PostPage';
-import { FormOfPost } from '../components/FormOfPost/FormOfPost'; 
+import { FormOfPost } from '../components/FormOfPost/FormOfPost';
+import { Notification } from '../components/Notifications/Notifications';
+import { useAppSelector } from '../store/hooks';
+import { ModalInfo } from '../components/ModalInfo/ModalInfo';
 export const App: React.FC = () => {
   const upperBlockRef = useRef<HTMLDivElement>(null);
   const scrollElementRef = useRef<HTMLDivElement>(null);
@@ -38,15 +41,17 @@ export const App: React.FC = () => {
         <div className="w-100" style={{ height: '1px' }} ref={upperBlockRef}></div>
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/posts" element={<PostsPage />}>
-            <Route path=":postId" element={<PostPage />} />
-            <Route path=":postId/edit" element={<FormOfPost />}/>
-          </Route>
+          <Route path="/posts" element={<PostsPage />}/>
+          <Route path="/posts/create" element={<FormOfPost />} />
+          <Route path="/posts/:postId" element={<PostPage />} />
+          <Route path="/posts/:postId/edit" element={<FormOfPost />} />
         </Routes>
         <ElementOfScrollProgress elementOfBreakPoint={upperBlockRef} />
       </div>
-      {/* <BackgroundCircles /> */}
+      <BackgroundCircles />
       <BackgroundGlass />
+      <Notification />
+      <ModalInfo />
     </div>
   );
 };

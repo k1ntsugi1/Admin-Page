@@ -27,6 +27,7 @@ module.exports = {
         use: [
           "style-loader",
           "css-loader",
+          "resolve-url-loader",
           // {
           //   loader: 'css-loader',
           //   options: {
