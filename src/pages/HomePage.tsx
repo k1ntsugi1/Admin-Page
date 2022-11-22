@@ -19,7 +19,7 @@ export const HomePage: React.FC = () => {
 
   return (
     <div className="w-100 h-100 d-flex flex-wrap justify-content-center align-items-center gap-4 rounded">
-      <div className="transcription-card-container h-75 w-25 fs-6 rounded">
+      <div className="transcription-card-container h-75 w-25 fs-6 border rounded">
         <div className="h-100 p-4 d-flex flex-column z-index-1000">
           <p className="z-index-1000">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
@@ -32,7 +32,7 @@ export const HomePage: React.FC = () => {
         </div>
         <BackgroundGlass className="rounded" />
       </div>
-      <div className="links-contacts-container w-50 h-75 d-flex flex-column rounded">
+      <div className="links-contacts-container w-50 h-75 d-flex flex-column border rounded">
         <Ticker
           className={classNameOfTicker}
           onClickHandler={() => openLinkHandler('https://github.com/k1ntsugi1')}

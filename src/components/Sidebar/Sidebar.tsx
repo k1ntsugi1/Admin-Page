@@ -7,6 +7,7 @@ import TasksLink from '../../assets/svg/task-list.svg';
 import AlbumsLink from '../../assets/svg/card-image.svg';
 import { sizesOfIcons } from '../../utils/constants';
 import { useAppSelector } from '../../store/hooks';
+import { toggleVisibilityhandler } from '../../utils/toggleVisibilityHandler';
 interface IProps {
   sizeOfNavItems: 's' | 'm' | 'l';
 }
@@ -30,9 +31,7 @@ export const Sidebar: React.FC<IProps> = ({ sizeOfNavItems }) => {
     navigate(path)
   }
   useEffect(() => {
-    setTimeout(() => {
-      if (showState === 'hidden') sidebarRef.current!.style.visibility = 'hidden';
-    }, 400);
+    toggleVisibilityhandler(sidebarRef, showState);
     if (showState === 'visible') sidebarRef.current!.style.visibility = '';
   }, [showState]);
   return (

@@ -1,0 +1,35 @@
+.wrapper-straight-progress-bar {
+    position: relative;
+    // display: flex;
+    // flex-direction: column;
+    // justify-content: space-between;
+    width: 24px;
+    height: 150px;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 10px;
+
+    .progress-container {
+        margin: 0;
+        padding: 1px;
+        width: 24px;
+        height: 100%;
+        border: 1px solid black;
+        border-radius: 8px;
+        .progress {     
+            background: #5769e9;
+        };
+    };
+
+    .progress-text {
+        padding: 1px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translateX(-50%) translateY(-50%) rotateZ(90deg);
+        background-color: lightgrey;
+        border-radius: 3px;
+        font-size: 0.7rem;
+        // color: var(--color-text);
+    }
+}

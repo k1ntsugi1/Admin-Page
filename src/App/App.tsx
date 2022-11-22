@@ -42,7 +42,7 @@ export const App: React.FC = () => {
         </Routes>
         <ElementOfScrollProgress elementOfBreakPoint={upperBlockRef} />
       </div>
-      {/* <BackgroundCircles /> */}
+      <BackgroundCircles />
       <BackgroundGlass />
     </div>
   );
