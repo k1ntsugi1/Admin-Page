@@ -12,3 +12,10 @@ export const sizesOfIcons = {
         height: '45'
     }
 }
+
+export const LoadingStatuses = {
+    idle: "idle",
+    pending: "pending",
+    fulfilled: "fulfilled",
+    rejected: "rejected",
+  };

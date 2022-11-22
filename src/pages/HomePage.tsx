@@ -7,12 +7,16 @@ import ArrowIcon from '../assets/svg/arrow-up-right-square-fill.svg';
 import { sizesOfIcons } from '../utils/constants';
 import cn from 'classnames';
 import { BackgroundGlass } from '../components/BackgroundGlass/BackgroundGlass';
+import { useAppDispatch } from '../store/hooks';
+
 export const HomePage: React.FC = () => {
+    const dispatch = useAppDispatch();
   const { width, height } = sizesOfIcons.l;
   const openLinkHandler = (link: string) => {
     window.open(link);
   };
   const classNameOfTicker = cn('border-bottom flex-grow-1 rounded z-index-1000');
+
   return (
     <div className="w-100 h-100 d-flex flex-wrap justify-content-center align-items-center gap-4 rounded">
       <div className="transcription-card-container h-75 w-25 fs-6 rounded">

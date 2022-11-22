@@ -1,0 +1,30 @@
+.progress-section {
+    margin: 0;
+    position: absolute;
+    top: 10px;
+    right: 30px;
+    padding: 5px;
+    max-width: 60px;
+    max-height: 200px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: nowrap;
+
+
+    border: 1px solid grey;
+    border-radius: 10px;
+    background: white;
+    cursor: pointer;
+
+    // &:hover {
+    //     animation: run-top-bottom linear 1s infinite;
+    // }
+}
+
+@keyframes run-top-bottom {
+    from {bottom: 60px}
+    to  {bottom: 70px}
+}

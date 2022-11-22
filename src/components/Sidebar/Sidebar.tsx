@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import cn from 'classnames';
+import { useNavigate } from 'react-router-dom'
 import HomeLink from '../../assets/svg/home.svg';
 import PostsLink from '../../assets/svg/stickies.svg';
 import TasksLink from '../../assets/svg/task-list.svg';
@@ -11,10 +12,12 @@ interface IProps {
 }
 
 export const Sidebar: React.FC<IProps> = ({ sizeOfNavItems }) => {
+  const navigate = useNavigate();
+  const { activePostId } = useAppSelector(store => store.dataPosts);
   const sidebarRef = useRef<HTMLDivElement>(null);
   const { showState } = useAppSelector((state) => state.uiSidebar);
   const classNameOfSidebar = cn(
-    'position-absolute start-0 top-0 z-index-1000 h-100 w-100px shadow-lg transition-opacity',
+    'position-absolute start-0 top-0 z-index-1000 h-100 w-100px shadow-lg transition-opacity bg-white',
     {
       'opacity-0': showState === 'hidden',
       'opacity-100': showState === 'visible'
@@ -23,7 +26,9 @@ export const Sidebar: React.FC<IProps> = ({ sizeOfNavItems }) => {
 
   const classNamesOfLinks = cn('mt-4 mx-auto cursor-pointer hover');
   const { width: navItemWidth, height: navItemHeight } = sizesOfIcons[sizeOfNavItems];
-
+  const navigateHandler = (path: string) => () => {
+    navigate(path)
+  }
   useEffect(() => {
     setTimeout(() => {
       if (showState === 'hidden') sidebarRef.current!.style.visibility = 'hidden';
@@ -38,24 +43,28 @@ export const Sidebar: React.FC<IProps> = ({ sizeOfNavItems }) => {
           width={navItemWidth}
           height={navItemHeight}
           className={classNamesOfLinks}
+          onClick={navigateHandler('/')}
         />
         <img
           src={PostsLink}
           width={navItemWidth}
           height={navItemHeight}
           className={classNamesOfLinks}
+          onClick={navigateHandler(`/posts${activePostId ? activePostId: ''}`)}
         />
         <img
           src={AlbumsLink}
           width={navItemWidth}
           height={navItemHeight}
           className={classNamesOfLinks}
+          onClick={navigateHandler('/albums')}
         />
         <img
           src={TasksLink}
           width={navItemWidth}
           height={navItemHeight}
           className={classNamesOfLinks}
+          onClick={navigateHandler('/todos')}
         />
       </div>
     </div>
