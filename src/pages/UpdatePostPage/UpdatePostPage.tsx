@@ -1,7 +1,7 @@
 import React from 'react';
 import { useFormik } from 'formik';
 import { Form, Button } from 'react-bootstrap';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Navigate, useNavigate, useParams } from 'react-router-dom';
 
 import { NavBtnsOfPage } from '../../components/NavBtnsOfPage/NavBtnsOfPage';
 import { TitleOfPage } from '../../components/TitleOfPage/TitleOfPage';
@@ -27,7 +27,7 @@ export const UpdatePostPage: React.FC = () => {
   const dispatch = useAppDispatch();
   const { postId } = useParams();
 
-  const { entities, statusOfLoading } = useAppSelector((store) => store.dataPosts);
+  const { entities, statusOfLoading, activePostId } = useAppSelector((store) => store.dataPosts);
   const editingPost = postId ? entities[postId] : {};
 
   const initialValues: IInitialValueOfFormik = {
@@ -119,6 +119,7 @@ export const UpdatePostPage: React.FC = () => {
           )}
         </Button>
       </Form>
+      {statusOfLoading === LoadingStatuses.fulfilled && activePostId && <Navigate to={`/posts/${activePostId}`} replace={true} />}
     </div>
   );
 };

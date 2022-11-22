@@ -37,11 +37,11 @@ export const PostPage: React.FC = () => {
     dispatch(actionsComments.addPostId({ id: Number(postId) }));
   }, []);
 
-  useEffect(() => {
-    return () => {
-      dispatch(actionsPosts.setActivePostId({ id: null }));
-    };
-  }, []);
+  // useEffect(() => {
+  //   return () => {
+  //     dispatch(actionsPosts.setActivePostId({ id: null }));
+  //   };
+  // }, []);
 
   return (
     <div className="contianer-page">

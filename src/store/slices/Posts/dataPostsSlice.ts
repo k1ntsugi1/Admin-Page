@@ -37,9 +37,13 @@ const dataPostsSlice = createSlice({
         state.typeOfError = '';
       })
       .addCase(fetchPosts.fulfilled, (state, { payload }) => {
-        const { posts } = payload;
+        const { posts, method } = payload;
         state.statusOfLoading = LoadingStatuses.fulfilled;
         postsEntityAdapter.upsertMany(state, posts);
+        if (method === 'post') {
+          const newPost = posts[0]
+          state.activePostId = newPost.id
+        }
       })
       .addCase(fetchPosts.rejected, (state, { payload }) => {
         state.statusOfLoading = LoadingStatuses.rejected;

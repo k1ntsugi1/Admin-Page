@@ -16,6 +16,7 @@ export interface IPost {
 
 export interface IResponse {
   posts: IPost[];
+  method: 'get' | 'post' | 'put';
 }
 
 export interface IClientParams {
@@ -44,7 +45,7 @@ export const fetchPosts = createAsyncThunk<IResponse, IClientParams, IThunkAPI>(
         thunkAPI.dispatch(actionsNotification.show({ message: 'Сохранено', type: 'success' }));
       }
 
-      return { posts: Array.isArray(data) ? data : [data] };
+      return { posts: Array.isArray(data) ? data : [data], method};
     } catch (error) {
       return thunkAPI.rejectWithValue({ error: 'serverError' });
     }
