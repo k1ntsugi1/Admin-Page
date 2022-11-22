@@ -1,27 +1,27 @@
 import React, { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
-import { fetchGetPosts } from '../store/slices/Posts/fetchGetPosts';
+import { fetchPosts } from '../store/slices/Posts/fetchPosts';
 import { selectorsPosts } from '../store/slices/Posts/dataPostsSlice';
 import { CardOfPost } from '../components/CardOfPost/CardOfPost';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useParams } from 'react-router-dom';
 import { MagnifyingGlassSpinner } from '../components/MagnifyingGlassSpinner/MagnifyingGlassSpinner';
 import { LoadingStatuses } from '../utils/constants'; 
+import { Button } from 'react-bootstrap';
 
 export const PostsPage: React.FC = () => {
+  const { postId }  = useParams();
   const dispatch = useAppDispatch();
-  const { activePostId, statusOfLoading } = useAppSelector((store) => store.dataPosts);
+  const { statusOfLoading } = useAppSelector((store) => store.dataPosts);
   const postIds = useAppSelector(selectorsPosts.selectIds);
   useEffect(() => {
-    if (postIds.length === 0) dispatch(fetchGetPosts());
-    // const timoutId = setTimeout(() => {dispatch(fetchGetPosts()}, 1000000);
-    // return clearTimeout(timoutId);
+    if (postIds.length === 0) dispatch(fetchPosts({method: 'get'}));
   }, []);
 
   return (
-    <section className="p-5 d-flex justify-content-end gap-2 flex-wrap">
+    <section className="p-5 h-75 d-flex justify-content-end gap-2 flex-wrap">
       { statusOfLoading === LoadingStatuses.pending && <MagnifyingGlassSpinner />}
-      {!activePostId && (statusOfLoading === LoadingStatuses.fulfilled) && postIds.map((postId) => <CardOfPost key={postId} id={postId} />)}
-      {activePostId && <Outlet />}
+      {!postId && (statusOfLoading === LoadingStatuses.fulfilled) && postIds.map((postId) => <CardOfPost key={postId} id={postId} />)}
+      {postId && <Outlet />}
     </section>
   );
 };

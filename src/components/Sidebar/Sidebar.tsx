@@ -49,7 +49,7 @@ export const Sidebar: React.FC<IProps> = ({ sizeOfNavItems }) => {
           width={navItemWidth}
           height={navItemHeight}
           className={classNamesOfLinks}
-          onClick={navigateHandler(`/posts${activePostId ? activePostId: ''}`)}
+          onClick={navigateHandler(`/posts/${activePostId ? activePostId: ''}`)}
         />
         <img
           src={AlbumsLink}

@@ -9,6 +9,8 @@ import { PostsPage } from '../pages/PostsPage';
 import { ElementOfScrollProgress } from '../components/ElementOfScrollProgress/ElementOfScrollProgress';
 import { useAppDispatch } from '../store/hooks';
 import { scrollHandler } from '../utils/scrollHandler';
+import { PostPage } from '../pages/PostPage';
+import { FormOfPost } from '../components/FormOfPost/FormOfPost'; 
 export const App: React.FC = () => {
   const upperBlockRef = useRef<HTMLDivElement>(null);
   const scrollElementRef = useRef<HTMLDivElement>(null);
@@ -37,12 +39,13 @@ export const App: React.FC = () => {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/posts" element={<PostsPage />}>
-            <Route path=":postId" element={<div>hello</div>}></Route>
+            <Route path=":postId" element={<PostPage />} />
+            <Route path=":postId/edit" element={<FormOfPost />}/>
           </Route>
         </Routes>
         <ElementOfScrollProgress elementOfBreakPoint={upperBlockRef} />
       </div>
-      <BackgroundCircles />
+      {/* <BackgroundCircles /> */}
       <BackgroundGlass />
     </div>
   );

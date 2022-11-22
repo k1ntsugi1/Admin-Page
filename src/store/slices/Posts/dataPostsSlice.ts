@@ -1,6 +1,6 @@
 import { createSlice, createEntityAdapter } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
-import { IPost, fetchGetPosts } from './fetchGetPosts';
+import { IPost, fetchPosts } from './fetchPosts';
 import { LoadingStatuses } from '../../../utils/constants';
 import { RootState } from '../../index';
 
@@ -24,21 +24,24 @@ const dataPostsSlice = createSlice({
   reducers: {
     setActivePostId(state, action:PayloadAction<{ id: number | string | null }>) {
       state.activePostId = action.payload.id;
+    },
+    updatePost(state, action:PayloadAction<{post: IPost }>) {
+      postsEntityAdapter.upsertOne(state, action.payload.post);
     }
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchGetPosts.pending, (state) => {
+      .addCase(fetchPosts.pending, (state) => {
         state.statusOfLoading = LoadingStatuses.pending;
         state.typeOfError = '';
       })
-      .addCase(fetchGetPosts.fulfilled, (state, { payload }) => {
+      .addCase(fetchPosts.fulfilled, (state, { payload }) => {
         const { posts } = payload;
         console.log(posts)
         state.statusOfLoading = LoadingStatuses.fulfilled;
         postsEntityAdapter.upsertMany(state, posts);
       })
-      .addCase(fetchGetPosts.rejected, (state, { payload }) => {
+      .addCase(fetchPosts.rejected, (state, { payload }) => {
         state.statusOfLoading = LoadingStatuses.rejected;
         // state.typeOfError = typeOfError;
       });
