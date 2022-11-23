@@ -24,13 +24,19 @@ export const HomePage: React.FC = () => {
     <div className="w-100 h-100 d-flex flex-wrap justify-content-center align-items-center gap-4 rounded">
       <div className="transcription-card-container h-75 w-25 fs-6 border rounded">
         <div className="h-100 p-4 d-flex flex-column z-index-1000">
-          <p className="z-index-1000">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-            exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
-            dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-            mollit anim id est laborum
+          <p>
+            Здравствуйте, данный проект выполнен в рамках аттестационного задания.
+          </p>
+          <p>
+           Необходимо было реализовать три сущности(посты, альбомы, todos) и CRUD для них, используя 
+            <a className='ms-1' href='https://jsonplaceholder.typicode.com/guide/'>jsonplaceholder API</a>
+          </p>
+          <p>
+           Минимальный стек: webpack, React, typescript, react-router-dom v6, redux/@toolkit, axios и любая
+           библитека стилей
+          </p>
+          <p>
+           Получилось <span className="text-decoration-line-through">мудрено</span> неплохо🗿
           </p>
         </div>
         <BackgroundGlass className="rounded" />

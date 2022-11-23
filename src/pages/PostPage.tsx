@@ -23,6 +23,7 @@ export const PostPage: React.FC = () => {
   const navigate = useNavigate();
   const { postId } = useParams();
 
+  const { userId } = useAppSelector((store) => store.dataUser);
   const post = useAppSelector((store) => selectorsPosts.selectById(store, Number(postId)!));
   const comments = useAppSelector((store) => selectCommentsByPostId(store, Number(postId)!));
   const { statusOfLoading: statusOfPostLoading } = useAppSelector((store) => store.dataPosts);
@@ -47,7 +48,7 @@ export const PostPage: React.FC = () => {
   return (
     <div className="contianer-page">
       <NavBtnsOfPage btns={dataOfNavBtns.postPage} onClickHandler={moveToNewPagePageHandler} />
-      <TitleOfPage title="Пост" />
+      <TitleOfPage title={`Пост | Пользователь ${userId === null ? 'Все': userId }`} />
       <div>
         {statusOfPostLoading === LoadingStatuses.pending && <ThreeDotsSpinner />}
         {statusOfPostLoading === LoadingStatuses.fulfilled && (

@@ -16,6 +16,7 @@ export const AlbumsPage: React.FC = () => {
 
   const [searchString, setSearchString] = useState<string>('');
 
+  const { userId } = useAppSelector((store) => store.dataUser);
   const albums = useAppSelector((store) => selectAlbumsByTitle(store, searchString))
   const { statusOfLoading } = useAppSelector((store) => store.dataAlbums);
 
@@ -41,7 +42,7 @@ export const AlbumsPage: React.FC = () => {
         placeholder="Поиск поста"
       />
 
-       <TitleOfPage title="Альбомы:" />
+       <TitleOfPage title={`Альбомы | Пользователь ${userId === null ? 'Все': userId }`} />
        {statusOfLoading === LoadingStatuses.pending && <MagnifyingGlassSpinner />}
        
        {statusOfLoading === LoadingStatuses.fulfilled && (

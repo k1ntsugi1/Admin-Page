@@ -2,7 +2,9 @@ import { RootState } from "../..";
 import { selectorsAlbums } from "./dataAlbumsSlice";
 
 export const selectAlbumsByTitle = (store: RootState, searchString: string) => {
+    const { userId } = store.dataUser
     const albums = selectorsAlbums.selectAll(store);
-    if(searchString === '') return albums;
-    return albums.filter(album => album.title.includes(searchString));
+    const albumsOfUser = userId === null ? albums : albums.filter(album => album.userId === userId);
+    if(searchString === '') return albumsOfUser;
+    return albumsOfUser.filter(album => album.title.includes(searchString));
 }

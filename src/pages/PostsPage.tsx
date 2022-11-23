@@ -19,6 +19,7 @@ export const PostsPage: React.FC = () => {
 
   const [searchString, setSearchString] = useState<string>('');
 
+  const { userId } = useAppSelector((store) => store.dataUser);
   const posts = useAppSelector((store) => selectPostsByTitle(store, searchString))
   const { statusOfLoading } = useAppSelector((store) => store.dataPosts);
 
@@ -49,7 +50,7 @@ export const PostsPage: React.FC = () => {
         placeholder="Поиск поста"
       />
 
-      <TitleOfPage title="Посты:" />
+      <TitleOfPage title={`Посты | Пользователь ${userId === null ? 'Все': userId }`} />
 
       {statusOfLoading === LoadingStatuses.pending && <MagnifyingGlassSpinner />}
 

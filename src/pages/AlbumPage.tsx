@@ -20,6 +20,7 @@ export const AlbumPage: React.FC = () => {
   const navigate = useNavigate();
   const { albumId } = useParams();
 
+  const { userId } = useAppSelector((store) => store.dataUser);
   const album = useAppSelector((store) => selectorsAlbums.selectById(store, Number(albumId)!));
   const photos = useAppSelector((store) => selectPhotosByAlbumId(store, Number(albumId)!));
   const { statusOfLoading, albumsIdsOfLoadedComments } = useAppSelector(
@@ -42,7 +43,7 @@ export const AlbumPage: React.FC = () => {
   return (
     <div className="contianer-page">
       <NavBtnsOfPage btns={dataOfNavBtns.albumPage} onClickHandler={moveToNewPagePageHandler} />
-      <TitleOfPage title="Альбом" />
+      <TitleOfPage title={`Альбом | Пользователь ${userId === null ? 'Все': userId }`} />
       <p className='title-page h4 border-bottom'><span>Название: {album?.title}</span></p>
       <div className="position-relative h-300px">
         {statusOfLoading === LoadingStatuses.pending && <ThreeDotsSpinner />}

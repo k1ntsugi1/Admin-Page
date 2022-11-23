@@ -37,6 +37,9 @@ export const urls = {
   },
   photos: {
     byAlbumId: (albumId: number) => `https://jsonplaceholder.typicode.com/albums/${albumId}/photos`,
+  },
+  todos: {
+    all: () => 'https://jsonplaceholder.typicode.com/todos'
   }
 };
 
