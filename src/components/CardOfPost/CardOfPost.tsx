@@ -8,17 +8,18 @@ import { ViewMoreElement } from '../ViewMoreElement/ViewMoreElement';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { actionsPosts, selectorsPosts } from '../../store/slices/Posts/dataPostsSlice';
 
-interface IPostId {
-  id: number | string;
+import { IPost } from '../../store/slices/Posts/fetchPosts';
+
+interface IProps {
+  post: IPost;
 }
 
-export const CardOfPost: React.FC<IPostId> = ({ id }) => {
+export const CardOfPost: React.FC<IProps> = ({ post }) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const [isHovering, setIsHovering] = useState<boolean>(false);
-
-  const post = useAppSelector((store) => selectorsPosts.selectById(store, id));
+  const id = post.id;
 
   const activePostHandler = (postId: number | string) => () => {
     dispatch(actionsPosts.setActivePostId({ id: postId }));
