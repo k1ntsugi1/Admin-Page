@@ -5,6 +5,7 @@ import { HomePage } from '../pages/HomePage';
 import { PostsPage } from '../pages/PostsPage';
 import { PostPage } from '../pages/PostPage';
 import { UpdatePostPage } from '../pages/UpdatePostPage/UpdatePostPage';
+import { AlbumsPage } from '../pages/AlbumsPage';
 
 import { ElementOfScrollProgress } from '../components/ElementOfScrollProgress/ElementOfScrollProgress';
 
@@ -55,6 +56,7 @@ export const App: React.FC = () => {
           <Route path="/posts/create" element={<UpdatePostPage />} />
           <Route path="/posts/:postId" element={<PostPage />} />
           <Route path="/posts/:postId/edit" element={<UpdatePostPage />} />
+          <Route path="/albums" element={<AlbumsPage />} />
         </Routes>
 
         {!pathname.match(/create|edit/gi) && (

@@ -2,6 +2,7 @@ import { configureStore } from '@reduxjs/toolkit';
 
 import dataPostsReducer from './slices/Posts/dataPostsSlice';
 import dataCommentsReducer from './slices/Comments/dataCommentsSlice';
+import dataAlbumsReducer from './slices/Albums/AlbumsSlice'
 
 import uiSidebarReducer from './slices/uiSidebarSlice';
 import uiProgressbarReducer from './slices/uiProgressbarSlice';
@@ -12,6 +13,7 @@ const store = configureStore({
   reducer: {
     dataPosts: dataPostsReducer,
     dataComments: dataCommentsReducer,
+    dataAlbums: dataAlbumsReducer,
     uiSidebar: uiSidebarReducer,
     uiProgressbar: uiProgressbarReducer,
     uiNotification: uiNotificationReducer,

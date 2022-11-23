@@ -29,6 +29,9 @@ export const urls = {
   comments: {
     all: () => 'https://jsonplaceholder.typicode.com/posts/comments',
     byPostId: (postId: string | number) => `https://jsonplaceholder.typicode.com/posts/${postId}/comments`
+  },
+  albums: {
+    all: () => 'https://jsonplaceholder.typicode.com/albums',
   }
 };
 
