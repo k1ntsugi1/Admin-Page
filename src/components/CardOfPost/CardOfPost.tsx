@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card } from 'react-bootstrap';
 
+import { DeletePostElement } from '../DeletePostElement/DeletePostElement';
 import { BackgroundGlass } from '../BackgroundGlass/BackgroundGlass';
 import { ViewMoreElement } from '../ViewMoreElement/ViewMoreElement';
 
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { actionsPosts, selectorsPosts } from '../../store/slices/Posts/dataPostsSlice';
+import { useAppDispatch } from '../../store/hooks';
+import { actionsPosts } from '../../store/slices/Posts/dataPostsSlice';
 
 import { IPost } from '../../store/slices/Posts/fetchPosts';
 
@@ -34,12 +35,14 @@ export const CardOfPost: React.FC<IProps> = ({ post }) => {
         onMouseOut={() => setIsHovering(false)}
       >
         <Card className="CardOfPost overflow-hidden">
+          <DeletePostElement postId={id} />
+
           <Card.Body className="centered-content-by-flex">
             <Card.Title>{post?.title}</Card.Title>
+            {isHovering && <ViewMoreElement onClick={activePostHandler(id)} />}
           </Card.Body>
         </Card>
 
-        {isHovering && <ViewMoreElement onClick={activePostHandler(id)} />}
         <BackgroundGlass />
       </div>
     </>

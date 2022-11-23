@@ -11,7 +11,7 @@ import { actionsModalInfo } from '../../store/slices/uiModalInfoSlice';
 import { fetchPosts, IClientParams } from '../../store/slices/Posts/fetchPosts';
 
 import { dataOfNavBtns, LoadingStatuses } from '../../utils/constants';
-import { validationSchema } from './validationSchema';
+import { validationSchemaPostForm } from '../../utils/validationSchema';
 
 import type { FormikProps } from 'formik';
 
@@ -39,12 +39,12 @@ export const UpdatePostPage: React.FC = () => {
 
   const formik: FormikProps<IInitialValueOfFormik> = useFormik<IInitialValueOfFormik>({
     initialValues,
-    validationSchema,
+    validationSchema: validationSchemaPostForm,
     validateOnChange: false,
     validateOnBlur: false,
     onSubmit: (values) => {
       const clientParams: IClientParams = {
-        method: postId ? 'put' : 'post',
+        method: postId ? 'patch' : 'post',
         postId: postId ?? null,
         values
       };
@@ -83,29 +83,27 @@ export const UpdatePostPage: React.FC = () => {
       <TitleOfPage title={postId ? 'Редактирование поста' : 'Создание поста'} />
 
       <Form noValidate onSubmit={formik.handleSubmit} className="h-75 d-flex flex-column gap-3">
-        <Form.Group>
-          <Form.Control
-            type="text"
-            name="title"
-            value={formik.values.title}
-            onChange={formik.handleChange}
-            aria-label="title of post"
-            placeholder="Введите заголовок"
-            isInvalid={!!formik.errors.title}
-          />
-        </Form.Group>
-        <Form.Group className="h-75">
-          <Form.Control
-            className="h-100"
-            as="textarea"
-            name="body"
-            value={formik.values.body}
-            onChange={formik.handleChange}
-            aria-label="body of post"
-            placeholder="Введите текст поста"
-            isInvalid={!!formik.errors.body}
-          />
-        </Form.Group>
+        <Form.Control
+          type="text"
+          name="title"
+          value={formik.values.title}
+          onChange={formik.handleChange}
+          aria-label="title of post"
+          placeholder="Введите заголовок"
+          isInvalid={!!formik.errors.title}
+        />
+
+        <Form.Control
+          className="h-75"
+          as="textarea"
+          name="body"
+          value={formik.values.body}
+          onChange={formik.handleChange}
+          aria-label="body of post"
+          placeholder="Введите текст поста"
+          isInvalid={!!formik.errors.body}
+        />
+
         <Button
           variant="light"
           type="submit"
@@ -119,7 +117,9 @@ export const UpdatePostPage: React.FC = () => {
           )}
         </Button>
       </Form>
-      {statusOfLoading === LoadingStatuses.fulfilled && activePostId && <Navigate to={`/posts/${activePostId}`} replace={true} />}
+      {statusOfLoading === LoadingStatuses.fulfilled && activePostId && (
+        <Navigate to={`/posts/${activePostId}`} replace={true} />
+      )}
     </div>
   );
 };

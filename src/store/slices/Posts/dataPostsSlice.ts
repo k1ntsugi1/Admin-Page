@@ -1,9 +1,12 @@
 import { createSlice, createEntityAdapter } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
+
 import { IPost, fetchPosts } from './fetchPosts';
+import { deletePost } from './deletePost';
+
 import { LoadingStatuses } from '../../../utils/constants';
+
 import { RootState } from '../../index';
-import { useNavigate } from 'react-router-dom';
 
 interface IInitialState {
   activePostId: string | number | null;
@@ -23,10 +26,10 @@ const dataPostsSlice = createSlice({
   name: 'posts',
   initialState: postsEntityAdapter.getInitialState(initialState),
   reducers: {
-    setActivePostId(state, action:PayloadAction<{ id: number | string | null }>) {
+    setActivePostId(state, action: PayloadAction<{ id: number | string | null }>) {
       state.activePostId = action.payload.id;
     },
-    updatePost(state, action:PayloadAction<{post: IPost }>) {
+    updatePost(state, action: PayloadAction<{ post: IPost }>) {
       postsEntityAdapter.upsertOne(state, action.payload.post);
     }
   },
@@ -41,12 +44,20 @@ const dataPostsSlice = createSlice({
         state.statusOfLoading = LoadingStatuses.fulfilled;
         postsEntityAdapter.upsertMany(state, posts);
         if (method === 'post') {
-          const newPost = posts[0]
-          state.activePostId = newPost.id
+          const newPost = posts[0];
+          state.activePostId = newPost.id;
         }
       })
       .addCase(fetchPosts.rejected, (state, { payload }) => {
         state.statusOfLoading = LoadingStatuses.rejected;
+        // state.typeOfError = typeOfError;
+      })
+      .addCase(deletePost.fulfilled, (state, { payload }) => {
+        const { postId } = payload;
+        postsEntityAdapter.removeOne(state, postId);
+      })
+      .addCase(deletePost.rejected, (state, { payload }) => {
+        // state.statusOfLoading = LoadingStatuses.rejected;
         // state.typeOfError = typeOfError;
       });
   }

@@ -12,7 +12,7 @@ module.exports = merge(common, {
     hot: true,
     open: true,
     liveReload: false,
-    compress: true,
+    //compress: true,
     historyApiFallback: true,
     static: {
       directory: path.join(__dirname, '../dist'),

@@ -23,9 +23,11 @@ export const LoadingStatuses = {
 export const urls = {
   posts: {
     all: () => 'https://jsonplaceholder.typicode.com/posts',
-    byPostId: (postId: string | number) => `https://jsonplaceholder.typicode.com/posts/${postId}`
+    byPostId: (postId: string | number) => `https://jsonplaceholder.typicode.com/posts/${postId}`,
+    delete:(postId: string | number) => `https://jsonplaceholder.typicode.com/posts/${postId}`,
   },
   comments: {
+    all: () => 'https://jsonplaceholder.typicode.com/posts/comments',
     byPostId: (postId: string | number) => `https://jsonplaceholder.typicode.com/posts/${postId}/comments`
   }
 };

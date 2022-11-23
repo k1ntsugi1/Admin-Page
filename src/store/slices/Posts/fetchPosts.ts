@@ -15,11 +15,11 @@ export interface IPost {
 
 export interface IResponse {
   posts: IPost[];
-  method: 'get' | 'post' | 'put';
+  method: 'get' | 'post' | 'patch';
 }
 
 export interface IClientParams {
-  method: 'get' | 'post' | 'put';
+  method: 'get' | 'post' | 'patch';
   postId?: string | number | null;
   values?: {
     title: string;
