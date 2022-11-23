@@ -16,7 +16,7 @@ interface IInitialState {
 
 const initialState: IInitialState = {
   activePostId: null,
-  statusOfLoading: 'idl',
+  statusOfLoading: LoadingStatuses.idle,
   typeOfError: ''
 };
 

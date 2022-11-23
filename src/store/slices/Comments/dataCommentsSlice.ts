@@ -18,7 +18,7 @@ interface IInitialState {
 const initialState: IInitialState = {
   methodOfFetch: 'idl',
   postIdsOfLoadedComments: [],
-  statusOfLoading: 'idl',
+  statusOfLoading: LoadingStatuses.idle,
   typeOfError: ''
 };
 

@@ -6,6 +6,7 @@ import { PostsPage } from '../pages/PostsPage';
 import { PostPage } from '../pages/PostPage';
 import { UpdatePostPage } from '../pages/UpdatePostPage/UpdatePostPage';
 import { AlbumsPage } from '../pages/AlbumsPage';
+import { AlbumPage } from '../pages/AlbumPage';
 
 import { ElementOfScrollProgress } from '../components/ElementOfScrollProgress/ElementOfScrollProgress';
 
@@ -57,9 +58,10 @@ export const App: React.FC = () => {
           <Route path="/posts/:postId" element={<PostPage />} />
           <Route path="/posts/:postId/edit" element={<UpdatePostPage />} />
           <Route path="/albums" element={<AlbumsPage />} />
+          <Route path="/albums/:albumId/photos" element={<AlbumPage />} />
         </Routes>
 
-        {!pathname.match(/create|edit/gi) && (
+        {!pathname.match(/create|edit|(albums\/[0-9])/gi) && (
           <ElementOfScrollProgress elementOfBreakPoint={upperBlockRef} />
         )}
       </div>

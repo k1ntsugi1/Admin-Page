@@ -32,7 +32,7 @@ export const PostsPage: React.FC = () => {
   }
 
   useEffect(() => {
-    if (posts.length === 0) dispatch(fetchPosts({ method: 'get' }));
+    if (statusOfLoading === LoadingStatuses.idle) dispatch(fetchPosts({ method: 'get' }));
   }, []);
 
   return (
@@ -54,7 +54,7 @@ export const PostsPage: React.FC = () => {
       {statusOfLoading === LoadingStatuses.pending && <MagnifyingGlassSpinner />}
 
       {statusOfLoading === LoadingStatuses.fulfilled && (
-        <div className="d-flex justify-content-end gap-2 flex-wrap">
+        <div className="d-flex justify-content-center gap-2 flex-wrap">
           {posts.map((post) => (
             <CardOfPost key={post.id} post={post} />
           ))}

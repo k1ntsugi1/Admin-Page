@@ -15,15 +15,23 @@ export interface IResponse {
   albums: IAlbum[];
 }
 
-export const fetchAlbums = createAsyncThunk<IResponse, void, IThunkAPI>(
+export interface IClientParams {
+  method: 'get';
+  albumId?: number;
+}
+
+export const fetchAlbums = createAsyncThunk<IResponse, IClientParams, IThunkAPI>(
   'fetchAlbums',
-  async (_, thunkAPI) => {
+  async (clientParams, thunkAPI) => {
     try {
-      const url = urls.albums.all();
 
-      const { data } = await axios.get<IAlbum[]>(url);
+      const { method, albumId } = clientParams;
 
-      return { albums: data };
+      const url = !albumId ? urls.albums.all() : urls.albums.byAlbumId(albumId);
+
+      const { data } = await axios[method]<IAlbum | IAlbum[]>(url);
+
+      return { albums: Array.isArray(data) ? data : [data] };
     } catch (error) {
       return thunkAPI.rejectWithValue({ error: 'serverError' });
     }

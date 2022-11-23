@@ -28,23 +28,21 @@ export const CardOfPost: React.FC<IProps> = ({ post }) => {
   };
 
   return (
-    <>
-      <div
-        className="position-relative"
-        onMouseOver={() => setIsHovering(true)}
-        onMouseOut={() => setIsHovering(false)}
-      >
-        <Card className="CardOfPost overflow-hidden">
-          <DeletePostElement postId={id} />
+    <div
+      className="position-relative"
+      onMouseOver={() => setIsHovering(true)}
+      onMouseOut={() => setIsHovering(false)}
+    >
+      <Card className="CardOfPost overflow-hidden">
+        <DeletePostElement postId={id} />
 
-          <Card.Body className="centered-content-by-flex">
-            <Card.Title>{post?.title}</Card.Title>
-            {isHovering && <ViewMoreElement onClick={activePostHandler(id)} />}
-          </Card.Body>
-        </Card>
+        <Card.Body className="centered-content-by-flex">
+          <Card.Title>{post?.title}</Card.Title>
+          {isHovering && <ViewMoreElement onClick={activePostHandler(id)} />}
+        </Card.Body>
+      </Card>
 
-        <BackgroundGlass />
-      </div>
-    </>
+      <BackgroundGlass />
+    </div>
   );
 };

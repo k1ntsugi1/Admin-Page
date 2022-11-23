@@ -82,10 +82,10 @@
 
 .title-page {
     margin: 1rem 0 1rem 0;
-    padding-top: 1rem;
-    padding-bottom: 1.5rem;
+    padding: 1rem 0.8rem 1.5rem 0.8rem;
     display: flex;
     justify-content: center;
+    text-align: center;
     border-bottom: 2px solid lightgray;
 }
 
@@ -111,4 +111,12 @@
 
 .min-height-25 {
     min-height: 25%;
+}
+
+.h-300px {
+    height: 300px;
+}
+
+.carousel-indicators {
+    visibility: hidden;
 }

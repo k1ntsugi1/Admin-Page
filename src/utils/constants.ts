@@ -13,6 +13,7 @@ export const sizesOfIcons = {
   }
 };
 
+
 export const LoadingStatuses = {
   idle: 'idle',
   pending: 'pending',
@@ -32,6 +33,10 @@ export const urls = {
   },
   albums: {
     all: () => 'https://jsonplaceholder.typicode.com/albums',
+    byAlbumId : (albumId: number) => `https://jsonplaceholder.typicode.com/albums/${albumId}`
+  },
+  photos: {
+    byAlbumId: (albumId: number) => `https://jsonplaceholder.typicode.com/albums/${albumId}/photos`,
   }
 };
 
@@ -40,4 +45,5 @@ export const dataOfNavBtns = {
   'postsPage': [{text: 'Создать', path: '/posts/create'}],
   'postPage': [{text: 'К постам', path: '/posts'}, {text: 'Редактировать', path: 'edit'}],
   'updatePostPage': [{text: 'Вернуться', path: '/posts'}],
+  'albumPage': [{text: 'К альбомам', path: '/albums'}],
 }
