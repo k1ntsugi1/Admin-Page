@@ -22,7 +22,7 @@ export const CardOfPost: React.FC<IProps> = ({ post }) => {
   const [isHovering, setIsHovering] = useState<boolean>(false);
   const id = post.id;
 
-  const activePostHandler = (postId: number | string) => () => {
+  const activePostHandler = (postId: number) => () => {
     dispatch(actionsPosts.setActivePostId({ id: postId }));
     navigate(`${id}`);
   };

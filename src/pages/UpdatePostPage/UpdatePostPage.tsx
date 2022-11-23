@@ -18,8 +18,8 @@ import type { FormikProps } from 'formik';
 interface IInitialValueOfFormik {
   title: string;
   body: string;
-  userId: string | number;
-  id?: string | number;
+  userId: number;
+  id?: number;
 }
 
 export const UpdatePostPage: React.FC = () => {
@@ -45,7 +45,7 @@ export const UpdatePostPage: React.FC = () => {
     onSubmit: (values) => {
       const clientParams: IClientParams = {
         method: postId ? 'patch' : 'post',
-        postId: postId ?? null,
+        postId: Number(postId) ?? null,
         values
       };
       dispatch(fetchPosts(clientParams));

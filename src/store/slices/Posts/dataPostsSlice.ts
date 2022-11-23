@@ -9,7 +9,7 @@ import { LoadingStatuses } from '../../../utils/constants';
 import { RootState } from '../../index';
 
 interface IInitialState {
-  activePostId: string | number | null;
+  activePostId: number | null;
   statusOfLoading: string;
   typeOfError: string;
 }
@@ -26,7 +26,7 @@ const dataPostsSlice = createSlice({
   name: 'posts',
   initialState: postsEntityAdapter.getInitialState(initialState),
   reducers: {
-    setActivePostId(state, action: PayloadAction<{ id: number | string | null }>) {
+    setActivePostId(state, action: PayloadAction<{ id: number | null }>) {
       state.activePostId = action.payload.id;
     },
     updatePost(state, action: PayloadAction<{ post: IPost }>) {

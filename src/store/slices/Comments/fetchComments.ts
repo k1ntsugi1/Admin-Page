@@ -21,13 +21,13 @@ interface IResponse {
 
 export interface IClientParams {
   method: 'get' | 'post' | 'patch';
-  postId: string | number;
+  postId: number;
   values?: {
-    postId: string | number;
+    postId: number;
     name: string;
     email: string;
     body: string;
-    id?: string | number;
+    id?: number;
   };
 }
 

@@ -39,8 +39,8 @@ export const PostPage: React.FC = () => {
 
   useEffect(() => {
     if (!postId || postIdsOfLoadedComments.includes(Number(postId))) return;
-    if (!post) dispatch(fetchPosts({ method: 'get', postId }));
-    dispatch(fetchComments({ method: 'get', postId }));
+    if (!post) dispatch(fetchPosts({ method: 'get', postId: Number(postId) }));
+    dispatch(fetchComments({ method: 'get', postId: Number(postId) }));
     dispatch(actionsComments.addPostId({ id: Number(postId) }));
   }, []);
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Carousel } from 'react-bootstrap';
 
@@ -19,7 +19,6 @@ export const AlbumPage: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { albumId } = useParams();
-  const [indexOfPhotos, setIndexOfPhotos] = useState<number>(1);
 
   const album = useAppSelector((store) => selectorsAlbums.selectById(store, Number(albumId)!));
   const photos = useAppSelector((store) => selectPhotosByAlbumId(store, Number(albumId)!));
@@ -32,10 +31,6 @@ export const AlbumPage: React.FC = () => {
     navigate(path);
   };
 
-  const handleSelect = (selectedIndex: number) => {
-    if (selectedIndex > photos.length) setIndexOfPhotos(photos.length);
-    setIndexOfPhotos(selectedIndex);
-  };
 
   useEffect(() => {
     if (!albumId || albumsIdsOfLoadedComments.includes(Number(albumId))) return;

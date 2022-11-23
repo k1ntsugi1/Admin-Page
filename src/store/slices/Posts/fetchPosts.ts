@@ -7,8 +7,8 @@ import { urls } from '../../../utils/constants';
 import { actionsNotification } from '../uiNotificationSlice';
 
 export interface IPost {
-  userId: string | number;
-  id: string | number;
+  userId: number;
+  id: number;
   title: string;
   body: string;
 }
@@ -20,12 +20,12 @@ export interface IResponse {
 
 export interface IClientParams {
   method: 'get' | 'post' | 'patch';
-  postId?: string | number | null;
+  postId?: number | null;
   values?: {
     title: string;
     body: string;
-    userId: string | number;
-    id?: string | number;
+    userId: number;
+    id?: number;
   };
 }
 

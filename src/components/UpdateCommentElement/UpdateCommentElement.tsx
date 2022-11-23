@@ -13,11 +13,11 @@ import { validationSchemaCommentForm } from '../../utils/validationSchema';
 import type { FormikProps } from 'formik';
 
 interface IInitialValueOfFormik {
-  postId: string | number;
+  postId: number;
   name: string;
   email: string;
   body: string;
-  id?: string | number;
+  id?: number;
 }
 
 interface IProps {
@@ -34,7 +34,7 @@ export const UpdateCommentElement: React.FC<IProps> = ({ id }) => {
   const classNamesOfFormItems = cn('border-0 rounded-0 border-bottom');
 
   const initialValues: IInitialValueOfFormik = {
-    postId: postId!,
+    postId: Number(postId!),
     name: '',
     email: '',
     body: '',
@@ -49,7 +49,7 @@ export const UpdateCommentElement: React.FC<IProps> = ({ id }) => {
     onSubmit: (values) => {
       const clientParams: IClientParams = {
         method: values.id ? 'patch' : 'post',
-        postId: postId!,
+        postId: Number(postId!),
         values
       };
       dispatch(fetchComments(clientParams));
