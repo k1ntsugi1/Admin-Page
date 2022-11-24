@@ -9,12 +9,16 @@ import { LoadingStatuses } from '../../../utils/constants';
 import { RootState } from '../../index';
 
 interface IInitialState {
+  allPostsAreLoaded: boolean,
+  userIdsWithLoadedPosts: number[],
   activePostId: number | null;
   statusOfLoading: string;
   typeOfError: string;
 }
 
 const initialState: IInitialState = {
+  allPostsAreLoaded: false,
+  userIdsWithLoadedPosts: [],
   activePostId: null,
   statusOfLoading: LoadingStatuses.idle,
   typeOfError: ''
@@ -31,6 +35,12 @@ const dataPostsSlice = createSlice({
     },
     updatePost(state, action: PayloadAction<{ post: IPost }>) {
       postsEntityAdapter.upsertOne(state, action.payload.post);
+    },
+    updateUserIdsWithLoadedPosts(state, action: PayloadAction<{ ids: number[] }>) {
+      state.userIdsWithLoadedPosts = [...state.userIdsWithLoadedPosts, ...action.payload.ids]
+    },
+    setAllPostsAreLoaded(state) {
+      state.allPostsAreLoaded = true;
     }
   },
   extraReducers: (builder) => {

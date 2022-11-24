@@ -20,21 +20,26 @@ export const PostsPage: React.FC = () => {
   const [searchString, setSearchString] = useState<string>('');
 
   const { userId } = useAppSelector((store) => store.dataUser);
-  const posts = useAppSelector((store) => selectPostsByTitle(store, searchString))
-  const { statusOfLoading } = useAppSelector((store) => store.dataPosts);
+  const posts = useAppSelector((store) => selectPostsByTitle(store, searchString));
+  const { statusOfLoading, userIdsWithLoadedPosts, allPostsAreLoaded } = useAppSelector(
+    (store) => store.dataPosts
+  );
+
+  const performedСonditionOfFetchPosts =
+    (userId && !userIdsWithLoadedPosts.includes(userId)) || (!userId && !allPostsAreLoaded);
 
   const moveToNewPagePageHandler = (path: string) => () => {
     navigate(path);
   };
 
-  const setSearchStringHandler = (event:React.ChangeEvent<HTMLInputElement>) => {
+  const setSearchStringHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     setSearchString(value.trim());
-  }
+  };
 
   useEffect(() => {
-    if (statusOfLoading === LoadingStatuses.idle) dispatch(fetchPosts({ method: 'get' }));
-  }, []);
+    if (performedСonditionOfFetchPosts) dispatch(fetchPosts({ method: 'get' }));
+  }, [userId]);
 
   return (
     <section className="contianer-page">
@@ -50,7 +55,7 @@ export const PostsPage: React.FC = () => {
         placeholder="Поиск поста"
       />
 
-      <TitleOfPage title={`Посты | Пользователь ${userId === null ? 'Все': userId }`} />
+      <TitleOfPage title={`Посты | Пользователь ${userId === null ? 'Все' : userId}`} />
 
       {statusOfLoading === LoadingStatuses.pending && <MagnifyingGlassSpinner />}
 

@@ -4,6 +4,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { IThunkAPI } from '../interfaces';
 
 import { urls } from '../../../utils/constants';
+import { actionsPosts } from './dataPostsSlice';
 import { actionsNotification } from '../uiNotificationSlice';
 
 export interface IPost {
@@ -33,18 +34,40 @@ export const fetchPosts = createAsyncThunk<IResponse, IClientParams, IThunkAPI>(
   'fetchPosts',
   async (clientParams, thunkAPI) => {
     try {
-
+      const state = thunkAPI.getState();
+      const dispatch = thunkAPI.dispatch;
+      const { userIdsWithLoadedPosts } = state.dataPosts;
+      const { userId } = state.dataUser;
       const { method, postId, values } = clientParams;
+      const { posts: urlsOfPosts } = urls;
 
-      const url = !postId ? urls.posts.all() : urls.posts.byPostId(postId);
+      const url = userId
+        ? urlsOfPosts.byUserId(userId)
+        : !postId
+        ? urlsOfPosts.all()
+        : urlsOfPosts.byPostId(postId);
 
       const { data } = await axios[method]<IPost[] | IPost>(url, values);
 
+      const preparedData = Array.isArray(data) ? data : [data];
+
       if (method !== 'get') {
-        thunkAPI.dispatch(actionsNotification.show({ message: 'Сохранено', type: 'success' }));
+        dispatch(actionsNotification.show({ message: 'Сохранено', type: 'success' }));
       }
 
-      return { posts: Array.isArray(data) ? data : [data], method};
+      if (userId) {
+        dispatch(actionsPosts.updateUserIdsWithLoadedPosts({ ids: [userId] }));
+      }
+
+      if (!userId && method === 'get') {
+        const userIds = preparedData
+          .map((post) => post.userId)
+          .filter((id) => !userIdsWithLoadedPosts.includes(id));
+          dispatch(actionsPosts.updateUserIdsWithLoadedPosts({ ids: userIds }));
+          dispatch(actionsPosts.setAllPostsAreLoaded());
+      }
+
+      return { posts: preparedData, method };
     } catch (error) {
       return thunkAPI.rejectWithValue({ error: 'serverError' });
     }

@@ -18,7 +18,10 @@ export const AlbumsPage: React.FC = () => {
 
   const { userId } = useAppSelector((store) => store.dataUser);
   const albums = useAppSelector((store) => selectAlbumsByTitle(store, searchString))
-  const { statusOfLoading } = useAppSelector((store) => store.dataAlbums);
+  const { statusOfLoading, userIdsWithLoadedAlbums, allAlbumsAreLoaded } = useAppSelector((store) => store.dataAlbums);
+
+  const performedСonditionOfFetchAlbums =
+  (userId && !userIdsWithLoadedAlbums.includes(userId)) || (!userId && !allAlbumsAreLoaded);
 
   const setSearchStringHandler = (event:React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
@@ -26,8 +29,8 @@ export const AlbumsPage: React.FC = () => {
   }
 
   useEffect(() => {
-    if (statusOfLoading === LoadingStatuses.idle) dispatch(fetchAlbums({method: 'get'}));
-  });
+    if (performedСonditionOfFetchAlbums) dispatch(fetchAlbums({ method: 'get' }));
+  }, [userId]);
 
   return (
     <div className="contianer-page">

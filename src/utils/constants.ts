@@ -25,6 +25,7 @@ export const urls = {
   posts: {
     all: () => 'https://jsonplaceholder.typicode.com/posts',
     byPostId: (postId: string | number) => `https://jsonplaceholder.typicode.com/posts/${postId}`,
+    byUserId: (userId: string | number) => `https://jsonplaceholder.typicode.com/users/${userId}/posts`,
     delete:(postId: string | number) => `https://jsonplaceholder.typicode.com/posts/${postId}`,
   },
   comments: {

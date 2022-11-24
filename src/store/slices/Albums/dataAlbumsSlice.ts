@@ -8,12 +8,16 @@ import { LoadingStatuses } from '../../../utils/constants';
 import { RootState } from '../../index';
 
 interface IInitialState {
+  allAlbumsAreLoaded: boolean,
+  userIdsWithLoadedAlbums: number[],
   activeAlbumId: number | null;
   statusOfLoading: string;
   typeOfError: string;
 }
 
 const initialState: IInitialState = {
+  allAlbumsAreLoaded: false,
+  userIdsWithLoadedAlbums: [],
   activeAlbumId: null,
   statusOfLoading: LoadingStatuses.idle,
   typeOfError: ''
@@ -28,6 +32,12 @@ const dataAlbumsSlice = createSlice({
     setActiveAlbumId(state, action: PayloadAction<{ id: number | null }>) {
       state.activeAlbumId = action.payload.id;
     },
+    updateUserIdsWithLoadedAlbums(state, action: PayloadAction<{ ids: number[] }>) {
+      state.userIdsWithLoadedAlbums = [...state.userIdsWithLoadedAlbums, ...action.payload.ids]
+    },
+    setAllAlbumsAreLoaded(state) {
+      state.allAlbumsAreLoaded = true;
+    }
   },
   extraReducers: (builder) => {
     builder
