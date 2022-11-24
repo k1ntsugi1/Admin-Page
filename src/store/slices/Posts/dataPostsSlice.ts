@@ -63,8 +63,8 @@ const dataPostsSlice = createSlice({
         // state.typeOfError = typeOfError;
       })
       .addCase(deletePost.fulfilled, (state, { payload }) => {
-        const { postId } = payload;
-        postsEntityAdapter.removeOne(state, postId);
+        const { itemId } = payload;
+        postsEntityAdapter.removeOne(state, itemId);
       })
       .addCase(deletePost.rejected, (state, { payload }) => {
         // state.statusOfLoading = LoadingStatuses.rejected;

@@ -4,6 +4,8 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../index';
 
 import { fetchPhotos, IPhoto } from './fetchPhotos';
+import { deleteAlbum } from '../Albums/deleteAlbum';
+import { deletePhoto } from './deletePhoto';
 
 import { LoadingStatuses } from '../../../utils/constants';
 
@@ -42,6 +44,34 @@ const dataPhotosSlice = createSlice({
       })
       .addCase(fetchPhotos.rejected, (state, { payload }) => {
         state.statusOfLoading = LoadingStatuses.rejected;
+        // state.typeOfError = typeOfError;
+      })
+      .addCase(deleteAlbum.fulfilled, (state, { payload }) => {
+        const { itemId } = payload;
+
+        if (!state.entities) return;
+
+        const arrayOfEntities = Object.values(state.entities ?? {});
+        if (arrayOfEntities.length === 0) return;
+
+        arrayOfEntities.forEach((photo) => {
+          if (!photo) return ;
+          if (photo.albumId === itemId) {
+            photosEntityAdapter.removeOne(state, photo.id)
+          }
+          
+        });
+      })
+      .addCase(deletePhoto.pending, (state, { payload }) => {
+        // state.statusOfLoading = LoadingStatuses.rejected;
+        // state.typeOfError = typeOfError;
+      })
+      .addCase(deletePhoto.fulfilled, (state, { payload }) => {
+        const { itemId } = payload;
+        photosEntityAdapter.removeOne(state, itemId);
+      })
+      .addCase(deletePhoto.rejected, (state, { payload }) => {
+        // state.statusOfLoading = LoadingStatuses.rejected;
         // state.typeOfError = typeOfError;
       });
   }

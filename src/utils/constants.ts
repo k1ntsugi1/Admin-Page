@@ -24,20 +24,22 @@ export const LoadingStatuses = {
 export const urls = {
   posts: {
     all: () => 'https://jsonplaceholder.typicode.com/posts',
-    byPostId: (postId: string | number) => `https://jsonplaceholder.typicode.com/posts/${postId}`,
-    byUserId: (userId: string | number) => `https://jsonplaceholder.typicode.com/users/${userId}/posts`,
-    delete:(postId: string | number) => `https://jsonplaceholder.typicode.com/posts/${postId}`,
+    byPostId: (postId: number) => `https://jsonplaceholder.typicode.com/posts/${postId}`,
+    byUserId: (userId: number) => `https://jsonplaceholder.typicode.com/users/${userId}/posts`,
   },
   comments: {
     all: () => 'https://jsonplaceholder.typicode.com/posts/comments',
-    byPostId: (postId: string | number) => `https://jsonplaceholder.typicode.com/posts/${postId}/comments`
+    byPostId: (postId: number) => `https://jsonplaceholder.typicode.com/posts/${postId}/comments`,
+    byCommentId: (commentId: number) => `https://jsonplaceholder.typicode.com/comments/${commentId}`
   },
   albums: {
     all: () => 'https://jsonplaceholder.typicode.com/albums',
     byAlbumId : (albumId: number) => `https://jsonplaceholder.typicode.com/albums/${albumId}`,
-    byUserId: (userId: string | number) => `https://jsonplaceholder.typicode.com/users/${userId}/albums`,
+    byUserId: (userId: number) => `https://jsonplaceholder.typicode.com/users/${userId}/albums`,
   },
   photos: {
+    all: () => 'https://jsonplaceholder.typicode.com/photos',
+    byPhotoId: (photoId: number) => `https://jsonplaceholder.typicode.com/photos/${photoId}`,
     byAlbumId: (albumId: number) => `https://jsonplaceholder.typicode.com/albums/${albumId}/photos`,
   },
   todos: {
@@ -50,5 +52,7 @@ export const dataOfNavBtns = {
   'postsPage': [{text: 'Создать', path: '/posts/create'}],
   'postPage': [{text: 'К постам', path: '/posts'}, {text: 'Редактировать', path: 'edit'}],
   'updatePostPage': [{text: 'Вернуться', path: '/posts'}],
-  'albumPage': [{text: 'К альбомам', path: '/albums'}],
+  'albumsPage': [{text: 'Создать', path: '/albums/create'}],
+  'albumPage': [{text: 'К альбомам', path: '/albums'}, {text: 'Редактировать', path: 'edit'}],
+  'updateAlbumPage': [{text: 'Вернуться', path: '/albums'}],
 }

@@ -27,13 +27,14 @@ export const UpdatePostPage: React.FC = () => {
   const dispatch = useAppDispatch();
   const { postId } = useParams();
 
+  const { userId } = useAppSelector((store) => store.dataUser);
   const { entities, statusOfLoading, activePostId } = useAppSelector((store) => store.dataPosts);
   const editingPost = postId ? entities[postId] : {};
 
   const initialValues: IInitialValueOfFormik = {
     title: '',
     body: '',
-    userId: 0,
+    userId: userId ? userId : 0,
     ...editingPost
   };
 

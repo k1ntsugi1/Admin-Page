@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card } from 'react-bootstrap';
 
-import { DeletePostElement } from '../DeletePostElement/DeletePostElement';
+import { DeleteElement } from '../DeleteElement/DeleteElement';
 import { BackgroundGlass } from '../BackgroundGlass/BackgroundGlass';
 import { ViewMoreElement } from '../ViewMoreElement/ViewMoreElement';
 
@@ -34,7 +34,7 @@ export const CardOfPost: React.FC<IProps> = ({ post }) => {
       onMouseOut={() => setIsHovering(false)}
     >
       <Card className="CardOfPost overflow-hidden">
-        <DeletePostElement postId={id} />
+        <DeleteElement itemId={id} pathToNextPage="/posts" typeOfElement="post"/>
 
         <Card.Body className="centered-content-by-flex">
           <Card.Title>{post?.title}</Card.Title>

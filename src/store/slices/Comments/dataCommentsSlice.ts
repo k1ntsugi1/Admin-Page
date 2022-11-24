@@ -5,6 +5,7 @@ import { RootState } from '../../index';
 
 import { fetchComments, IComment } from './fetchComments';
 import { deletePost } from '../Posts/deletePost';
+import { deleteComment } from './deleteComment';
 
 import { LoadingStatuses } from '../../../utils/constants';
 
@@ -49,7 +50,7 @@ const dataCommentsSlice = createSlice({
         // state.typeOfError = typeOfError;
       })
       .addCase(deletePost.fulfilled, (state, { payload }) => {
-        const { postId } = payload;
+        const { itemId } = payload;
 
         if (!state.entities) return;
 
@@ -57,12 +58,23 @@ const dataCommentsSlice = createSlice({
         if (arrayOfEntities.length === 0) return;
 
         arrayOfEntities.forEach((comment) => {
-          if (!comment) return ;
-          if (comment.postId === Number(postId)) {
-            commentsEntityAdapter.removeOne(state, comment.id)
+          if (!comment) return;
+          if (comment.postId === itemId) {
+            commentsEntityAdapter.removeOne(state, comment.id);
           }
-          
         });
+      })
+      .addCase(deleteComment.pending, (state, { payload }) => {
+        // state.statusOfLoading = LoadingStatuses.rejected;
+        // state.typeOfError = typeOfError;
+      })
+      .addCase(deleteComment.fulfilled, (state, { payload }) => {
+        const { itemId } = payload;
+        commentsEntityAdapter.removeOne(state, itemId);
+      })
+      .addCase(deleteComment.rejected, (state, { payload }) => {
+        // state.statusOfLoading = LoadingStatuses.rejected;
+        // state.typeOfError = typeOfError;
       });
   }
 });

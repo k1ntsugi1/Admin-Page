@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { IComment } from '../../store/slices/Comments/fetchComments';
 import { Card } from 'react-bootstrap';
 
+import { DeleteElement } from '../DeleteElement/DeleteElement';
 import { UpdateCommentElement } from '../UpdateCommentElement/UpdateCommentElement';
 import { BackgroundGlass } from '../BackgroundGlass/BackgroundGlass';
 
@@ -22,6 +23,7 @@ export const CardOfComment: React.FC<IProps> = ({ comment }) => {
     <div>
       {showStateOfEditForm === 'hidden' ? (
         <Card className="position-relative ms-1 p-2 w-100 border-0 rounded-0 bg-transparent">
+          <DeleteElement itemId={comment.id} typeOfElement="comment"/>
           <Card.Body className="border-start border-bottom">
             <Card.Title className="d-flex justify-content-between flex-nowrap">
               <span>{comment?.name}</span>

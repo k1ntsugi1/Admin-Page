@@ -7,6 +7,7 @@ import { PostPage } from '../pages/PostPage';
 import { UpdatePostPage } from '../pages/UpdatePostPage/UpdatePostPage';
 import { AlbumsPage } from '../pages/AlbumsPage';
 import { AlbumPage } from '../pages/AlbumPage';
+import { UpdateAlbumPage } from '../pages/UpdateAlbumPage.tsx/UpdateAlbumPage.tsx';
 import { TodosPage } from '../pages/TodosPage';
 
 import { ElementOfScrollProgress } from '../components/ElementOfScrollProgress/ElementOfScrollProgress';
@@ -59,7 +60,9 @@ export const App: React.FC = () => {
           <Route path="/posts/:postId" element={<PostPage />} />
           <Route path="/posts/:postId/edit" element={<UpdatePostPage />} />
           <Route path="/albums" element={<AlbumsPage />} />
-          <Route path="/albums/:albumId/photos" element={<AlbumPage />} />
+          <Route path="/albums/create" element={<UpdateAlbumPage />} />
+          <Route path="/albums/:albumId" element={<AlbumPage />} />
+          <Route path="/albums/:albumId/edit" element={<UpdateAlbumPage />} />
           <Route path="/todos" element={<TodosPage />} />
         </Routes>
 
@@ -74,7 +77,7 @@ export const App: React.FC = () => {
       <ModalInfo />
       <Notification />
 
-      <BackgroundCircles />
+      {/* <BackgroundCircles /> */}
       <BackgroundGlass />
     </div>
   );

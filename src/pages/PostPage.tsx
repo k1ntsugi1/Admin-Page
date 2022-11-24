@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 import { NavBtnsOfPage } from '../components/NavBtnsOfPage/NavBtnsOfPage';
 import { TitleOfPage } from '../components/TitleOfPage/TitleOfPage';
-import { DeletePostElement } from '../components/DeletePostElement/DeletePostElement';
+import { DeleteElement } from '../components/DeleteElement/DeleteElement';
 import { CardOfComment } from '../components/CardOfComment/CardOfComment';
 import { UpdateCommentElement } from '../components/UpdateCommentElement/UpdateCommentElement';
 import { ThreeDotsSpinner } from '../components/ThreeDotsSpinner/ThreeDotsSpinner';
@@ -53,7 +53,7 @@ export const PostPage: React.FC = () => {
         {statusOfPostLoading === LoadingStatuses.pending && <ThreeDotsSpinner />}
         {statusOfPostLoading === LoadingStatuses.fulfilled && (
           <div className="position-relative p-3 border rounded">
-            <DeletePostElement postId={postId!}/>
+            <DeleteElement itemId={Number(postId!)} pathToNextPage="/posts" typeOfElement="post"/>
             <p className="h3">{post?.title}</p>
             <p>{post?.body}</p>
             <BackgroundGlass />

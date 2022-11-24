@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card } from 'react-bootstrap';
 
+import { DeleteElement } from '../DeleteElement/DeleteElement';
 import { ViewMoreElement } from '../ViewMoreElement/ViewMoreElement';
 import { BackgroundGlass } from '../BackgroundGlass/BackgroundGlass';
 
@@ -22,7 +23,7 @@ export const CardOfAlbum: React.FC<IProps> = ({ album }) => {
 
   const activeAlbumHandler = (albumId: number) => () => {
     dispatch(actionsAlbums.setActiveAlbumId({ id: albumId }));
-    navigate(`${id}/photos`);
+    navigate(`${id}`);
   };
 
   return (
@@ -32,9 +33,11 @@ export const CardOfAlbum: React.FC<IProps> = ({ album }) => {
       onMouseOut={() => setIsHovering(false)}
     >
       <Card className="CardOfPost overflow-hidden">
+      <DeleteElement itemId={id} pathToNextPage="/albums" typeOfElement="album"/>
+
         <Card.Body className="centered-content-by-flex">
           <Card.Title>{album?.title}</Card.Title>
-          {isHovering && <ViewMoreElement onClick={activeAlbumHandler(id!)} />}
+          {isHovering && <ViewMoreElement onClick={activeAlbumHandler(id)} />}
         </Card.Body>
       </Card>
 

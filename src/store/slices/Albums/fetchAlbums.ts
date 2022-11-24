@@ -2,6 +2,8 @@ import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import { actionsAlbums } from './dataAlbumsSlice';
+import { actionsNotification } from '../uiNotificationSlice';
+import { fetchPhotos } from '../Photos/fetchPhotos';
 
 import { IThunkAPI } from '../interfaces';
 
@@ -15,11 +17,25 @@ export interface IAlbum {
 
 export interface IResponse {
   albums: IAlbum[];
+  method: 'get' | 'post' | 'patch';
+}
+
+interface IValuesOfPhotos {
+  title: string;
+  url: string;
+  thumbnailUrl: string;
+  id?: number;
 }
 
 export interface IClientParams {
-  method: 'get';
+  method: 'get' | 'post' | 'patch';
   albumId?: number;
+  valuesOfAlbum?: {
+    title: string;
+    userId: number;
+    id?: number;
+  };
+  valuesOfPhotos?: IValuesOfPhotos[];
 }
 
 export const fetchAlbums = createAsyncThunk<IResponse, IClientParams, IThunkAPI>(
@@ -30,17 +46,39 @@ export const fetchAlbums = createAsyncThunk<IResponse, IClientParams, IThunkAPI>
       const dispatch = thunkAPI.dispatch;
       const { userIdsWithLoadedAlbums } = state.dataAlbums;
       const { userId } = state.dataUser;
-      const { method, albumId } = clientParams;
+      const { method, albumId, valuesOfAlbum, valuesOfPhotos } = clientParams;
       const { albums: urlsOfAlbums } = urls;
-      const url = userId
-        ? urlsOfAlbums.byUserId(userId)
-        : !albumId
-        ? urlsOfAlbums.all()
-        : urlsOfAlbums.byAlbumId(albumId);
 
-      const { data } = await axios[method]<IAlbum | IAlbum[]>(url);
+      const url =
+        userId && method === 'get'
+          ? urlsOfAlbums.byUserId(userId)
+          : !albumId
+          ? urlsOfAlbums.all()
+          : urlsOfAlbums.byAlbumId(albumId);
+
+      const { data } = await axios[method]<IAlbum | IAlbum[]>(url, valuesOfAlbum);
 
       const preparedData = Array.isArray(data) ? data : [data];
+
+      if (method !== 'get') {
+        dispatch(actionsNotification.show({ message: 'Альбом Сохранен', type: 'success' }));
+
+        if (valuesOfPhotos === undefined) {
+          return { albums: Array.isArray(data) ? data : [data], method };
+        }
+
+        const albumId = preparedData[0].id
+
+        const photosWithAlbumId = valuesOfPhotos.map((photo) => ({
+          title: photo.title,
+          url: photo.url,
+          thumbnailUrl: photo.thumbnailUrl,
+          albumId,
+        }));
+        await dispatch(
+          fetchPhotos({ method: 'post', albumId, values: photosWithAlbumId })
+        );
+      }
 
       if (userId) {
         dispatch(actionsAlbums.updateUserIdsWithLoadedAlbums({ ids: [userId] }));
@@ -54,7 +92,7 @@ export const fetchAlbums = createAsyncThunk<IResponse, IClientParams, IThunkAPI>
         dispatch(actionsAlbums.setAllAlbumsAreLoaded());
       }
 
-      return { albums: Array.isArray(data) ? data : [data] };
+      return { albums: Array.isArray(data) ? data : [data], method };
     } catch (error) {
       return thunkAPI.rejectWithValue({ error: 'serverError' });
     }

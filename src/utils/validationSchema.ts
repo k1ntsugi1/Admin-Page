@@ -19,3 +19,7 @@ export const validationSchemaCommentForm = Yup.object().shape({
   email: schema('email'),
   body: schema('body'),
 });
+
+export const validationSchemaAlbumForm = Yup.object().shape({
+  title: schema('title'),
+});

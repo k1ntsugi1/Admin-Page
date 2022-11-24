@@ -36,8 +36,8 @@ export const fetchComments = createAsyncThunk<IResponse, IClientParams, IThunkAP
   async (clientParams, thunkAPI) => {
     try {
       const { method, postId, values } = clientParams;
-
-      const url = method === 'patch' ? urls.comments.all() :urls.comments.byPostId(postId);
+      const { comments: urlsOfComments } = urls;
+      const url = method === 'post' ? urlsOfComments.all() : urlsOfComments.byPostId(postId);
 
       const { data } = await axios[method]<IComment[] | IComment>(url, values);
       
