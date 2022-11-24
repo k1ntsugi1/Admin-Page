@@ -31,8 +31,12 @@ export const fetchAlbums = createAsyncThunk<IResponse, IClientParams, IThunkAPI>
       const { userIdsWithLoadedAlbums } = state.dataAlbums;
       const { userId } = state.dataUser;
       const { method, albumId } = clientParams;
-
-      const url = !albumId ? urls.albums.all() : urls.albums.byAlbumId(albumId);
+      const { albums: urlsOfAlbums } = urls;
+      const url = userId
+        ? urlsOfAlbums.byUserId(userId)
+        : !albumId
+        ? urlsOfAlbums.all()
+        : urlsOfAlbums.byAlbumId(albumId);
 
       const { data } = await axios[method]<IAlbum | IAlbum[]>(url);
 
