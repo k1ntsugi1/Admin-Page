@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Form } from 'react-bootstrap';
 
+import { TitleOfPage } from '../components/TitleOfPage/TitleOfPage';
+
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { fetchTodos, ITodo } from '../store/slices/Todos/fetchTodos';
 import { selectTodosByTitle } from '../store/slices/Todos/customSelectorOfTodos';
@@ -25,10 +27,10 @@ export const TodosPage: React.FC = () => {
     { completed: [], uncompleted: [] }
   );
 
-  const setSearchStringHandler = (event:React.ChangeEvent<HTMLInputElement>) => {
+  const setSearchStringHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     setSearchString(value.trim());
-  }
+  };
 
   useEffect(() => {
     dispatch(fetchTodos({ method: 'get' }));
@@ -36,15 +38,18 @@ export const TodosPage: React.FC = () => {
 
   return (
     <div className="contianer-page">
-      <Form.Control
-        className="mt-4"
-        type="text"
-        name="todos by title"
-        value={searchString}
-        onChange={setSearchStringHandler}
-        aria-label="search by post title"
-        placeholder="Поиск поста"
-      />
+      <div className="container-fluid">
+        <div className="row">
+          <div className="col">
+            <TitleOfPage title="Завершенные:" />
+            {completed.map(task => <div key={task.id}>{task.title}</div>)}
+          </div>
+          <div className="col">
+            <TitleOfPage title="В процессе:" />
+            {uncompleted.map(task => <div key={task.id}>{task.title}</div>)}
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
