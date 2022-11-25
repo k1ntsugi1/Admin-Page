@@ -5,7 +5,7 @@ import { Form, Button } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { fetchComments, IClientParams } from '../../store/slices/Comments/fetchComments';
+import { fetchComments, IClientParams } from '../../store/slices/dataComments/fetchComments';
 
 import { LoadingStatuses } from '../../utils/constants';
 import { validationSchemaCommentForm } from '../../utils/validationSchema';

@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { DeleteElement } from '../DeleteElement/DeleteElement';
 import { UpdateTaskElement } from '../UpdateTaskElement/UpdateTaskElement';
 
-import { ITodo } from '../../store/slices/Todos/fetchTodos';
+import { ITodo } from '../../store/slices/dataTodos/fetchTodos';
 
 import { sizesOfIcons } from '../../utils/constants';
 

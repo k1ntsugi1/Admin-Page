@@ -4,7 +4,7 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../index';
 
 import { fetchPhotos, IPhoto } from './fetchPhotos';
-import { deleteAlbum } from '../Albums/deleteAlbum';
+import { deleteAlbum } from '../dataAlbums/deleteAlbum';
 import { deletePhoto } from './deletePhoto';
 
 import { LoadingStatuses } from '../../../utils/constants';

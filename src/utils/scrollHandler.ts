@@ -1,5 +1,5 @@
 import { AppDispatch } from '../store';
-import { actionsProgressbar } from '../store/slices/uiProgressbarSlice';
+import { actionsProgressbar } from '../store/slices/uiProgressbar/uiProgressbarSlice';
 
 interface IScrollHandler {
   (element: HTMLElement, appDispatch: AppDispatch): void;

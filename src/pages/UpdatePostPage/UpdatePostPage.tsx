@@ -8,8 +8,8 @@ import { NavBtnsOfPage } from '../../components/NavBtnsOfPage/NavBtnsOfPage';
 import { TitleOfPage } from '../../components/TitleOfPage/TitleOfPage';
 
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { actionsModalInfo } from '../../store/slices/uiModalInfoSlice';
-import { fetchPosts, IClientParams } from '../../store/slices/Posts/fetchPosts';
+import { actionsModalInfo } from '../../store/slices/uiModalinfo/uiModalInfoSlice';
+import { fetchPosts, IClientParams } from '../../store/slices/dataPosts/fetchPosts';
 
 import { dataOfNavBtns, LoadingStatuses } from '../../utils/constants';
 import { validationSchemaPostForm } from '../../utils/validationSchema';

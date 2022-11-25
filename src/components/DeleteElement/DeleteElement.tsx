@@ -2,11 +2,11 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { useAppDispatch } from '../../store/hooks';
-import { deletePost, TDeletePost } from '../../store/slices/Posts/deletePost';
-import { deleteAlbum, TDeleteAlbum } from '../../store/slices/Albums/deleteAlbum';
-import { deleteComment, TDeleteComment } from '../../store/slices/Comments/deleteComment';
-import { deleteTask, TDeleteTask } from '../../store/slices/Todos/deleteTask';
-import { actionsNotification } from '../../store/slices/uiNotificationSlice';
+import { deletePost, TDeletePost } from '../../store/slices/dataPosts/deletePost';
+import { deleteAlbum, TDeleteAlbum } from '../../store/slices/dataAlbums/deleteAlbum';
+import { deleteComment, TDeleteComment } from '../../store/slices/dataComments/deleteComment';
+import { deleteTask, TDeleteTask } from '../../store/slices/dataTodos/deleteTask';
+import { actionsNotification } from '../../store/slices/uiNotification/uiNotificationSlice';
 
 import { sizesOfIcons } from '../../utils/constants';
 

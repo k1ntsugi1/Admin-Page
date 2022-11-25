@@ -2,7 +2,7 @@ import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import { urls } from '../../../utils/constants';
-import { actionsNotification } from '../uiNotificationSlice';
+import { actionsNotification } from '../uiNotification/uiNotificationSlice';
 
 import { IThunkAPI } from '../interfaces';
 

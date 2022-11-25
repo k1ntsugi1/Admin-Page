@@ -1,16 +1,16 @@
 import { configureStore } from '@reduxjs/toolkit';
 
-import dataUserReducer from './slices/dataUserSlice';
-import dataPostsReducer from './slices/Posts/dataPostsSlice';
-import dataCommentsReducer from './slices/Comments/dataCommentsSlice';
-import dataAlbumsReducer from './slices/Albums/dataAlbumsSlice'
-import dataPhotosReducer from './slices/Photos/dataPhotosSlice';
-import dataTodosReducer from './slices/Todos/dataTodosSLice';
+import dataUserReducer from './slices/dataUser/dataUserSlice';
+import dataPostsReducer from './slices/dataPosts/dataPostsSlice';
+import dataCommentsReducer from './slices/dataComments/dataCommentsSlice';
+import dataAlbumsReducer from './slices/dataAlbums/dataAlbumsSlice'
+import dataPhotosReducer from './slices/dataPhotos/dataPhotosSlice';
+import dataTodosReducer from './slices/dataTodos/dataTodosSLice';
 
-import uiSidebarReducer from './slices/uiSidebarSlice';
-import uiProgressbarReducer from './slices/uiProgressbarSlice';
-import uiNotificationReducer from './slices/uiNotificationSlice';
-import uiModalInfoReducer from './slices/uiModalInfoSlice';
+import uiSidebarReducer from './slices/uiSidebar/uiSidebarSlice';
+import uiProgressbarReducer from './slices/uiProgressbar/uiProgressbarSlice';
+import uiNotificationReducer from './slices/uiNotification/uiNotificationSlice';
+import uiModalInfoReducer from './slices/uiModalinfo/uiModalInfoSlice';
 
 const store = configureStore({
   reducer: {

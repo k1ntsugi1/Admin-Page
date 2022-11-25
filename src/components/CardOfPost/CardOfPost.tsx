@@ -7,13 +7,13 @@ import { BackgroundGlass } from '../BackgroundGlass/BackgroundGlass';
 import { ViewMoreElement } from '../ViewMoreElement/ViewMoreElement';
 
 import { useAppDispatch } from '../../store/hooks';
-import { actionsPosts } from '../../store/slices/Posts/dataPostsSlice';
+import { actionsPosts } from '../../store/slices/dataPosts/dataPostsSlice';
 
 import { sizesOfIcons } from '../../utils/constants';
 
 import EditIcon from '../../assets/svg/edit.svg'
 
-import { IPost } from '../../store/slices/Posts/fetchPosts';
+import { IPost } from '../../store/slices/dataPosts/fetchPosts';
 
 interface IProps {
   post: IPost;

@@ -6,17 +6,17 @@ import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import { HeaderOfPage } from '../../components/HeaderOfPage/HeaderOfPage';
 
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { actionsModalInfo } from '../../store/slices/uiModalInfoSlice';
-import { actionsNotification } from '../../store/slices/uiNotificationSlice';
-import { fetchAlbums } from '../../store/slices/Albums/fetchAlbums';
+import { actionsModalInfo } from '../../store/slices/uiModalinfo/uiModalInfoSlice';
+import { actionsNotification } from '../../store/slices/uiNotification/uiNotificationSlice';
+import { fetchAlbums } from '../../store/slices/dataAlbums/fetchAlbums';
 
 import { LoadingStatuses } from '../../utils/constants';
-import { selectPhotosByAlbumId } from '../../store/slices/Photos/customSelectorsOfPhotos';
+import { selectPhotosByAlbumId } from '../../store/slices/dataPhotos/customSelectorsOfPhotos';
 import { fetchGetImageUrl } from '../../utils/fetchGetImageUrl';
 import { validationSchemaAlbumForm } from '../../utils/validationSchema';
 
 import type { FormikProps } from 'formik';
-import { IClientParams } from '../../store/slices/Albums/fetchAlbums';
+import { IClientParams } from '../../store/slices/dataAlbums/fetchAlbums';
 
 type TNewPhoto = {
   title: string;

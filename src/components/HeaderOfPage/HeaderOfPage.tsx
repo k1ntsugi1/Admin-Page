@@ -23,7 +23,6 @@ interface IProps {
 
 export const HeaderOfPage: React.FC<IProps> = (props) => {
   const { searchParams, navigateParams, nameOfPage, title } = props;
-  const { userId } = useAppSelector((store) => store.dataUser);
 
   const colorOfBackgroundCircles = nameOfPage.match(/album/gi)
     ? 'green'
@@ -41,7 +40,7 @@ export const HeaderOfPage: React.FC<IProps> = (props) => {
       )}
 
       <TitleOfPage
-        title={`${title} | Пользователь ${userId === null ? 'Все' : userId}`}
+        title={title}
         className="h3"
       />
 

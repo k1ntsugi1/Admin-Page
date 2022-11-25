@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { IComment } from '../../store/slices/Comments/fetchComments';
+import { IComment } from '../../store/slices/dataComments/fetchComments';
 import { Card } from 'react-bootstrap';
 
 import { DeleteElement } from '../DeleteElement/DeleteElement';

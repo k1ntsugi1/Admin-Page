@@ -3,7 +3,7 @@ import cn from 'classnames';
 import Burger from '../../assets/svg/burger.svg';
 
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { actionsUiSidebar } from '../../store/slices/uiSidebarSlice';
+import { actionsUiSidebar } from '../../store/slices/uiSidebar/uiSidebarSlice';
 
 import { sizesOfIcons } from '../../utils/constants';
 

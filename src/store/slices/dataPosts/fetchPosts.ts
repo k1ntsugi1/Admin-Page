@@ -5,7 +5,7 @@ import { IThunkAPI } from '../interfaces';
 
 import { urls } from '../../../utils/constants';
 import { actionsPosts } from './dataPostsSlice';
-import { actionsNotification } from '../uiNotificationSlice';
+import { actionsNotification } from '../uiNotification/uiNotificationSlice';
 
 export interface IPost {
   userId: number;

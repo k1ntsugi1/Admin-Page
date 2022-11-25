@@ -4,7 +4,7 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../index';
 
 import { fetchComments, IComment } from './fetchComments';
-import { deletePost } from '../Posts/deletePost';
+import { deletePost } from '../dataPosts/deletePost';
 import { deleteComment } from './deleteComment';
 
 import { LoadingStatuses } from '../../../utils/constants';

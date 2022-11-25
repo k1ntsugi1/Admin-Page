@@ -7,8 +7,8 @@ import { ViewMoreElement } from '../ViewMoreElement/ViewMoreElement';
 import { BackgroundGlass } from '../BackgroundGlass/BackgroundGlass';
 
 import { useAppDispatch } from '../../store/hooks';
-import { actionsAlbums } from '../../store/slices/Albums/dataAlbumsSlice';
-import { IAlbum } from '../../store/slices/Albums/fetchAlbums';
+import { actionsAlbums } from '../../store/slices/dataAlbums/dataAlbumsSlice';
+import { IAlbum } from '../../store/slices/dataAlbums/fetchAlbums';
 
 import { sizesOfIcons } from '../../utils/constants';
 

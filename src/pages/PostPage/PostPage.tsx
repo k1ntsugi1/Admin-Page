@@ -1,22 +1,22 @@
 import React, { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { HeaderOfPage } from '../components/HeaderOfPage/HeaderOfPage';
-import { TitleOfPage } from '../components/TitleOfPage/TitleOfPage';
-import { DeleteElement } from '../components/DeleteElement/DeleteElement';
-import { CardOfComment } from '../components/CardOfComment/CardOfComment';
-import { UpdateCommentElement } from '../components/UpdateCommentElement/UpdateCommentElement';
-import { ThreeDotsSpinner } from '../components/ThreeDotsSpinner/ThreeDotsSpinner';
-import { BackgroundGlass } from '../components/BackgroundGlass/BackgroundGlass';
+import { HeaderOfPage } from '../../components/HeaderOfPage/HeaderOfPage';
+import { TitleOfPage } from '../../components/TitleOfPage/TitleOfPage';
+import { DeleteElement } from '../../components/DeleteElement/DeleteElement';
+import { CardOfComment } from '../../components/CardOfComment/CardOfComment';
+import { UpdateCommentElement } from '../../components/UpdateCommentElement/UpdateCommentElement';
+import { ThreeDotsSpinner } from '../../components/ThreeDotsSpinner/ThreeDotsSpinner';
+import { BackgroundGlass } from '../../components/BackgroundGlass/BackgroundGlass';
 
-import { useAppDispatch, useAppSelector } from '../store/hooks';
-import { actionsPosts, selectorsPosts } from '../store/slices/Posts/dataPostsSlice';
-import { selectCommentsByPostId } from '../store/slices/Comments/customSelectorsOfComments';
-import { actionsComments } from '../store/slices/Comments/dataCommentsSlice';
-import { fetchComments } from '../store/slices/Comments/fetchComments';
-import { fetchPosts } from '../store/slices/Posts/fetchPosts';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { actionsPosts, selectorsPosts } from '../../store/slices/dataPosts/dataPostsSlice';
+import { selectCommentsByPostId } from '../../store/slices/dataComments/customSelectorsOfComments';
+import { actionsComments } from '../../store/slices/dataComments/dataCommentsSlice';
+import { fetchComments } from '../../store/slices/dataComments/fetchComments';
+import { fetchPosts } from '../../store/slices/dataPosts/fetchPosts';
 
-import { LoadingStatuses } from '../utils/constants';
+import { LoadingStatuses } from '../../utils/constants';
 
 export const PostPage: React.FC = () => {
   const dispatch = useAppDispatch();

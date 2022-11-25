@@ -1,10 +1,13 @@
 import React from 'react';
 import { Modal, Button } from 'react-bootstrap';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { actionsModalInfo } from '../../store/slices/uiModalInfoSlice';
+import { actionsModalInfo } from '../../store/slices/uiModalinfo/uiModalInfoSlice';
 
 export const ModalInfo: React.FC = () => {
+  const { pathname } = useLocation();
+  const navigate = useNavigate()
   const dispatch = useAppDispatch();
 
   const { message, show } = useAppSelector((store) => store.uiModalInfo);
@@ -25,7 +28,7 @@ export const ModalInfo: React.FC = () => {
           variant=""
           onClick={() => {
             handleClose();
-            //proceedHandler();
+            if (!pathname.match(/^\/$/gi)) navigate(-1)
           }}
         >
           Продолжить

@@ -2,8 +2,8 @@ import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import { actionsAlbums } from './dataAlbumsSlice';
-import { actionsNotification } from '../uiNotificationSlice';
-import { fetchPhotos } from '../Photos/fetchPhotos';
+import { actionsNotification } from '../uiNotification/uiNotificationSlice';
+import { fetchPhotos } from '../dataPhotos/fetchPhotos';
 
 import { IThunkAPI } from '../interfaces';
 

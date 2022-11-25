@@ -2,13 +2,13 @@ import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import { urls } from '../../../utils/constants';
-import { actionsNotification } from '../uiNotificationSlice';
+import { actionsNotification } from '../uiNotification/uiNotificationSlice';
 
-export const deleteTask = createAsyncThunk(
-  'deleteTask',
+export const deleteComment = createAsyncThunk(
+  'deleteComment',
   async (itemId: number, thunkAPI) => {
     try {
-      const url = urls.todos.byTodoId(itemId);
+      const url = urls.comments.byCommentId(itemId);
       await axios.delete(url);
       thunkAPI.dispatch(actionsNotification.show({ message: 'Удалено', type: 'error' }));
       return { itemId };
@@ -18,4 +18,4 @@ export const deleteTask = createAsyncThunk(
   }
 );
 
-export type TDeleteTask = typeof deleteTask
+export type TDeleteComment = typeof deleteComment;

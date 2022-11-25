@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { CardOfAlbum } from '../components/CardOfAlbum/CardOfAlbum';
-import { MagnifyingGlassSpinner } from '../components/MagnifyingGlassSpinner/MagnifyingGlassSpinner';
-import { HeaderOfPage } from '../components/HeaderOfPage/HeaderOfPage';
+import { CardOfAlbum } from '../../components/CardOfAlbum/CardOfAlbum';
+import { MagnifyingGlassSpinner } from '../../components/MagnifyingGlassSpinner/MagnifyingGlassSpinner';
+import { HeaderOfPage } from '../../components/HeaderOfPage/HeaderOfPage';
 
-import { useAppDispatch, useAppSelector } from '../store/hooks';
-import { fetchAlbums } from '../store/slices/Albums/fetchAlbums';
-import { selectAlbumsByTitle } from '../store/slices/Albums/customSelectorsOfAlbums';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { fetchAlbums } from '../../store/slices/dataAlbums/fetchAlbums';
+import { selectAlbumsByTitle } from '../../store/slices/dataAlbums/customSelectorsOfAlbums';
 
-import { LoadingStatuses } from '../utils/constants';
+import { LoadingStatuses } from '../../utils/constants';
 
 export const AlbumsPage: React.FC = () => {
   const navigate = useNavigate();
@@ -18,6 +18,7 @@ export const AlbumsPage: React.FC = () => {
   const [searchString, setSearchString] = useState<string>('');
 
   const { userId } = useAppSelector((store) => store.dataUser);
+  console.log(userId)
   const albums = useAppSelector((store) => selectAlbumsByTitle(store, searchString));
   const { statusOfLoading, userIdsWithLoadedAlbums, allAlbumsAreLoaded } = useAppSelector(
     (store) => store.dataAlbums
@@ -37,7 +38,7 @@ export const AlbumsPage: React.FC = () => {
   return (
     <div className="contianer-page">
       <HeaderOfPage
-        title="Альбомы"
+        title="Альбом"
         nameOfPage="albumsPage"
         searchParams={{ searchString, setSearchString }}
         navigateParams={{ navigateHandler }}

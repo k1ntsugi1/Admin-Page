@@ -1,19 +1,19 @@
 import React, { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { HeaderOfPage } from '../components/HeaderOfPage/HeaderOfPage';
-import { DeleteElement } from '../components/DeleteElement/DeleteElement';
-import { ThreeDotsSpinner } from '../components/ThreeDotsSpinner/ThreeDotsSpinner';
-import { CustomSlider } from '../components/CustomSlider/CustomSlider';
-import { BackgroundGlass } from '../components/BackgroundGlass/BackgroundGlass';
+import { HeaderOfPage } from '../../components/HeaderOfPage/HeaderOfPage';
+import { DeleteElement } from '../../components/DeleteElement/DeleteElement';
+import { ThreeDotsSpinner } from '../../components/ThreeDotsSpinner/ThreeDotsSpinner';
+import { CustomSlider } from '../../components/CustomSlider/CustomSlider';
+import { BackgroundGlass } from '../../components/BackgroundGlass/BackgroundGlass';
 
-import { useAppDispatch, useAppSelector } from '../store/hooks';
-import { fetchAlbums } from '../store/slices/Albums/fetchAlbums';
-import { fetchPhotos } from '../store/slices/Photos/fetchPhotos';
-import { selectorsAlbums, actionsAlbums } from '../store/slices/Albums/dataAlbumsSlice';
-import { actionsPhotos } from '../store/slices/Photos/dataPhotosSlice';
-import { selectPhotosByAlbumId } from '../store/slices/Photos/customSelectorsOfPhotos';
-import { LoadingStatuses } from '../utils/constants';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { fetchAlbums } from '../../store/slices/dataAlbums/fetchAlbums';
+import { fetchPhotos } from '../../store/slices/dataPhotos/fetchPhotos';
+import { selectorsAlbums, actionsAlbums } from '../../store/slices/dataAlbums/dataAlbumsSlice';
+import { actionsPhotos } from '../../store/slices/dataPhotos/dataPhotosSlice';
+import { selectPhotosByAlbumId } from '../../store/slices/dataPhotos/customSelectorsOfPhotos';
+import { LoadingStatuses } from '../../utils/constants';
 
 export const AlbumPage: React.FC = () => {
   const dispatch = useAppDispatch();

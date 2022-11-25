@@ -3,9 +3,9 @@ import { useFormik } from 'formik';
 import { Form, Button } from 'react-bootstrap';
 
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { actionsProgressbar } from '../../store/slices/uiProgressbarSlice';
-import { actionsUser } from '../../store/slices/dataUserSlice';
-import { actionsNotification } from '../../store/slices/uiNotificationSlice';
+import { actionsProgressbar } from '../../store/slices/uiProgressbar/uiProgressbarSlice';
+import { actionsUser } from '../../store/slices/dataUser/dataUserSlice';
+import { actionsNotification } from '../../store/slices/uiNotification/uiNotificationSlice';
 
 import { sizesOfIcons } from '../../utils/constants';
 

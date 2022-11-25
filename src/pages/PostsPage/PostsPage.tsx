@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { HeaderOfPage } from '../components/HeaderOfPage/HeaderOfPage';
-import { CardOfPost } from '../components/CardOfPost/CardOfPost';
-import { MagnifyingGlassSpinner } from '../components/MagnifyingGlassSpinner/MagnifyingGlassSpinner';
+import { HeaderOfPage } from '../../components/HeaderOfPage/HeaderOfPage';
+import { CardOfPost } from '../../components/CardOfPost/CardOfPost';
+import { MagnifyingGlassSpinner } from '../../components/MagnifyingGlassSpinner/MagnifyingGlassSpinner';
 
-import { useAppDispatch, useAppSelector } from '../store/hooks';
-import { selectPostsByTitle } from '../store/slices/Posts/customSelectorsOfPosts';
-import { fetchPosts } from '../store/slices/Posts/fetchPosts';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { selectPostsByTitle } from '../../store/slices/dataPosts/customSelectorsOfPosts';
+import { fetchPosts } from '../../store/slices/dataPosts/fetchPosts';
 
-import { LoadingStatuses } from '../utils/constants';
+import { LoadingStatuses } from '../../utils/constants';
 
 
 export const PostsPage: React.FC = () => {

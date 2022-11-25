@@ -1,9 +1,8 @@
 import React from 'react';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
 
-import { TitleOfPage } from '../TitleOfPage/TitleOfPage';
 import { TodoElement } from '../TodoElement/TodoElement';
-import { ITodo } from '../../store/slices/Todos/fetchTodos'
+import { ITodo } from '../../store/slices/dataTodos/fetchTodos'
 
 interface IProps {
     droppableId: string,
@@ -17,7 +16,7 @@ export const TodoListDroppable: React.FC<IProps> = (props) => {
         <Droppable droppableId={droppableId}>
                 {(provided) => (
                   <div {...provided.droppableProps} ref={provided.innerRef} className="col min-width-200px">
-                    <TitleOfPage title={title} className='h4'/>
+                    <p className="title-page h5">{title}</p>
                     <div className="d-flex flex-column gap-2">
                       {todos.map((task, index) => (
                         <Draggable key={task.id} draggableId={String(task.id)} index={index}>

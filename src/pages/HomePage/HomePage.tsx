@@ -1,15 +1,15 @@
 import React from 'react';
 import cn from 'classnames';
 
-import { Ticker } from '../components/Ticker/Ticker';
-import { BackgroundGlass } from '../components/BackgroundGlass/BackgroundGlass';
-import { BackgroundCircles } from '../components/BackgroundCircles/BackgroundCircles';
-import { sizesOfIcons } from '../utils/constants';
+import { Ticker } from '../../components/Ticker/Ticker';
+import { BackgroundGlass } from '../../components/BackgroundGlass/BackgroundGlass';
+import { BackgroundCircles } from '../../components/BackgroundCircles/BackgroundCircles';
+import { sizesOfIcons } from '../../utils/constants';
 
-import GithubIcon from '../assets/svg/github.svg';
-import TelegramIcon from '../assets/svg/telegram.svg';
-import MailIcon from '../assets/svg/mail.svg';
-import ArrowIcon from '../assets/svg/arrow-up-right-square-fill.svg';
+import GithubIcon from '../../assets/svg/github.svg';
+import TelegramIcon from '../../assets/svg/telegram.svg';
+import MailIcon from '../../assets/svg/mail.svg';
+import ArrowIcon from '../../assets/svg/arrow-up-right-square-fill.svg';
 
 export const HomePage: React.FC = () => {
   const { width, height } = sizesOfIcons.l;
@@ -21,7 +21,7 @@ export const HomePage: React.FC = () => {
   };
 
   return (
-    <div className="position-relative w-100 h-100 d-flex flex-wrap justify-content-center align-items-center gap-4 rounded">
+    <div className="py-3 position-relative w-100 h-100 d-flex flex-wrap justify-content-center align-items-center gap-4 rounded">
       <div className="transcription-card-container h-75 w-25 fs-6 border rounded">
         <div className="h-100 p-4 d-flex flex-column z-index-1000">
           <p>

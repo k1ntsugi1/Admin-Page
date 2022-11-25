@@ -4,8 +4,8 @@ import { useFormik } from 'formik';
 import { Form, Button } from 'react-bootstrap';
 
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { fetchTodos } from '../../store/slices/Todos/fetchTodos'; 
-import { actionsNotification } from '../../store/slices/uiNotificationSlice';
+import { fetchTodos } from '../../store/slices/dataTodos/fetchTodos'; 
+import { actionsNotification } from '../../store/slices/uiNotification/uiNotificationSlice';
 
 import { LoadingStatuses } from '../../utils/constants';
 import { validationSchemaTaskForm } from '../../utils/validationSchema';

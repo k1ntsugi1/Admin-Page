@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import cn from 'classnames';
 
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { actionsNotification } from '../../store/slices/uiNotificationSlice';
+import { actionsNotification } from '../../store/slices/uiNotification/uiNotificationSlice';
 
 export const Notification: React.FC = () => {
   const dispatch = useAppDispatch();
