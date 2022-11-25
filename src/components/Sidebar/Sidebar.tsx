@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import cn from 'classnames';
 
 import { useAppSelector } from '../../store/hooks';
@@ -18,9 +18,11 @@ interface IProps {
 
 export const Sidebar: React.FC<IProps> = ({ sizeOfNavItems }) => {
   const navigate = useNavigate();
+  const { pathname } = useLocation();
   const sidebarRef = useRef<HTMLDivElement>(null);
 
   const { activePostId } = useAppSelector((store) => store.dataPosts);
+  const { activeAlbumId } = useAppSelector((store) => store.dataAlbums);
   const { showState } = useAppSelector((state) => state.uiSidebar);
 
   const { width, height } = sizesOfIcons[sizeOfNavItems];
@@ -33,6 +35,23 @@ export const Sidebar: React.FC<IProps> = ({ sizeOfNavItems }) => {
     }
   );
   const classNamesOfLinks = cn('mt-4 mx-auto cursor-pointer hover');
+
+  const classNamesOfHomeLink = cn(classNamesOfLinks, {
+    activePage: pathname.match(/^\/$/gi),
+    unactivePage: !pathname.match(/^\/$/gi)
+  });
+  const classNamesOfPostsLink = cn(classNamesOfLinks, {
+    activePage: pathname.match(/^\/posts/gi),
+    unactivePage: !pathname.match(/^\/posts/gi)
+  });
+  const classNamesOfAlbumsLink = cn(classNamesOfLinks, {
+    activePage: pathname.match(/^\/albums/gi),
+    unactivePage: !pathname.match(/^\/albums/gi)
+  });
+  const classNamesOfTodosLink = cn(classNamesOfLinks, {
+    activePage: pathname.match(/^\/todos$/gi),
+    unactivePage: !pathname.match(/^\/todos$/gi)
+  })
 
   const navigateHandler = (path: string) => () => {
     navigate(path);
@@ -52,28 +71,28 @@ export const Sidebar: React.FC<IProps> = ({ sizeOfNavItems }) => {
           src={HomeLink}
           width={width}
           height={height}
-          className={classNamesOfLinks}
+          className={classNamesOfHomeLink}
           onClick={navigateHandler('/')}
         />
         <img
           src={PostsLink}
           width={width}
           height={height}
-          className={classNamesOfLinks}
+          className={classNamesOfPostsLink}
           onClick={navigateHandler(`/posts/${activePostId ? activePostId : ''}`)}
         />
         <img
           src={AlbumsLink}
           width={width}
           height={height}
-          className={classNamesOfLinks}
-          onClick={navigateHandler('/albums')}
+          className={classNamesOfAlbumsLink}
+          onClick={navigateHandler(`/albums/${activeAlbumId ? activeAlbumId : ''}`)}
         />
         <img
           src={TasksLink}
           width={width}
           height={height}
-          className={classNamesOfLinks}
+          className={classNamesOfTodosLink}
           onClick={navigateHandler('/todos')}
         />
       </div>

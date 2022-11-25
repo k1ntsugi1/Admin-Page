@@ -1,8 +1,48 @@
+$color-orange: rgb(236, 82, 82);
+$color-green: rgb(64, 233, 107);
+$color-blue: rgb(59, 47, 235);
+$color-violet: rgb(141 0 229);
+
+
+.color-orange {
+  background: $color-orange;
+}
+
+.color-green {
+  background: $color-green;
+}
+
+.color-blue {
+  background: $color-blue;
+}
+
+.color-violet {
+  background: $color-violet;
+}
+
+
+.color-container-orange {
+  background: linear-gradient(145deg, white 40%, $color-orange);
+}
+
+.color-container-green {
+  background: linear-gradient(145deg, white 40%, $color-green);
+}
+
+.color-container-blue {
+  background: linear-gradient(145deg, white 40%, $color-blue);
+}
+
+.color-container-violet {
+  background: linear-gradient(145deg, white 40%, $color-violet);
+}
+
+
 @mixin circle {
   position: absolute;
   border-radius: 50%;
   opacity: 0.95;
-  background: rgb(236, 82, 82);
+  //background: rgb(236, 82, 82);
   border: 2px solid white;
 }
 
@@ -14,7 +54,7 @@
   height: 100%;
   z-index: -10;
   overflow: hidden;
-  background: linear-gradient(145deg, white 40%, rgb(236, 82, 82));
+  //background: linear-gradient(145deg, white 40%, rgb(236, 82, 82));
 }
 .backgroundCircles__circlesContainer {
   position: absolute;
@@ -30,8 +70,8 @@
 
 .backgroundCircles__circle-1 {
   @include circle;
-  width: 350px;
-  height: 350px;
+  width: 250px;
+  height: 250px;
   right: 10%;
   bottom: 10%;
   animation: run-3 5s linear infinite;
@@ -40,8 +80,8 @@
 
 .backgroundCircles__circle-2 {
   @include circle;
-  width: 300px;
-  height: 300px;
+  width: 200px;
+  height: 200px;
   right: 10%;
   bottom: 10%;
 
@@ -51,8 +91,8 @@
 
 .backgroundCircles__circle-3 {
   @include circle;
-  width: 250px;
-  height: 250px;
+  width: 150px;
+  height: 150px;
   right: 10%;
   bottom: 10%;
 
@@ -62,8 +102,8 @@
 
 .backgroundCircles__circle-4 {
   @include circle;
-  width: 200px;
-  height: 200px;
+  width: 100px;
+  height: 100px;
   right: 5%;
   bottom: 10%;
 

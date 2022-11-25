@@ -5,10 +5,11 @@ import {
   Droppable,
   DropResult as IDropResult
 } from 'react-beautiful-dnd';
-import { Form } from 'react-bootstrap';
 
+import { HeaderOfPage } from '../components/HeaderOfPage/HeaderOfPage';
 import { TitleOfPage } from '../components/TitleOfPage/TitleOfPage';
 import { MagnifyingGlassSpinner } from '../components/MagnifyingGlassSpinner/MagnifyingGlassSpinner';
+import { TodoListDroppable } from '../components/TodoListDroppable/TodoListDroppable';
 import { TodoElement } from '../components/TodoElement/TodoElement';
 import { UpdateTaskElement } from '../components/UpdateTaskElement/UpdateTaskElement';
 
@@ -43,13 +44,8 @@ export const TodosPage: React.FC = () => {
     { completed: [], uncompleted: [] }
   );
 
-  const performedСonditionOfFetchAlbums =
+  const performedСonditionOfFetchTodos =
     (userId && !userIdsWithLoadedTodos.includes(userId)) || (!userId && !allTodosAreLoaded);
-
-  const setSearchStringHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const value = event.target.value;
-    setSearchString(value.trim());
-  };
 
   const onDragEndHandler = async (result: IDropResult) => {
     if (!result) return;
@@ -67,74 +63,33 @@ export const TodosPage: React.FC = () => {
   };
 
   useEffect(() => {
-    console.log(performedСonditionOfFetchAlbums);
-    if (performedСonditionOfFetchAlbums) dispatch(fetchTodos({ method: 'get' }));
+    if (performedСonditionOfFetchTodos) dispatch(fetchTodos({ method: 'get' }));
   }, [userId]);
 
   return (
     <div className="contianer-page">
+      <HeaderOfPage
+        title="Задачи"
+        nameOfPage="todosPage"
+        searchParams={{ searchString, setSearchString }}
+      />
+
       <div className="container-fluid">
-        <Form.Control
-          className="mt-4"
-          type="text"
-          name="posts by title"
-          value={searchString}
-          onChange={setSearchStringHandler}
-          aria-label="search by post title"
-          placeholder="Поиск поста"
-        />
-        <TitleOfPage title={`Задачи | Пользователь ${userId === null ? 'Все' : userId}`} />
         {statusOfLoading === LoadingStatuses.pending && <MagnifyingGlassSpinner />}
+
         {statusOfLoading === LoadingStatuses.fulfilled && (
           <div className="pb-3 row">
             <DragDropContext onDragEnd={onDragEndHandler}>
-              <Droppable droppableId="completed">
-                {(provided) => (
-                  <div {...provided.droppableProps} ref={provided.innerRef} className="col">
-                    <TitleOfPage title="Завершенные:" />
-                    <div className="d-flex flex-column gap-2">
-                      {todosByStatusOfCompleted.completed.map((task, index) => (
-                        <Draggable key={task.id} draggableId={String(task.id)} index={index}>
-                          {(provided) => (
-                            <div
-                              ref={provided.innerRef}
-                              {...provided.draggableProps}
-                              {...provided.dragHandleProps}
-                            >
-                              <TodoElement task={task} />
-                            </div>
-                          )}
-                        </Draggable>
-                      ))}
-                    </div>
-                    {provided.placeholder}
-                  </div>
-                )}
-              </Droppable>
-              <Droppable droppableId="uncompleted">
-                {(provided) => (
-                  <div {...provided.droppableProps} ref={provided.innerRef} className="col">
-                    <TitleOfPage title="В процессе:" />
-                    <UpdateTaskElement />
-                    <div className="d-flex flex-column gap-2">
-                      {todosByStatusOfCompleted.uncompleted.map((task, index) => (
-                        <Draggable key={task.id} draggableId={String(task.id)} index={index}>
-                          {(provided) => (
-                            <div
-                              ref={provided.innerRef}
-                              {...provided.draggableProps}
-                              {...provided.dragHandleProps}
-                            >
-                              <TodoElement task={task} />
-                            </div>
-                          )}
-                        </Draggable>
-                      ))}
-                    </div>
-                    {provided.placeholder}
-                  </div>
-                )}
-              </Droppable>
+              <TodoListDroppable
+                droppableId="completed"
+                title="Завершенные:"
+                todos={todosByStatusOfCompleted.completed}
+              />
+              <TodoListDroppable
+                droppableId="uncompleted"
+                title="В процессе:"
+                todos={todosByStatusOfCompleted.uncompleted}
+              />
             </DragDropContext>
           </div>
         )}

@@ -1,9 +1,16 @@
 import React from 'react';
+import cn from 'classnames';
 
-export const TitleOfPage: React.FC<{ title: string }> = ({ title }) => {
+interface IProps {
+  title: string;
+  className?: string;
+}
+
+export const TitleOfPage: React.FC<IProps> = ({ title, className }) => {
+  const classNameOfTitleContainer = cn('title-page', className ? className : '')
   return (
-    <p className="h3 title-page">
+    <div className={classNameOfTitleContainer}>
       <span>{title}</span>
-    </p>
+    </div>
   );
 };

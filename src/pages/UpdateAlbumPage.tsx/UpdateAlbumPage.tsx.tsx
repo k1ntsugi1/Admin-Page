@@ -3,15 +3,14 @@ import { useFormik } from 'formik';
 import { Form, Button } from 'react-bootstrap';
 import { Navigate, useNavigate, useParams } from 'react-router-dom';
 
-import { NavBtnsOfPage } from '../../components/NavBtnsOfPage/NavBtnsOfPage';
-import { TitleOfPage } from '../../components/TitleOfPage/TitleOfPage';
+import { HeaderOfPage } from '../../components/HeaderOfPage/HeaderOfPage';
 
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { actionsModalInfo } from '../../store/slices/uiModalInfoSlice';
 import { actionsNotification } from '../../store/slices/uiNotificationSlice';
 import { fetchAlbums } from '../../store/slices/Albums/fetchAlbums';
 
-import { dataOfNavBtns, LoadingStatuses } from '../../utils/constants';
+import { LoadingStatuses } from '../../utils/constants';
 import { selectPhotosByAlbumId } from '../../store/slices/Photos/customSelectorsOfPhotos';
 import { fetchGetImageUrl } from '../../utils/fetchGetImageUrl';
 import { validationSchemaAlbumForm } from '../../utils/validationSchema';
@@ -84,7 +83,7 @@ export const UpdateAlbumPage: React.FC = () => {
     navigate(`${path}/${albumId ? albumId : ''}`);
   };
 
-  const moveToNewPagePageHandler = (path: string) => () => {
+  const navigateHandler = (path: string) => () => {
     const { title: newTitle } = formik.values;
     const { title} = initialValues;
 
@@ -136,11 +135,11 @@ export const UpdateAlbumPage: React.FC = () => {
 
   return (
     <div className="contianer-page justify-content-center">
-      <NavBtnsOfPage
-        btns={dataOfNavBtns.updateAlbumPage}
-        onClickHandler={moveToNewPagePageHandler}
+       <HeaderOfPage
+        title="Редактирование альбома"
+        nameOfPage="updateAlbumPage"
+        navigateParams={{ navigateHandler }}
       />
-      <TitleOfPage title={albumId ? 'Редактирование альбома' : 'Создание альбома'} />
 
       <Form noValidate onSubmit={formik.handleSubmit} className="h-75 d-flex flex-column gap-3">
         <Form.Control
@@ -197,7 +196,7 @@ export const UpdateAlbumPage: React.FC = () => {
         </Button>
       </Form>
 
-      <div className="h-50 w-100 d-flex flex-wrap gap-1 overflow-auto">
+      <div className="mt-3 w-100 d-flex flex-wrap justify-content-center gap-1 overflow-auto">
         {[...photos, ...formik.values.photos].map((photo, index) => {
           return photo ? <img key={index} src={photo.url} width={150} height={150} /> : null;
         })}

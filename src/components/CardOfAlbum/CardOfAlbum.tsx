@@ -10,6 +10,10 @@ import { useAppDispatch } from '../../store/hooks';
 import { actionsAlbums } from '../../store/slices/Albums/dataAlbumsSlice';
 import { IAlbum } from '../../store/slices/Albums/fetchAlbums';
 
+import { sizesOfIcons } from '../../utils/constants';
+
+import EditIcon from '../../assets/svg/edit.svg'
+
 interface IProps {
   album: IAlbum;
 }
@@ -18,6 +22,7 @@ export const CardOfAlbum: React.FC<IProps> = ({ album }) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
+  const {width, height } = sizesOfIcons.xs
   const [isHovering, setIsHovering] = useState<boolean>(false);
   const id = album.id;
 
@@ -33,7 +38,17 @@ export const CardOfAlbum: React.FC<IProps> = ({ album }) => {
       onMouseOut={() => setIsHovering(false)}
     >
       <Card className="CardOfPost overflow-hidden">
-      <DeleteElement itemId={id} pathToNextPage="/albums" typeOfElement="album"/>
+      <div className="p-2 d-flex justify-content-end gap-2 border-bottom ">
+          <DeleteElement itemId={id} pathToNextPage="/albums" typeOfElement="album" />
+          <img
+                className="hover cursor-pointer"
+                src={EditIcon}
+                width={width}
+                height={height}
+                alt="editIcon"
+                onClick={() => {navigate(`${id}/edit`)}}
+              />
+        </div>
 
         <Card.Body className="centered-content-by-flex">
           <Card.Title>{album?.title}</Card.Title>

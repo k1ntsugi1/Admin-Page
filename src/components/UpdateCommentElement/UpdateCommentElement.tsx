@@ -57,8 +57,8 @@ export const UpdateCommentElement: React.FC<IProps> = ({ id }) => {
   });
 
   return (
-    <div className="m-0 ms-1 p-2 h-25">
-      <Form noValidate onSubmit={formik.handleSubmit} className="m-0 p-1 border h-75">
+    <div className="m-0">
+      <Form noValidate onSubmit={formik.handleSubmit} className="m-0 p-1 h-100 d-flex flex-column gap-2 border">
         <Form.Control
           className={classNamesOfFormItems}
           type="text"
@@ -75,13 +75,13 @@ export const UpdateCommentElement: React.FC<IProps> = ({ id }) => {
           name="email"
           value={formik.values.email}
           onChange={formik.handleChange}
-          aria-label="name of user"
+          aria-label="email"
           placeholder="Введите email"
           isInvalid={!!formik.errors.email}
         />
 
         <Form.Control
-          className="border-0 rounded-0 border-bottom h-75"
+          className="height-150px border-0 rounded-0 border-bottom"
           as="textarea"
           name="body"
           value={formik.values.body}

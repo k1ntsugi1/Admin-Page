@@ -33,6 +33,7 @@
     transform: scale(1.2);
     border-radius: 25%;
     border: 1px solid gray;
+    filter: opacity(1);
 }
 
 .z-index-1000 {
@@ -94,9 +95,14 @@
     width: 100%;
     display: flex;
     flex-direction: column;
-    padding: 3rem;
+    padding: 3rem 110px 3rem 110px;
+    //padding: 3rem;
 }
-
+@media (max-width:750px) {
+    .contianer-page {
+        padding: 3rem 75px 3rem 75px;
+    }
+}
 .nav-btns-container {
     width: 100%;
     display: flex;
@@ -123,4 +129,28 @@
 
 .h-60px {
     height: 60px;
+}
+
+.min-height-200px {
+    min-height: 200px;
+}
+
+.max-height-400px {
+    max-height: 400px;
+}
+
+.height-150px {
+    height: 150px;
+}
+
+.min-width-200px {
+    min-width: 200px;
+}
+
+.unactivePage {
+    filter: opacity(0.5);
+}
+
+.activePage {
+    filter: opacity(1);
 }

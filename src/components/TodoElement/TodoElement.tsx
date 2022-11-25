@@ -15,41 +15,42 @@ interface IProps {
 }
 
 export const TodoElement: React.FC<IProps> = ({ task }) => {
-  const { width, height } = sizesOfIcons.s;
+  const { width, height } = sizesOfIcons.xs;
   const [showStateOfEditForm, setShowStateOfEditForm] = useState<string>('hidden');
   return (
-    <div className="p-1 border rounded">
-      {showStateOfEditForm === 'hidden' ? (
-        <>
-          <DeleteElement itemId={task.id} typeOfElement="task" />
-          <p>{task.title}</p>
-
-          <img
-            className="hover"
-            src={EditIcon}
-            width={width}
-            height={height}
-            alt="editIcon"
-            onClick={() => setShowStateOfEditForm('visible')}
-          />
-        </>
-      ) : (
-        <div>
-          <div className="d-flex justify-content-end">
-            <img
-              className="hover"
-              src={CloseIcon}
-              width={width}
-              height={height}
-              alt="closeIcon"
-              onClick={() => setShowStateOfEditForm('hidden')}
-            />
-          </div>
-          <div>
-            <UpdateTaskElement id={task.id} />
+    <div className="p-2 border rounded">
+      <div className="d-flex flex-column">
+        <div className="p-1 d-flex flex-nowrap justify-content-between gap-2 border-bottom">
+          <p className="fw-bold m-0">Задача №{task.id}</p>
+          <div className='d-flex flex-nowrap justify-content-between gap-3'>
+            <DeleteElement itemId={task.id} typeOfElement="task"/>
+            {showStateOfEditForm === 'hidden' ? (
+              <img
+                className="hover cursor-pointer"
+                src={EditIcon}
+                width={width}
+                height={height}
+                alt="editIcon"
+                onClick={() => setShowStateOfEditForm('visible')}
+              />
+            ) : (
+              <img
+                className="hover cursor-pointer"
+                src={CloseIcon}
+                width={width}
+                height={height}
+                alt="closeIcon"
+                onClick={() => setShowStateOfEditForm('hidden')}
+              />
+            )}
           </div>
         </div>
-      )}
+        {showStateOfEditForm === 'hidden' ? (
+          <div className='p-1'>{task.title}</div>
+        ) : (
+          <UpdateTaskElement id={task.id} />
+        )}
+      </div>
     </div>
   );
 };

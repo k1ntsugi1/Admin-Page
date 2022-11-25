@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Form } from 'react-bootstrap';
 
-import { NavBtnsOfPage } from '../components/NavBtnsOfPage/NavBtnsOfPage';
-import { TitleOfPage } from '../components/TitleOfPage/TitleOfPage';
+import { HeaderOfPage } from '../components/HeaderOfPage/HeaderOfPage';
 import { CardOfPost } from '../components/CardOfPost/CardOfPost';
 import { MagnifyingGlassSpinner } from '../components/MagnifyingGlassSpinner/MagnifyingGlassSpinner';
 
@@ -11,11 +9,12 @@ import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { selectPostsByTitle } from '../store/slices/Posts/customSelectorsOfPosts';
 import { fetchPosts } from '../store/slices/Posts/fetchPosts';
 
-import { LoadingStatuses, dataOfNavBtns } from '../utils/constants';
+import { LoadingStatuses } from '../utils/constants';
+
 
 export const PostsPage: React.FC = () => {
+  const navigate = useNavigate(); 
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
 
   const [searchString, setSearchString] = useState<string>('');
 
@@ -28,13 +27,8 @@ export const PostsPage: React.FC = () => {
   const performedСonditionOfFetchPosts =
     (userId && !userIdsWithLoadedPosts.includes(userId)) || (!userId && !allPostsAreLoaded);
 
-  const moveToNewPagePageHandler = (path: string) => () => {
+  const navigateHandler = (path: string) => () => {
     navigate(path);
-  };
-
-  const setSearchStringHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const value = event.target.value;
-    setSearchString(value.trim());
   };
 
   useEffect(() => {
@@ -43,19 +37,12 @@ export const PostsPage: React.FC = () => {
 
   return (
     <section className="contianer-page">
-      <NavBtnsOfPage btns={dataOfNavBtns.postsPage} onClickHandler={moveToNewPagePageHandler} />
-
-      <Form.Control
-        className="mt-4"
-        type="text"
-        name="posts by title"
-        value={searchString}
-        onChange={setSearchStringHandler}
-        aria-label="search by post title"
-        placeholder="Поиск поста"
+      <HeaderOfPage
+        title="Посты"
+        nameOfPage="postsPage"
+        searchParams={{ searchString, setSearchString }}
+        navigateParams={{navigateHandler}}
       />
-
-      <TitleOfPage title={`Посты | Пользователь ${userId === null ? 'Все' : userId}`} />
 
       {statusOfLoading === LoadingStatuses.pending && <MagnifyingGlassSpinner />}
 

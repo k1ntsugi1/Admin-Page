@@ -16,34 +16,24 @@ interface IProps {
 }
 
 export const CardOfComment: React.FC<IProps> = ({ comment }) => {
-  const { width, height } = sizesOfIcons.s;
+  const { width, height } = sizesOfIcons.xs;
   const [showStateOfEditForm, setShowStateOfEditForm] = useState<string>('hidden');
 
   return (
-    <div>
-      {showStateOfEditForm === 'hidden' ? (
-        <Card className="position-relative ms-1 p-2 w-100 border-0 rounded-0 bg-transparent">
-          <DeleteElement itemId={comment.id} typeOfElement="comment"/>
-          <Card.Body className="border-start border-bottom">
-            <Card.Title className="d-flex justify-content-between flex-nowrap">
-              <span>{comment?.name}</span>
-              <img
-                className="hover"
-                src={EditIcon}
-                width={width}
-                height={height}
-                alt="editIcon"
-                onClick={() => setShowStateOfEditForm('visible')}
-              />
-            </Card.Title>
-            <Card.Subtitle className="text-muted">{comment?.email}</Card.Subtitle>
-            <Card.Text>{comment?.body}</Card.Text>
-          </Card.Body>
-          <BackgroundGlass />
-        </Card>
-      ) : (
-        <div>
-          <div className="d-flex justify-content-end">
+    <div className="mt-2 rounded">
+      <Card className="position-relative ms-1 p-2 w-100 border-0 rounded-0 bg-transparent">
+        <div className="p-2 d-flex justify-content-end gap-2 border-top border-bottom border-start">
+          <DeleteElement itemId={comment.id} typeOfElement="comment" />
+          {showStateOfEditForm === 'hidden' ? (
+            <img
+              className="hover"
+              src={EditIcon}
+              width={width}
+              height={height}
+              alt="editIcon"
+              onClick={() => setShowStateOfEditForm('visible')}
+            />
+          ) : (
             <img
               className="hover"
               src={CloseIcon}
@@ -52,12 +42,23 @@ export const CardOfComment: React.FC<IProps> = ({ comment }) => {
               alt="closeIcon"
               onClick={() => setShowStateOfEditForm('hidden')}
             />
-          </div>
+          )}
+        </div>
+        {showStateOfEditForm === 'hidden' ? (
+          <Card.Body className="border-start border-bottom">
+            <Card.Title className="d-flex justify-content-between flex-nowrap">
+              <span>{comment?.name}</span>
+            </Card.Title>
+            <Card.Subtitle className="text-muted">{comment?.email}</Card.Subtitle>
+            <Card.Text>{comment?.body}</Card.Text>
+          </Card.Body>
+        ) : (
           <div>
             <UpdateCommentElement id={comment?.id} />
           </div>
-        </div>
-      )}
+        )}
+        <BackgroundGlass />
+      </Card>
     </div>
   );
 };

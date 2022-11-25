@@ -35,9 +35,9 @@ export const CustomSlider: React.FC<IProps> = ({ slides }) => {
 
   return (
     <div>
-      <div className="h-300px w-100 position-relative">
+      <div className="h-300px w-100 position-relative d-flex flex-column justify-content-end">
         <img
-          className="position-absolute top-50 start-0"
+          className="cursor-pointer hover position-absolute top-50 start-0 translate-middle"
           src={ArrowLeft}
           width={width}
           height={height}
@@ -45,7 +45,7 @@ export const CustomSlider: React.FC<IProps> = ({ slides }) => {
           onClick={setActiveSlideIndexHandler('left')}
         />
         <img
-          className="position-absolute top-50 start-100"
+          className="cursor-pointer hover position-absolute top-50 start-100 translate-middle"
           src={ArrowRight}
           width={width}
           height={height}
@@ -55,17 +55,17 @@ export const CustomSlider: React.FC<IProps> = ({ slides }) => {
         <img
           className="position-absolute top-50 start-50 translate-middle"
           src={slides[activeSlideIndex].url}
-          width={150}
-          height={150}
+          width={250}
+          height={250}
           alt="slide"
         />
       </div>
-      <p className="title-page h4 border-bottom">
-        <span>{slides[activeSlideIndex].title}</span>
-      </p>
-      <p className="title-page h4 border-bottom">
-        <span>Слайд: {activeSlideIndex + 1}</span>
-      </p>
+      <div className="centered-content-by-flex h5 border-bottom">
+        <span className='mx-auto'>{slides[activeSlideIndex].title}</span>
+      </div>
+      <div className="centered-content-by-flex h6 border-bottom">
+        <span className='mx-auto'>Слайд: {activeSlideIndex + 1}</span>
+      </div>
     </div>
   );
 };

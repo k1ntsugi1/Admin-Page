@@ -76,9 +76,6 @@ export const App: React.FC = () => {
 
       {/* <ModalInfo /> */}
       <Notification />
-
-      {/* <BackgroundCircles /> */}
-      <BackgroundGlass />
     </div>
   );
 };

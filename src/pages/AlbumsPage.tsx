@@ -1,20 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { Form } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 
-import { TitleOfPage } from '../components/TitleOfPage/TitleOfPage';
 import { CardOfAlbum } from '../components/CardOfAlbum/CardOfAlbum';
-import { NavBtnsOfPage } from '../components/NavBtnsOfPage/NavBtnsOfPage';
 import { MagnifyingGlassSpinner } from '../components/MagnifyingGlassSpinner/MagnifyingGlassSpinner';
+import { HeaderOfPage } from '../components/HeaderOfPage/HeaderOfPage';
 
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { fetchAlbums } from '../store/slices/Albums/fetchAlbums';
 import { selectAlbumsByTitle } from '../store/slices/Albums/customSelectorsOfAlbums';
 
-import { dataOfNavBtns } from '../utils/constants';
-
 import { LoadingStatuses } from '../utils/constants';
-import { actionsAlbums } from '../store/slices/Albums/dataAlbumsSlice';
-import { useNavigate } from 'react-router-dom';
 
 export const AlbumsPage: React.FC = () => {
   const navigate = useNavigate();
@@ -31,12 +26,7 @@ export const AlbumsPage: React.FC = () => {
   const performedСonditionOfFetchAlbums =
     (userId && !userIdsWithLoadedAlbums.includes(userId)) || (!userId && !allAlbumsAreLoaded);
 
-  const setSearchStringHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const value = event.target.value;
-    setSearchString(value.trim());
-  };
-
-  const moveToNewPagePageHandler = (path: string) => () => {
+  const navigateHandler = (path: string) => () => {
     navigate(path);
   };
 
@@ -46,18 +36,12 @@ export const AlbumsPage: React.FC = () => {
 
   return (
     <div className="contianer-page">
-      <NavBtnsOfPage btns={dataOfNavBtns.albumsPage} onClickHandler={moveToNewPagePageHandler} />
-      <Form.Control
-        className="mt-4"
-        type="text"
-        name="posts by title"
-        value={searchString}
-        onChange={setSearchStringHandler}
-        aria-label="search by post title"
-        placeholder="Поиск поста"
+      <HeaderOfPage
+        title="Альбомы"
+        nameOfPage="albumsPage"
+        searchParams={{ searchString, setSearchString }}
+        navigateParams={{ navigateHandler }}
       />
-
-      <TitleOfPage title={`Альбомы | Пользователь ${userId === null ? 'Все' : userId}`} />
       {statusOfLoading === LoadingStatuses.pending && <MagnifyingGlassSpinner />}
 
       {statusOfLoading === LoadingStatuses.fulfilled && (

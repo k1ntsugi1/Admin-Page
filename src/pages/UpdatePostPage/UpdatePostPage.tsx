@@ -3,6 +3,7 @@ import { useFormik } from 'formik';
 import { Form, Button } from 'react-bootstrap';
 import { Navigate, useNavigate, useParams } from 'react-router-dom';
 
+import { HeaderOfPage } from '../../components/HeaderOfPage/HeaderOfPage';
 import { NavBtnsOfPage } from '../../components/NavBtnsOfPage/NavBtnsOfPage';
 import { TitleOfPage } from '../../components/TitleOfPage/TitleOfPage';
 
@@ -57,14 +58,14 @@ export const UpdatePostPage: React.FC = () => {
     navigate(`${path}/${postId ? postId : ''}`);
   };
 
-  const moveToNewPagePageHandler = (path: string) => () => {
+  const navigateHandler = (path: string) => () => {
     const { title: newTitle, body: newBody } = formik.values;
     const { title, body } = initialValues;
 
     if (title !== newTitle || body !== newBody) {
       dispatch(
         actionsModalInfo.show({
-          message: 'Записанные данные не будут сохранены, вы уверены?',
+          message: 'Записанные данные не будут сохранены, вы уверены?'
           // proceedHandler: () => {
           //   moveToNewPagePage(path);
           // }
@@ -77,11 +78,16 @@ export const UpdatePostPage: React.FC = () => {
 
   return (
     <div className="contianer-page justify-content-center">
-      <NavBtnsOfPage
+      <HeaderOfPage
+        title="Редактирование поста"
+        nameOfPage="updatePostPage"
+        navigateParams={{ navigateHandler }}
+      />
+      {/* <NavBtnsOfPage
         btns={dataOfNavBtns.updatePostPage}
         onClickHandler={moveToNewPagePageHandler}
       />
-      <TitleOfPage title={postId ? 'Редактирование поста' : 'Создание поста'} />
+      <TitleOfPage title={postId ? 'Редактирование поста' : 'Создание поста'} /> */}
 
       <Form noValidate onSubmit={formik.handleSubmit} className="h-75 d-flex flex-column gap-3">
         <Form.Control

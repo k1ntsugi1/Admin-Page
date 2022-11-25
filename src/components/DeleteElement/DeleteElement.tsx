@@ -13,13 +13,14 @@ import { sizesOfIcons } from '../../utils/constants';
 import DeleteIcon from '../../assets/svg/delete.svg';
 
 interface IProps {
-  itemId: number,
-  typeOfElement: 'album' | 'post' | 'comment' | 'task',
-  pathToNextPage?: string,
+  itemId: number;
+  typeOfElement: 'album' | 'post' | 'comment' | 'task';
+  pathToNextPage?: string;
+  size?: string;
 }
 
 interface IMappingThunk {
-  [index: string]: TDeletePost | TDeleteAlbum | TDeleteComment | TDeleteTask,
+  [index: string]: TDeletePost | TDeleteAlbum | TDeleteComment | TDeleteTask;
 }
 
 const mappingThunk: IMappingThunk = {
@@ -27,32 +28,30 @@ const mappingThunk: IMappingThunk = {
   post: deletePost,
   comment: deleteComment,
   task: deleteTask
-  
-}
+};
 
-export const DeleteElement: React.FC<IProps> = ({ itemId, typeOfElement, pathToNextPage }) => {
+export const DeleteElement: React.FC<IProps> = (props) => {
+  const { itemId, typeOfElement, pathToNextPage, size = 'xs' } = props;
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const { width, height } = sizesOfIcons.s;
+  const { width, height } = sizesOfIcons[size];
 
-    const deletePostHandler = () => {
-        dispatch(actionsNotification.show({ message: 'Подождите...', type: 'success' }));
-        const thunkOfDeleting = mappingThunk[typeOfElement];
-        dispatch(thunkOfDeleting(itemId));
-        if (pathToNextPage) navigate(pathToNextPage, {replace: true})
-    }
+  const deletePostHandler = () => {
+    dispatch(actionsNotification.show({ message: 'Подождите...', type: 'success' }));
+    const thunkOfDeleting = mappingThunk[typeOfElement];
+    dispatch(thunkOfDeleting(itemId));
+    if (pathToNextPage) navigate(pathToNextPage, { replace: true });
+  };
 
   return (
-    <div className="d-flex justify-content-end">
-      <img
-        className="m-3 cursor-pointer hover"
-        src={DeleteIcon}
-        width={width}
-        height={height}
-        alt="deleteIcon"
-        onClick={deletePostHandler}
-      />
-    </div>
+    <img
+      className="cursor-pointer hover"
+      src={DeleteIcon}
+      width={width}
+      height={height}
+      alt="deleteIcon"
+      onClick={deletePostHandler}
+    />
   );
 };

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { NavBtnsOfPage } from '../components/NavBtnsOfPage/NavBtnsOfPage';
+import { HeaderOfPage } from '../components/HeaderOfPage/HeaderOfPage';
 import { TitleOfPage } from '../components/TitleOfPage/TitleOfPage';
 import { DeleteElement } from '../components/DeleteElement/DeleteElement';
 import { CardOfComment } from '../components/CardOfComment/CardOfComment';
@@ -16,14 +16,13 @@ import { actionsComments } from '../store/slices/Comments/dataCommentsSlice';
 import { fetchComments } from '../store/slices/Comments/fetchComments';
 import { fetchPosts } from '../store/slices/Posts/fetchPosts';
 
-import { dataOfNavBtns, LoadingStatuses } from '../utils/constants';
+import { LoadingStatuses } from '../utils/constants';
 
 export const PostPage: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { postId } = useParams();
 
-  const { userId } = useAppSelector((store) => store.dataUser);
   const post = useAppSelector((store) => selectorsPosts.selectById(store, Number(postId)!));
   const comments = useAppSelector((store) => selectCommentsByPostId(store, Number(postId)!));
   const { statusOfLoading: statusOfPostLoading } = useAppSelector((store) => store.dataPosts);
@@ -33,7 +32,7 @@ export const PostPage: React.FC = () => {
     methodOfFetch
   } = useAppSelector((store) => store.dataComments);
 
-  const moveToNewPagePageHandler = (path: string) => () => {
+  const navigateHandler = (path: string) => () => {
     dispatch(actionsPosts.setActivePostId({ id: null }));
     navigate(path);
   };
@@ -47,13 +46,19 @@ export const PostPage: React.FC = () => {
 
   return (
     <div className="contianer-page">
-      <NavBtnsOfPage btns={dataOfNavBtns.postPage} onClickHandler={moveToNewPagePageHandler} />
-      <TitleOfPage title={`Пост | Пользователь ${userId === null ? 'Все': userId }`} />
+      <HeaderOfPage title="Пост" nameOfPage="postPage" navigateParams={{ navigateHandler }} />
       <div>
         {statusOfPostLoading === LoadingStatuses.pending && <ThreeDotsSpinner />}
         {statusOfPostLoading === LoadingStatuses.fulfilled && (
           <div className="position-relative p-3 border rounded">
-            <DeleteElement itemId={Number(postId!)} pathToNextPage="/posts" typeOfElement="post"/>
+            <div className="p-1 d-flex justify-content-end border-bottom">
+              <DeleteElement
+                itemId={Number(postId!)}
+                pathToNextPage="/posts"
+                typeOfElement="post"
+              />
+            </div>
+
             <p className="h3">{post?.title}</p>
             <p>{post?.body}</p>
             <BackgroundGlass />
@@ -61,20 +66,20 @@ export const PostPage: React.FC = () => {
         )}
 
         <div className="d-flex flex-column">
-          <TitleOfPage title="Комментарии" />
+          <TitleOfPage title="Комментарии" className="h4" />
           <UpdateCommentElement />
           {statusOfCommentsLoading === LoadingStatuses.pending && methodOfFetch === 'get' && (
             <ThreeDotsSpinner />
           )}
           {(statusOfCommentsLoading === LoadingStatuses.fulfilled ||
             (statusOfCommentsLoading === LoadingStatuses.pending && methodOfFetch !== 'get')) && (
-              <div className="position-relative w-100 h-100">
-                {comments.map((comment) => {
-                  if (!comment) return null;
-                  return <CardOfComment key={comment.id} comment={comment} />;
-                })}
-              </div>
-            )}
+            <div className="position-relative w-100 h-100">
+              {comments.map((comment) => {
+                if (!comment) return null;
+                return <CardOfComment key={comment.id} comment={comment} />;
+              })}
+            </div>
+          )}
         </div>
       </div>
     </div>
