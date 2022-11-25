@@ -10,6 +10,7 @@ import { Form } from 'react-bootstrap';
 import { TitleOfPage } from '../components/TitleOfPage/TitleOfPage';
 import { MagnifyingGlassSpinner } from '../components/MagnifyingGlassSpinner/MagnifyingGlassSpinner';
 import { TodoElement } from '../components/TodoElement/TodoElement';
+import { UpdateTaskElement } from '../components/UpdateTaskElement/UpdateTaskElement';
 
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { fetchTodos, ITodo } from '../store/slices/Todos/fetchTodos';
@@ -73,10 +74,19 @@ export const TodosPage: React.FC = () => {
   return (
     <div className="contianer-page">
       <div className="container-fluid">
+        <Form.Control
+          className="mt-4"
+          type="text"
+          name="posts by title"
+          value={searchString}
+          onChange={setSearchStringHandler}
+          aria-label="search by post title"
+          placeholder="Поиск поста"
+        />
         <TitleOfPage title={`Задачи | Пользователь ${userId === null ? 'Все' : userId}`} />
         {statusOfLoading === LoadingStatuses.pending && <MagnifyingGlassSpinner />}
         {statusOfLoading === LoadingStatuses.fulfilled && (
-          <div className="row">
+          <div className="pb-3 row">
             <DragDropContext onDragEnd={onDragEndHandler}>
               <Droppable droppableId="completed">
                 {(provided) => (
@@ -105,6 +115,7 @@ export const TodosPage: React.FC = () => {
                 {(provided) => (
                   <div {...provided.droppableProps} ref={provided.innerRef} className="col">
                     <TitleOfPage title="В процессе:" />
+                    <UpdateTaskElement />
                     <div className="d-flex flex-column gap-2">
                       {todosByStatusOfCompleted.uncompleted.map((task, index) => (
                         <Draggable key={task.id} draggableId={String(task.id)} index={index}>

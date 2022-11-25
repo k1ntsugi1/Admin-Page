@@ -23,3 +23,7 @@ export const validationSchemaCommentForm = Yup.object().shape({
 export const validationSchemaAlbumForm = Yup.object().shape({
   title: schema('title'),
 });
+
+export const validationSchemaTaskForm = Yup.object().shape({
+  title: schema('title'),
+});

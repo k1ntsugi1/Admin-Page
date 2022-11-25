@@ -5,6 +5,7 @@ import { useAppDispatch } from '../../store/hooks';
 import { deletePost, TDeletePost } from '../../store/slices/Posts/deletePost';
 import { deleteAlbum, TDeleteAlbum } from '../../store/slices/Albums/deleteAlbum';
 import { deleteComment, TDeleteComment } from '../../store/slices/Comments/deleteComment';
+import { deleteTask, TDeleteTask } from '../../store/slices/Todos/deleteTask';
 import { actionsNotification } from '../../store/slices/uiNotificationSlice';
 
 import { sizesOfIcons } from '../../utils/constants';
@@ -13,18 +14,20 @@ import DeleteIcon from '../../assets/svg/delete.svg';
 
 interface IProps {
   itemId: number,
-  typeOfElement: string,
+  typeOfElement: 'album' | 'post' | 'comment' | 'task',
   pathToNextPage?: string,
 }
 
 interface IMappingThunk {
-  [index: string]: TDeletePost | TDeleteAlbum | TDeleteComment,
+  [index: string]: TDeletePost | TDeleteAlbum | TDeleteComment | TDeleteTask,
 }
 
 const mappingThunk: IMappingThunk = {
   album: deleteAlbum,
   post: deletePost,
   comment: deleteComment,
+  task: deleteTask
+  
 }
 
 export const DeleteElement: React.FC<IProps> = ({ itemId, typeOfElement, pathToNextPage }) => {

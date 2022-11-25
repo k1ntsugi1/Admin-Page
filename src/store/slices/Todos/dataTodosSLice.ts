@@ -2,6 +2,7 @@ import { createSlice, createEntityAdapter } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 
 import { fetchTodos, ITodo } from './fetchTodos';
+import { deleteTask } from './deleteTask';
 
 import { LoadingStatuses } from '../../../utils/constants';
 
@@ -10,7 +11,7 @@ import { RootState } from '../../index';
 interface IInitialState {
   statusOfLoading: string;
   typeOfError: string;
-  allTodosAreLoaded: boolean,
+  allTodosAreLoaded: boolean;
   userIdsWithLoadedTodos: number[];
 }
 
@@ -50,6 +51,14 @@ const dataTodosSlice = createSlice({
         state.statusOfLoading = LoadingStatuses.rejected;
         // state.typeOfError = typeOfError;
       })
+      .addCase(deleteTask.fulfilled, (state, { payload }) => {
+        const { itemId } = payload;
+        todosEntityAdapter.removeOne(state, itemId);
+      })
+      .addCase(deleteTask.rejected, (state, { payload }) => {
+        // state.statusOfLoading = LoadingStatuses.rejected;
+        // state.typeOfError = typeOfError;
+      });
   }
 });
 

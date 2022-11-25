@@ -37,15 +37,20 @@ export const fetchComments = createAsyncThunk<IResponse, IClientParams, IThunkAP
     try {
       const { method, postId, values } = clientParams;
       const { comments: urlsOfComments } = urls;
-      const url = method === 'post' ? urlsOfComments.all() : urlsOfComments.byPostId(postId);
+      const url =
+        method === 'post'
+          ? urlsOfComments.all()
+          : values && values.id
+          ? urlsOfComments.byCommentId(values.id)
+          : urlsOfComments.byPostId(postId);
 
       const { data } = await axios[method]<IComment[] | IComment>(url, values);
-      
+
       if (method !== 'get') {
         thunkAPI.dispatch(actionsNotification.show({ message: 'Сохранено', type: 'success' }));
       }
 
-      return { comments: Array.isArray(data) ? data : [data]};
+      return { comments: Array.isArray(data) ? data : [data] };
     } catch (error) {
       return thunkAPI.rejectWithValue({ error: 'serverError' });
     }
