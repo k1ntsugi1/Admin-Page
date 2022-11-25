@@ -41,8 +41,9 @@
   - scss
   - axios
 
+---
 
-tasks: 
+tasks/problems: 
   - HOT of webpack doesnt work (decrease version of webpack)
   - Добавить обработчик ошибок для тасок
   - ~~добавить перенавигацию полсе создания новго поста~~
