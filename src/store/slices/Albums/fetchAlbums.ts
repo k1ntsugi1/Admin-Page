@@ -80,7 +80,7 @@ export const fetchAlbums = createAsyncThunk<IResponse, IClientParams, IThunkAPI>
         );
       }
 
-      if (userId) {
+      if (userId && method === 'get') {
         dispatch(actionsAlbums.updateUserIdsWithLoadedAlbums({ ids: [userId] }));
       }
 
@@ -92,7 +92,7 @@ export const fetchAlbums = createAsyncThunk<IResponse, IClientParams, IThunkAPI>
         dispatch(actionsAlbums.setAllAlbumsAreLoaded());
       }
 
-      return { albums: Array.isArray(data) ? data : [data], method };
+      return { albums: preparedData, method };
     } catch (error) {
       return thunkAPI.rejectWithValue({ error: 'serverError' });
     }

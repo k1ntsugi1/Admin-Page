@@ -55,7 +55,7 @@ export const fetchPosts = createAsyncThunk<IResponse, IClientParams, IThunkAPI>(
         dispatch(actionsNotification.show({ message: 'Сохранено', type: 'success' }));
       }
 
-      if (userId) {
+      if (userId && method === 'get') {
         dispatch(actionsPosts.updateUserIdsWithLoadedPosts({ ids: [userId] }));
       }
 

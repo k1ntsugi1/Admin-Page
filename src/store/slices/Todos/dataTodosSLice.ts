@@ -10,9 +10,13 @@ import { RootState } from '../../index';
 interface IInitialState {
   statusOfLoading: string;
   typeOfError: string;
+  allTodosAreLoaded: boolean,
+  userIdsWithLoadedTodos: number[];
 }
 
 const initialState: IInitialState = {
+  allTodosAreLoaded: false,
+  userIdsWithLoadedTodos: [],
   statusOfLoading: LoadingStatuses.idle,
   typeOfError: ''
 };
@@ -23,6 +27,12 @@ const dataTodosSlice = createSlice({
   name: 'posts',
   initialState: todosEntityAdapter.getInitialState(initialState),
   reducers: {
+    updateUserIdsWithLoadedTodos(state, action: PayloadAction<{ ids: number[] }>) {
+      state.userIdsWithLoadedTodos = [...state.userIdsWithLoadedTodos, ...action.payload.ids];
+    },
+    setAllTodosAreLoaded(state) {
+      state.allTodosAreLoaded = true;
+    }
   },
   extraReducers: (builder) => {
     builder
