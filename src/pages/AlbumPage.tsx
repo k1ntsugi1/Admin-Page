@@ -44,7 +44,7 @@ export const AlbumPage: React.FC = () => {
       <HeaderOfPage title="Альбом" nameOfPage="albumPage" navigateParams={{ navigateHandler }} />
       <div className='mt-3 p-3 border rounded bg-white'>
         <div className="p-1 d-flex justify-content-between border-bottom">
-          <p className="h4">{album!.title}</p>
+          <p className="h4">{album?.title}</p>
           <DeleteElement itemId={Number(albumId!)} pathToNextPage="/albums" typeOfElement="album" />
         </div>
         <div className="position-relative">
