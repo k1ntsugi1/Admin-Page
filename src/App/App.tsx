@@ -74,7 +74,7 @@ export const App: React.FC = () => {
       <Sidebar sizeOfNavItems="s" />
       <SidebarToggler sizeOfToggler="m" />
 
-      <ModalInfo />
+      {/* <ModalInfo /> */}
       <Notification />
 
       {/* <BackgroundCircles /> */}

@@ -65,9 +65,9 @@ export const UpdatePostPage: React.FC = () => {
       dispatch(
         actionsModalInfo.show({
           message: 'Записанные данные не будут сохранены, вы уверены?',
-          proceedHandler: () => {
-            moveToNewPagePage(path);
-          }
+          // proceedHandler: () => {
+          //   moveToNewPagePage(path);
+          // }
         })
       );
       return;

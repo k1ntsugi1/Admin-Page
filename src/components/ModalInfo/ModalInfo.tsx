@@ -7,7 +7,7 @@ import { actionsModalInfo } from '../../store/slices/uiModalInfoSlice';
 export const ModalInfo: React.FC = () => {
   const dispatch = useAppDispatch();
 
-  const { message, show, proceedHandler } = useAppSelector((store) => store.uiModalInfo);
+  const { message, show } = useAppSelector((store) => store.uiModalInfo);
 
   const handleClose = () => {
     dispatch(actionsModalInfo.close());
@@ -25,7 +25,7 @@ export const ModalInfo: React.FC = () => {
           variant=""
           onClick={() => {
             handleClose();
-            proceedHandler();
+            //proceedHandler();
           }}
         >
           Продолжить

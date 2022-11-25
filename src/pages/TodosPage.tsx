@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import { Form } from 'react-bootstrap';
 
 import { TitleOfPage } from '../components/TitleOfPage/TitleOfPage';
@@ -40,14 +41,55 @@ export const TodosPage: React.FC = () => {
     <div className="contianer-page">
       <div className="container-fluid">
         <div className="row">
-          <div className="col">
-            <TitleOfPage title="Завершенные:" />
-            {completed.map(task => <div key={task.id}>{task.title}</div>)}
-          </div>
-          <div className="col">
-            <TitleOfPage title="В процессе:" />
-            {uncompleted.map(task => <div key={task.id}>{task.title}</div>)}
-          </div>
+            <DragDropContext
+              onDragEnd={(result) => {
+                if (!result) return;
+                console.log(result);
+              }}
+            >
+              <Droppable droppableId="completed">
+                {(provided) => (
+                  <div {...provided.droppableProps} ref={provided.innerRef} className="col">
+                    <TitleOfPage title="Завершенные:" />
+                    {completed.map((task, index) => (
+                      <Draggable key={task.id} draggableId={String(task.id)} index={index}>
+                        {(provided) => (
+                          <div
+                            ref={provided.innerRef}
+                            {...provided.draggableProps}
+                            {...provided.dragHandleProps}
+                          >
+                            <span>{task.title} {task.id}</span>
+                          </div>
+                        )}
+                      </Draggable>
+                    ))}
+                    {provided.placeholder}
+                  </div>
+                )}
+              </Droppable>
+              <Droppable droppableId="uncompleted">
+                {(provided) => (
+                  <div {...provided.droppableProps} ref={provided.innerRef} className="col">
+                    <TitleOfPage title="В процессе:" />
+                    {uncompleted.map((task, index) => (
+                      <Draggable key={task.id} draggableId={String(task.id)} index={index}>
+                        {(provided) => (
+                          <div
+                            ref={provided.innerRef}
+                            {...provided.draggableProps}
+                            {...provided.dragHandleProps}
+                          >
+                            <span>{task.title} {task.id}</span>
+                          </div>
+                        )}
+                      </Draggable>
+                    ))}
+                    {provided.placeholder}
+                  </div>
+                )}
+              </Droppable>
+            </DragDropContext>
         </div>
       </div>
     </div>
