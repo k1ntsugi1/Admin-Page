@@ -14,7 +14,7 @@ import { TodoElement } from '../components/TodoElement/TodoElement';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { fetchTodos, ITodo } from '../store/slices/Todos/fetchTodos';
 import { selectTodosByTitle } from '../store/slices/Todos/customSelectorOfTodos';
-
+import { actionsNotification } from '../store/slices/uiNotificationSlice';
 import { LoadingStatuses } from '../utils/constants';
 
 interface IAccOfReduceTodos {
@@ -28,7 +28,9 @@ export const TodosPage: React.FC = () => {
   const [searchString, setSearchString] = useState<string>('');
 
   const { userId } = useAppSelector((store) => store.dataUser);
-  const { statusOfLoading, userIdsWithLoadedTodos, allTodosAreLoaded } = useAppSelector((store) => store.dataTodos);
+  const { statusOfLoading, userIdsWithLoadedTodos, allTodosAreLoaded } = useAppSelector(
+    (store) => store.dataTodos
+  );
   const todos = useAppSelector((store) => selectTodosByTitle(store, searchString));
 
   const todosByStatusOfCompleted = todos.reduce(
@@ -41,24 +43,30 @@ export const TodosPage: React.FC = () => {
   );
 
   const performedСonditionOfFetchAlbums =
-  (userId && !userIdsWithLoadedTodos.includes(userId)) || (!userId && !allTodosAreLoaded);
+    (userId && !userIdsWithLoadedTodos.includes(userId)) || (!userId && !allTodosAreLoaded);
 
   const setSearchStringHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     setSearchString(value.trim());
   };
 
-  const onDragEndHandler = (result: IDropResult) => {
+  const onDragEndHandler = async (result: IDropResult) => {
     if (!result) return;
-    console.log(result);
     const { destination, source, draggableId } = result;
     if (destination && destination.droppableId !== source.droppableId) {
-      const values = todosByStatusOfCompleted[source.droppableId].find((task) => task.id === Number(draggableId));
-      if (values) dispatch(fetchTodos({ method: 'patch', values }))
+      const value = todos.find((task) => task.id === Number(draggableId));
+      if (value) {
+        const nextValues = { ...value };
+        nextValues.completed = !value.completed;
+
+        dispatch(actionsNotification.show({ message: 'Подождите', type: 'success' }));
+        await dispatch(fetchTodos({ method: 'patch', values: nextValues }));
+      }
     }
   };
 
   useEffect(() => {
+    console.log(performedСonditionOfFetchAlbums);
     if (performedСonditionOfFetchAlbums) dispatch(fetchTodos({ method: 'get' }));
   }, [userId]);
 
@@ -74,19 +82,21 @@ export const TodosPage: React.FC = () => {
                 {(provided) => (
                   <div {...provided.droppableProps} ref={provided.innerRef} className="col">
                     <TitleOfPage title="Завершенные:" />
-                    {todosByStatusOfCompleted.completed.map((task, index) => (
-                      <Draggable key={task.id} draggableId={String(task.id)} index={index}>
-                        {(provided) => (
-                          <div
-                            ref={provided.innerRef}
-                            {...provided.draggableProps}
-                            {...provided.dragHandleProps}
-                          >
-                            <TodoElement task={task}/>
-                          </div>
-                        )}
-                      </Draggable>
-                    ))}
+                    <div className="d-flex flex-column gap-2">
+                      {todosByStatusOfCompleted.completed.map((task, index) => (
+                        <Draggable key={task.id} draggableId={String(task.id)} index={index}>
+                          {(provided) => (
+                            <div
+                              ref={provided.innerRef}
+                              {...provided.draggableProps}
+                              {...provided.dragHandleProps}
+                            >
+                              <TodoElement task={task} />
+                            </div>
+                          )}
+                        </Draggable>
+                      ))}
+                    </div>
                     {provided.placeholder}
                   </div>
                 )}
@@ -95,19 +105,21 @@ export const TodosPage: React.FC = () => {
                 {(provided) => (
                   <div {...provided.droppableProps} ref={provided.innerRef} className="col">
                     <TitleOfPage title="В процессе:" />
-                    {todosByStatusOfCompleted.uncompleted.map((task, index) => (
-                      <Draggable key={task.id} draggableId={String(task.id)} index={index}>
-                        {(provided) => (
-                          <div
-                            ref={provided.innerRef}
-                            {...provided.draggableProps}
-                            {...provided.dragHandleProps}
-                          >
-                            <TodoElement task={task}/>
-                          </div>
-                        )}
-                      </Draggable>
-                    ))}
+                    <div className="d-flex flex-column gap-2">
+                      {todosByStatusOfCompleted.uncompleted.map((task, index) => (
+                        <Draggable key={task.id} draggableId={String(task.id)} index={index}>
+                          {(provided) => (
+                            <div
+                              ref={provided.innerRef}
+                              {...provided.draggableProps}
+                              {...provided.dragHandleProps}
+                            >
+                              <TodoElement task={task} />
+                            </div>
+                          )}
+                        </Draggable>
+                      ))}
+                    </div>
                     {provided.placeholder}
                   </div>
                 )}

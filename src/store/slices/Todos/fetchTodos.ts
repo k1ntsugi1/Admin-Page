@@ -45,7 +45,7 @@ export const fetchTodos = createAsyncThunk<IResponse, IClientParams, IThunkAPI>(
           ? urls.todos.byTodoId(values.id)
           : urls.todos.all();
 
-      const { data } = await axios[method]<ITodo[] | ITodo>(url);
+      const { data } = await axios[method]<ITodo[] | ITodo>(url, values ? values : {});
       const preparedData = Array.isArray(data) ? data : [data];
 
       if (method !== 'get') {

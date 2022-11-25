@@ -24,7 +24,7 @@ const initialState: IInitialState = {
 const todosEntityAdapter = createEntityAdapter<ITodo>();
 
 const dataTodosSlice = createSlice({
-  name: 'posts',
+  name: 'todos',
   initialState: todosEntityAdapter.getInitialState(initialState),
   reducers: {
     updateUserIdsWithLoadedTodos(state, action: PayloadAction<{ ids: number[] }>) {
@@ -36,12 +36,13 @@ const dataTodosSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchTodos.pending, (state) => {
-        state.statusOfLoading = LoadingStatuses.pending;
+      .addCase(fetchTodos.pending, (state, { meta }) => {
+        if (meta.arg.method === 'get') state.statusOfLoading = LoadingStatuses.pending;
         state.typeOfError = '';
       })
       .addCase(fetchTodos.fulfilled, (state, { payload }) => {
         const { todos } = payload;
+        console.log(todos);
         state.statusOfLoading = LoadingStatuses.fulfilled;
         todosEntityAdapter.upsertMany(state, todos);
       })
