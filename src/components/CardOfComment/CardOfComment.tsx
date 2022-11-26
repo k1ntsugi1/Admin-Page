@@ -6,7 +6,7 @@ import { DeleteElement } from '../DeleteElement/DeleteElement';
 import { UpdateCommentElement } from '../UpdateCommentElement/UpdateCommentElement';
 import { BackgroundGlass } from '../BackgroundGlass/BackgroundGlass';
 
-import { sizesOfIcons } from '../../utils/constants';
+import { SizesOfIcons } from '../../constants/SizesOfIcons';
 
 import EditIcon from '../../assets/svg/edit.svg';
 import CloseIcon from '../../assets/svg/close.svg';
@@ -16,7 +16,7 @@ interface IProps {
 }
 
 export const CardOfComment: React.FC<IProps> = ({ comment }) => {
-  const { width, height } = sizesOfIcons.xs;
+  const { width, height } = SizesOfIcons.xs;
   const [showStateOfEditForm, setShowStateOfEditForm] = useState<string>('hidden');
 
   return (
@@ -26,7 +26,7 @@ export const CardOfComment: React.FC<IProps> = ({ comment }) => {
           <DeleteElement itemId={comment.id} typeOfElement="comment" />
           {showStateOfEditForm === 'hidden' ? (
             <img
-              className="hover"
+              className="cursor-pointer hover"
               src={EditIcon}
               width={width}
               height={height}
@@ -35,7 +35,7 @@ export const CardOfComment: React.FC<IProps> = ({ comment }) => {
             />
           ) : (
             <img
-              className="hover"
+              className="cursor-pointer hover"
               src={CloseIcon}
               width={width}
               height={height}

@@ -3,7 +3,8 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 
 import { fetchAlbums, IAlbum } from './fetchAlbums';
 import { deleteAlbum } from './deleteAlbum';
-import { LoadingStatuses } from '../../../utils/constants';
+
+import { LoadingStatuses } from '../../../constants/LoadingStatuses';
 
 import { RootState } from '../../index';
 
@@ -65,10 +66,10 @@ const dataAlbumsSlice = createSlice({
         albumsEntityAdapter.removeOne(state, itemId);
       })
       .addCase(deleteAlbum.rejected, (state, { payload }) => {
-        // if (!payload) return;
-        // const { message } = payload;
-        // state.statusOfLoading = LoadingStatuses.rejected;
-        // state.errorMessage = message;
+        if (!payload) return;
+        const { message } = payload;
+        state.statusOfLoading = LoadingStatuses.rejected;
+        state.errorMessage = message;
       });
   }
 });

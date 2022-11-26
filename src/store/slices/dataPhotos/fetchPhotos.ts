@@ -1,7 +1,8 @@
 import axios, {AxiosError} from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-import { urls } from '../../../utils/constants';
+import { URLS } from '../../../constants/URLS';
+
 import { errorOfAsyncThunkHandler } from '../../../utils/errorOfAsyncThunkHandler';
 
 import { actionsNotification } from '../uiNotification/uiNotificationSlice';
@@ -49,8 +50,8 @@ export const fetchPhotos = createAsyncThunk<IResponse, IClientParams, IThunkAPI>
     try {
       const { method, albumId, values } = clientParams;
 
-      const { photos: urlsOfPhotos } = urls;
-      const url = method === 'post' ? urlsOfPhotos.all() : urlsOfPhotos.byAlbumId(albumId);
+      const { PHOTOS: URLS_OF_PHOTOS } = URLS;
+      const url = method === 'post' ? URLS_OF_PHOTOS.ALL() : URLS_OF_PHOTOS.BY_ALBUM_ID(albumId);
 
       const { data } = await axios[method]<IPhoto[] | IPostedPatchedPhoto>(
         url,

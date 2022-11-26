@@ -16,7 +16,7 @@ import { actionsComments } from '../../store/slices/dataComments/dataCommentsSli
 import { fetchComments } from '../../store/slices/dataComments/fetchComments';
 import { fetchPosts } from '../../store/slices/dataPosts/fetchPosts';
 
-import { LoadingStatuses } from '../../utils/constants';
+import { LoadingStatuses } from '../../constants/LoadingStatuses';
 
 export const PostPage: React.FC = () => {
   const dispatch = useAppDispatch();

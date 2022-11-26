@@ -3,7 +3,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import dataUserReducer from './slices/dataUser/dataUserSlice';
 import dataPostsReducer from './slices/dataPosts/dataPostsSlice';
 import dataCommentsReducer from './slices/dataComments/dataCommentsSlice';
-import dataAlbumsReducer from './slices/dataAlbums/dataAlbumsSlice'
+import dataAlbumsReducer from './slices/dataAlbums/dataAlbumsSlice';
 import dataPhotosReducer from './slices/dataPhotos/dataPhotosSlice';
 import dataTodosReducer from './slices/dataTodos/dataTodosSLice';
 
@@ -28,8 +28,7 @@ const store = configureStore({
     uiModalInfo: uiModalInfoReducer
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(showErrorModal)
-},
-);
+});
 
 export type RootState = ReturnType<typeof store.getState>;
 

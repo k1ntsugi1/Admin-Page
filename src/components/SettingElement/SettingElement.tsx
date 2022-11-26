@@ -7,7 +7,7 @@ import { actionsProgressbar } from '../../store/slices/uiProgressbar/uiProgressb
 import { actionsUser } from '../../store/slices/dataUser/dataUserSlice';
 import { actionsNotification } from '../../store/slices/uiNotification/uiNotificationSlice';
 
-import { sizesOfIcons } from '../../utils/constants';
+import { SizesOfIcons } from '../../constants/SizesOfIcons';
 
 import SaveIcon from '../../assets/svg/check-all.svg';
 
@@ -19,7 +19,7 @@ interface IInitialValueOfFormik {
 
 export const SettingElement: React.FC = () => {
   const dispatch = useAppDispatch();
-  const { width, height } = sizesOfIcons.m;
+  const { width, height } = SizesOfIcons.m;
   const { userId } = useAppSelector((store) => store.dataUser);
 
   const setTypeOfProgressbarHandler = (newType: string) => () => {

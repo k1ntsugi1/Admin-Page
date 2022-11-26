@@ -3,7 +3,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import { IThunkAPI } from '../interfaces';
 
-import { urls } from '../../../utils/constants';
+import { URLS } from '../../../constants/URLS';
 
 import { errorOfAsyncThunkHandler } from '../../../utils/errorOfAsyncThunkHandler';
 
@@ -42,13 +42,13 @@ export const fetchPosts = createAsyncThunk<IResponse, IClientParams, IThunkAPI>(
       const { userIdsWithLoadedPosts } = state.dataPosts;
       const { userId } = state.dataUser;
       const { method, postId, values } = clientParams;
-      const { posts: urlsOfPosts } = urls;
+      const { POSTS: URLS_OF_POSTS } = URLS;
 
       const url = userId
-        ? urlsOfPosts.byUserId(userId)
+        ? URLS_OF_POSTS.BY_USER_ID(userId)
         : !postId
-        ? urlsOfPosts.all()
-        : urlsOfPosts.byPostId(postId);
+        ? URLS_OF_POSTS.ALL()
+        : URLS_OF_POSTS.BY_POST_ID(postId);
 
       const { data } = await axios[method]<IPost[] | IPost>(url, values);
 

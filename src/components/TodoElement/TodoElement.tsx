@@ -5,7 +5,7 @@ import { UpdateTaskElement } from '../UpdateTaskElement/UpdateTaskElement';
 
 import { ITodo } from '../../store/slices/dataTodos/fetchTodos';
 
-import { sizesOfIcons } from '../../utils/constants';
+import { SizesOfIcons } from '../../constants/SizesOfIcons';
 
 import EditIcon from '../../assets/svg/edit.svg';
 import CloseIcon from '../../assets/svg/close.svg';
@@ -15,7 +15,7 @@ interface IProps {
 }
 
 export const TodoElement: React.FC<IProps> = ({ task }) => {
-  const { width, height } = sizesOfIcons.xs;
+  const { width, height } = SizesOfIcons.xs;
   const [showStateOfEditForm, setShowStateOfEditForm] = useState<string>('hidden');
   return (
     <div className="p-2 border rounded">

@@ -1,9 +1,11 @@
 import React, { useEffect, useRef } from 'react';
 import cn from 'classnames';
 
+import { ThreeDotsSpinner } from '../ThreeDotsSpinner/ThreeDotsSpinner';
+
 import { useAppSelector } from '../../store/hooks';
 
-import { LoadingStatuses } from '../../utils/constants';
+import { LoadingStatuses } from '../../constants/LoadingStatuses';
 
 interface IProps {
   title: string;
@@ -11,13 +13,13 @@ interface IProps {
 }
 
 export const TitleOfPage: React.FC<IProps> = ({ title, className }) => {
-  
-  const textRef = useRef<HTMLSpanElement>(null);
-  const plug = 'Либо 25-ый кадр, либо мы ждем выполнения микротасок :)';
+  const textRef = useRef<HTMLParagraphElement>(null);
+  const blinkingElementRef = useRef<HTMLSpanElement>(null);
+  const textOfTitle = `${title} |`;
   const { pending } = LoadingStatuses;
 
-  const { userId } = useAppSelector((store) => store.dataUser)
-  const textOfTitle = `${title} | Пользователь: ${userId ? userId : '"Все"'}`;
+  const { userId } = useAppSelector((store) => store.dataUser);
+  const userIdText = `Пользователь: ${userId ? userId : '"Все"'}`;
 
   const { statusOfLoading: statusOfAlbumLoading } = useAppSelector((store) => store.dataAlbums);
   const { statusOfLoading: statusOfPostsLoading } = useAppSelector((store) => store.dataPosts);
@@ -28,11 +30,22 @@ export const TitleOfPage: React.FC<IProps> = ({ title, className }) => {
     statusOfPostsLoading !== pending &&
     statusOfTodosLoading !== pending;
 
-  const classNameOfTitleContainer = cn('title-page', className ? className : '');
+  const classNameOfTitleContainer = cn(
+    'title-page',
+    'align-items-center',
+    className ? className : ''
+  );
+
+  const hideBlinkingElement = () => {
+    return setTimeout(() => {
+      if (!blinkingElementRef.current) return;
+      blinkingElementRef.current.style.visibility = 'hidden';
+    }, 2000);
+  };
 
   useEffect(() => {
-    if (!textRef.current || !performedСonditionOfFetch) return;
-    const text = textOfTitle;
+    if (!textRef.current || !blinkingElementRef.current || !performedСonditionOfFetch) return;
+    const text = userIdText;
     const lengthOfText = text.length - 1;
 
     const idsOfTimeouts: ReturnType<typeof setTimeout>[] = [];
@@ -40,7 +53,7 @@ export const TitleOfPage: React.FC<IProps> = ({ title, className }) => {
     const printText = (position: number) => {
       if (!textRef.current) return;
       const nextText = text.substring(0, position);
-      textRef.current.textContent = nextText.length !== 0 ? nextText : plug;
+      textRef.current.textContent = nextText.length !== 0 ? nextText : '';
     };
 
     const setTimeoutes = (position: number) => {
@@ -53,8 +66,15 @@ export const TitleOfPage: React.FC<IProps> = ({ title, className }) => {
       setTimeoutes(position + 1);
     };
 
-    textRef.current.innerHTML = plug;
+    textRef.current.textContent = '';
+
+    blinkingElementRef.current.style.visibility = 'visible';
+    const idOfTimeoutOfBlinkingElement = hideBlinkingElement();
+
+    idsOfTimeouts.push(idOfTimeoutOfBlinkingElement);
+
     setTimeoutes(0);
+    
     return () => {
       idsOfTimeouts.reverse().forEach((id) => clearTimeout(id));
     };
@@ -62,7 +82,19 @@ export const TitleOfPage: React.FC<IProps> = ({ title, className }) => {
 
   return (
     <div className={classNameOfTitleContainer}>
-      <span ref={textRef}></span>
+      <p className="m-0 me-1">{textOfTitle}</p>
+
+      {performedСonditionOfFetch && (
+        <>
+          <p className="m-0 me-1" ref={textRef}></p>
+          <span className="blinking" ref={blinkingElementRef}></span>{' '}
+        </>
+      )}
+      {!performedСonditionOfFetch && (
+        <div className="w-25">
+          <ThreeDotsSpinner />
+        </div>
+      )}
     </div>
   );
 };

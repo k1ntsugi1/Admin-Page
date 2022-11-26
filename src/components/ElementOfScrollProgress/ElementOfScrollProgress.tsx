@@ -1,13 +1,17 @@
 import React, { RefObject, useState, useEffect, useRef } from 'react';
-import { useAppSelector } from '../../store/hooks';
+import { useLocation } from 'react-router-dom';
+import cn from 'classnames';
+
 import { CircleScrollProgressbar } from '../CircleScrollProgressbar/CircleScrollProgressbar';
 import { StraightScrollProgressbar } from '../StraightScrollProgressbar/StraightScrollProgressbar';
 import { ScrollIntoViewElement } from '../ScrollIntoViewElement/ScrollIntoViewElement';
 import { SettingElement } from '../SettingElement/SettingElement';
-import SettingIcon from '../../assets/svg/setting.svg';
-import cn from 'classnames';
-import { useLocation } from 'react-router-dom';
+
+import { useAppSelector } from '../../store/hooks';
+
 import { toggleVisibilityhandler } from '../../utils/toggleVisibilityHandler';
+
+import SettingIcon from '../../assets/svg/setting.svg';
 
 export const ElementOfScrollProgress: React.FC<{
   elementOfBreakPoint?: RefObject<HTMLDivElement>;

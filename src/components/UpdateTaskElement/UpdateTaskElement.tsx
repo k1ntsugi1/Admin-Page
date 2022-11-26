@@ -4,10 +4,8 @@ import { useFormik } from 'formik';
 import { Form, Button } from 'react-bootstrap';
 
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { fetchTodos } from '../../store/slices/dataTodos/fetchTodos'; 
-import { actionsNotification } from '../../store/slices/uiNotification/uiNotificationSlice';
+import { fetchTodos } from '../../store/slices/dataTodos/fetchTodos';
 
-import { LoadingStatuses } from '../../utils/constants';
 import { validationSchemaTaskForm } from '../../utils/validationSchema';
 
 import type { FormikProps } from 'formik';
@@ -44,17 +42,24 @@ export const UpdateTaskElement: React.FC<IProps> = ({ id }) => {
     validationSchema: validationSchemaTaskForm,
     validateOnChange: false,
     validateOnBlur: false,
-    onSubmit: (values) => {
-        const nextValue = {...values, userId: Number(values.userId)}
+    onSubmit: async (values, acitons) => {
+      try {
+        const nextValue = { ...values, userId: Number(values.userId) };
         const method = values.id ? 'patch' : 'post';
-        dispatch(actionsNotification.show({ message: 'Подождите', type: 'success' }));
-        dispatch(fetchTodos({method, values: nextValue}))
+        await dispatch(fetchTodos({ method, values: nextValue }));
+      } finally {
+        acitons.setSubmitting(false);
+      }
     }
   });
 
   return (
     <div className="m-0 ms-1 p-2 h-60px w-100">
-      <Form noValidate onSubmit={formik.handleSubmit} className="h-100 w-100 d-flex flex-row flex-nowrap">
+      <Form
+        noValidate
+        onSubmit={formik.handleSubmit}
+        className="h-100 w-100 d-flex flex-row flex-nowrap"
+      >
         <Form.Control
           className={classNamesOfFormItems}
           type="text"
@@ -65,18 +70,14 @@ export const UpdateTaskElement: React.FC<IProps> = ({ id }) => {
           placeholder="Введите задачу"
           isInvalid={!!formik.errors.title}
         />
-        
+
         <Button
           variant="light"
           type="submit"
           className="border rounded"
-          //disabled={statusOfLoading === LoadingStatuses.pending && (methodOfFetch !== 'get')}
+          disabled={formik.isSubmitting}
         >
-          {/* {statusOfLoading === LoadingStatuses.pending && (methodOfFetch !== 'get') ? (
-            <span>Подождите</span>
-          ) : ( */}
-            <span>Сохранить</span>
-          {/* )} */}
+          {formik.isSubmitting ? <span>Подождите</span> : <span>Сохранить</span>}
         </Button>
       </Form>
     </div>

@@ -1,23 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import {
   DragDropContext,
-  Draggable,
-  Droppable,
   DropResult as IDropResult
 } from 'react-beautiful-dnd';
 
 import { HeaderOfPage } from '../../components/HeaderOfPage/HeaderOfPage';
-import { TitleOfPage } from '../../components/TitleOfPage/TitleOfPage';
 import { MagnifyingGlassSpinner } from '../../components/MagnifyingGlassSpinner/MagnifyingGlassSpinner';
 import { TodoListDroppable } from '../../components/TodoListDroppable/TodoListDroppable';
-import { TodoElement } from '../../components/TodoElement/TodoElement';
 import { UpdateTaskElement } from '../../components/UpdateTaskElement/UpdateTaskElement';
 
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { fetchTodos, ITodo } from '../../store/slices/dataTodos/fetchTodos';
 import { selectTodosByTitle } from '../../store/slices/dataTodos/customSelectorOfTodos';
 import { actionsNotification } from '../../store/slices/uiNotification/uiNotificationSlice';
-import { LoadingStatuses } from '../../utils/constants';
+
+import { LoadingStatuses } from '../../constants/LoadingStatuses';
 
 interface IAccOfReduceTodos {
   [index: string]: ITodo[];

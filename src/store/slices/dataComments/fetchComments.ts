@@ -3,8 +3,9 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import { actionsNotification } from '../uiNotification/uiNotificationSlice';
 
+import { URLS } from '../../../constants/URLS';
+
 import { errorOfAsyncThunkHandler } from '../../../utils/errorOfAsyncThunkHandler';
-import { urls } from '../../../utils/constants';
 
 import { IThunkAPI } from '../interfaces';
 
@@ -37,13 +38,13 @@ export const fetchComments = createAsyncThunk<IResponse, IClientParams, IThunkAP
   async (clientParams, thunkAPI) => {
     try {
       const { method, postId, values } = clientParams;
-      const { comments: urlsOfComments } = urls;
+      const { COMMENTS: URLS_OF_COMMENTS } = URLS;
       const url =
         method === 'post'
-          ? urlsOfComments.all()
+          ? URLS_OF_COMMENTS.ALL()
           : values && values.id
-          ? urlsOfComments.byCommentId(values.id)
-          : urlsOfComments.byPostId(postId);
+          ? URLS_OF_COMMENTS.BY_COMMENT_ID(values.id)
+          : URLS_OF_COMMENTS.BY_POST_ID(postId);
 
       const { data } = await axios[method]<IComment[] | IComment>(url, values);
 

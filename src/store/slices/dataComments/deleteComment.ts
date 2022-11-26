@@ -3,14 +3,17 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import { errorOfAsyncThunkHandler } from '../../../utils/errorOfAsyncThunkHandler';
 
-import { urls } from '../../../utils/constants';
+import { URLS } from '../../../constants/URLS';
+
 import { actionsNotification } from '../uiNotification/uiNotificationSlice';
 
-export const deleteComment = createAsyncThunk(
+import { TClientParamsForDeleteItem, IThunkAPI, ISuccessOfDeleteItem } from '../interfaces';
+
+export const deleteComment = createAsyncThunk<ISuccessOfDeleteItem, TClientParamsForDeleteItem, IThunkAPI>(
   'deleteComment',
   async (itemId: number, thunkAPI) => {
     try {
-      const url = urls.comments.byCommentId(itemId);
+      const url = URLS.COMMENTS.BY_COMMENT_ID(itemId);
       await axios.delete(url);
       thunkAPI.dispatch(actionsNotification.show({ message: 'Удалено', type: 'error' }));
       return { itemId };

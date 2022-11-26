@@ -12,7 +12,7 @@ export const MagnifyingGlassSpinner: React.FC = () => {
         wrapperStyle={{}}
         wrapperClass="MagnifyingGlass-wrapper"
         glassColor="rgb(248 249 250 / 54%)"
-        color = '#e15b64'
+        color = 'black'
       />
     </div>
   );

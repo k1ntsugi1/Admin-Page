@@ -4,7 +4,8 @@ import cn from 'classnames';
 import { Ticker } from '../../components/Ticker/Ticker';
 import { BackgroundGlass } from '../../components/BackgroundGlass/BackgroundGlass';
 import { BackgroundCircles } from '../../components/BackgroundCircles/BackgroundCircles';
-import { sizesOfIcons } from '../../utils/constants';
+
+import { SizesOfIcons } from '../../constants/SizesOfIcons';
 
 import GithubIcon from '../../assets/svg/github.svg';
 import TelegramIcon from '../../assets/svg/telegram.svg';
@@ -12,7 +13,7 @@ import MailIcon from '../../assets/svg/mail.svg';
 import ArrowIcon from '../../assets/svg/arrow-up-right-square-fill.svg';
 
 export const HomePage: React.FC = () => {
-  const { width, height } = sizesOfIcons.l;
+  const { width, height } = SizesOfIcons.l;
 
   const classNameOfTicker = cn('border-bottom flex-grow-1 rounded z-index-1000');
 

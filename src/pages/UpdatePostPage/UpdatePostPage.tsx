@@ -4,14 +4,13 @@ import { Form, Button } from 'react-bootstrap';
 import { Navigate, useNavigate, useParams } from 'react-router-dom';
 
 import { HeaderOfPage } from '../../components/HeaderOfPage/HeaderOfPage';
-import { NavBtnsOfPage } from '../../components/NavBtnsOfPage/NavBtnsOfPage';
-import { TitleOfPage } from '../../components/TitleOfPage/TitleOfPage';
 
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { actionsModalInfo } from '../../store/slices/uiModalinfo/uiModalInfoSlice';
 import { fetchPosts, IClientParams } from '../../store/slices/dataPosts/fetchPosts';
 
-import { dataOfNavBtns, LoadingStatuses } from '../../utils/constants';
+import { LoadingStatuses } from '../../constants/LoadingStatuses';
+
 import { validationSchemaPostForm } from '../../utils/validationSchema';
 
 import type { FormikProps } from 'formik';
@@ -44,13 +43,18 @@ export const UpdatePostPage: React.FC = () => {
     validationSchema: validationSchemaPostForm,
     validateOnChange: false,
     validateOnBlur: false,
-    onSubmit: (values) => {
-      const clientParams: IClientParams = {
-        method: postId ? 'patch' : 'post',
-        postId: Number(postId) ?? null,
-        values
-      };
-      dispatch(fetchPosts(clientParams));
+    onSubmit: async (values, actions) => {
+      try {
+        const clientParams: IClientParams = {
+          method: postId ? 'patch' : 'post',
+          postId: Number(postId) ?? null,
+          values
+        };
+        await dispatch(fetchPosts(clientParams));
+      } finally {
+        actions.setSubmitting(false)
+      }
+      
     }
   });
 
@@ -81,11 +85,6 @@ export const UpdatePostPage: React.FC = () => {
         nameOfPage="updatePostPage"
         navigateParams={{ navigateHandler }}
       />
-      {/* <NavBtnsOfPage
-        btns={dataOfNavBtns.updatePostPage}
-        onClickHandler={moveToNewPagePageHandler}
-      />
-      <TitleOfPage title={postId ? 'Редактирование поста' : 'Создание поста'} /> */}
 
       <Form noValidate onSubmit={formik.handleSubmit} className="h-75 d-flex flex-column gap-3">
         <Form.Control
@@ -113,9 +112,9 @@ export const UpdatePostPage: React.FC = () => {
           variant="light"
           type="submit"
           className="w-100 border rounded"
-          disabled={statusOfLoading === LoadingStatuses.pending}
+          disabled={formik.isSubmitting}
         >
-          {statusOfLoading === LoadingStatuses.pending ? (
+          {formik.isSubmitting ? (
             <span>Подождите</span>
           ) : (
             <span>Сохранить</span>

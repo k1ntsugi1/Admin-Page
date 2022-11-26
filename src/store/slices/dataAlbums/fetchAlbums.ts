@@ -9,7 +9,7 @@ import { errorOfAsyncThunkHandler } from '../../../utils/errorOfAsyncThunkHandle
 
 import { IThunkAPI } from '../interfaces';
 
-import { urls } from '../../../utils/constants';
+import { URLS } from '../../../constants/URLS';
 
 export interface IAlbum {
   userId: number;
@@ -49,14 +49,14 @@ export const fetchAlbums = createAsyncThunk<IResponse, IClientParams, IThunkAPI>
       const { userIdsWithLoadedAlbums } = state.dataAlbums;
       const { userId } = state.dataUser;
       const { method, albumId, valuesOfAlbum, valuesOfPhotos } = clientParams;
-      const { albums: urlsOfAlbums } = urls;
+      const { ALBUMS: URLS_OF_ALBUMS } = URLS;
 
       const url =
         userId && method === 'get'
-          ? urlsOfAlbums.byUserId(userId)
+          ? URLS_OF_ALBUMS.BY_USER_ID(userId)
           : !albumId
-          ? urlsOfAlbums.all()
-          : urlsOfAlbums.byAlbumId(albumId);
+          ? URLS_OF_ALBUMS.ALL()
+          : URLS_OF_ALBUMS.BY_ALBUM_ID(albumId);
 
       const { data } = await axios[method]<IAlbum | IAlbum[]>(url, valuesOfAlbum);
 

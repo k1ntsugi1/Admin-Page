@@ -5,11 +5,11 @@ import Burger from '../../assets/svg/burger.svg';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { actionsUiSidebar } from '../../store/slices/uiSidebar/uiSidebarSlice';
 
-import { sizesOfIcons } from '../../utils/constants';
+import { SizesOfIcons } from '../../constants/SizesOfIcons';
 
 interface IProps {
   className?: string;
-  sizeOfToggler: 's' | 'm' | 'l';
+  sizeOfToggler: 'xs' | 's' | 'm' | 'l';
 }
 
 export const SidebarToggler: React.FC<IProps> = ({ className, sizeOfToggler }) => {
@@ -19,7 +19,7 @@ export const SidebarToggler: React.FC<IProps> = ({ className, sizeOfToggler }) =
 
   const classNamesOfSidebarToggler = cn('sidebarToggler', className);
 
-  const { width, height } = sizesOfIcons[sizeOfToggler];
+  const { width, height } = SizesOfIcons[sizeOfToggler];
 
   const showStateHandler = () => {
     const newShowState = showState === 'hidden' ? 'visible' : 'hidden';

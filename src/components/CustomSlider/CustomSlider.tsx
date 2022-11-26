@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { sizesOfIcons } from '../../utils/constants';
+import { SizesOfIcons } from '../../constants/SizesOfIcons'; 
 
 import ArrowLeft from '../../assets/svg/arrow-left-circle.svg';
 import ArrowRight from '../../assets/svg/arrow-right-circle.svg';
@@ -16,7 +16,7 @@ interface IProps {
 
 export const CustomSlider: React.FC<IProps> = ({ slides }) => {
   console.log(slides);
-  const { width, height } = sizesOfIcons.s;
+  const { width, height } = SizesOfIcons.s;
   const maxIndex = slides.length - 1;
   const [activeSlideIndex, setActiveSlideIndex] = useState<number>(0);
 

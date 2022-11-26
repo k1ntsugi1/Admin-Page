@@ -9,7 +9,7 @@ import { ViewMoreElement } from '../ViewMoreElement/ViewMoreElement';
 import { useAppDispatch } from '../../store/hooks';
 import { actionsPosts } from '../../store/slices/dataPosts/dataPostsSlice';
 
-import { sizesOfIcons } from '../../utils/constants';
+import { SizesOfIcons } from '../../constants/SizesOfIcons';
 
 import EditIcon from '../../assets/svg/edit.svg'
 
@@ -23,7 +23,7 @@ export const CardOfPost: React.FC<IProps> = ({ post }) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const {width, height } = sizesOfIcons.xs
+  const {width, height } = SizesOfIcons.xs
   const [isHovering, setIsHovering] = useState<boolean>(false);
   const id = post.id;
 

@@ -5,9 +5,8 @@ import { NavBtnsOfPage } from '../NavBtnsOfPage/NavBtnsOfPage';
 import { TitleOfPage } from '../TitleOfPage/TitleOfPage';
 import { BackgroundGlass } from '../BackgroundGlass/BackgroundGlass';
 import { BackgroundCircles } from '../BackgroundCircles/BackgroundCircles';
-import { useAppSelector } from '../../store/hooks';
 
-import { dataOfNavBtns } from '../../utils/constants';
+import { DataOfNavigationBtns } from '../../constants/DataOfNavigationBtns';
 
 interface IProps {
   searchParams?: {
@@ -32,9 +31,9 @@ export const HeaderOfPage: React.FC<IProps> = (props) => {
 
   return (
     <div className="mb-3 p-3 position-relative border rounded">
-      {navigateParams && dataOfNavBtns[nameOfPage] && (
+      {navigateParams && DataOfNavigationBtns[nameOfPage] && (
         <NavBtnsOfPage
-          btns={dataOfNavBtns[nameOfPage]}
+          btns={DataOfNavigationBtns[nameOfPage]}
           onClickHandler={navigateParams.navigateHandler}
         />
       )}

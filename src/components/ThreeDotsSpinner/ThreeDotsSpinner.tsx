@@ -8,7 +8,7 @@ export const ThreeDotsSpinner: React.FC = () => {
         height="80"
         width="80"
         radius="9"
-        color="#e15b64"
+        color="black"
         ariaLabel="three-dots-loading"
         wrapperStyle={{}}
         visible={true}

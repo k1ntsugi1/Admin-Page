@@ -8,7 +8,7 @@ import { deleteComment, TDeleteComment } from '../../store/slices/dataComments/d
 import { deleteTask, TDeleteTask } from '../../store/slices/dataTodos/deleteTask';
 import { actionsNotification } from '../../store/slices/uiNotification/uiNotificationSlice';
 
-import { sizesOfIcons } from '../../utils/constants';
+import { SizesOfIcons } from '../../constants/SizesOfIcons';
 
 import DeleteIcon from '../../assets/svg/delete.svg';
 
@@ -16,7 +16,7 @@ interface IProps {
   itemId: number;
   typeOfElement: 'album' | 'post' | 'comment' | 'task';
   pathToNextPage?: string;
-  size?: string;
+  size?: 'xs'| 's' | 'm' | 'l';
 }
 
 interface IMappingThunk {
@@ -35,7 +35,7 @@ export const DeleteElement: React.FC<IProps> = (props) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const { width, height } = sizesOfIcons[size];
+  const { width, height } = SizesOfIcons[size];
 
   const deletePostHandler = () => {
     dispatch(actionsNotification.show({ message: 'Подождите...', type: 'success' }));

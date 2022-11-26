@@ -4,7 +4,8 @@ import cn from 'classnames';
 
 import { useAppSelector } from '../../store/hooks';
 
-import { sizesOfIcons } from '../../utils/constants';
+import { SizesOfIcons } from '../../constants/SizesOfIcons';
+
 import { toggleVisibilityhandler } from '../../utils/toggleVisibilityHandler';
 
 import HomeLink from '../../assets/svg/home.svg';
@@ -13,7 +14,7 @@ import TasksLink from '../../assets/svg/task-list.svg';
 import AlbumsLink from '../../assets/svg/card-image.svg';
 
 interface IProps {
-  sizeOfNavItems: 's' | 'm' | 'l';
+  sizeOfNavItems: 'xs'| 's' | 'm' | 'l';
 }
 
 export const Sidebar: React.FC<IProps> = ({ sizeOfNavItems }) => {
@@ -25,7 +26,7 @@ export const Sidebar: React.FC<IProps> = ({ sizeOfNavItems }) => {
   const { activeAlbumId } = useAppSelector((store) => store.dataAlbums);
   const { showState } = useAppSelector((state) => state.uiSidebar);
 
-  const { width, height } = sizesOfIcons[sizeOfNavItems];
+  const { width, height } = SizesOfIcons[sizeOfNavItems];
 
   const classNameOfSidebar = cn(
     'position-absolute start-0 top-0 z-index-1000 h-100 w-100px shadow-lg transition-opacity bg-white',

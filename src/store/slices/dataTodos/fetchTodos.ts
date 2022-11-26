@@ -3,11 +3,12 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import { errorOfAsyncThunkHandler } from '../../../utils/errorOfAsyncThunkHandler';
 
+import { URLS } from '../../../constants/URLS';
+
 import { actionsNotification } from '../uiNotification/uiNotificationSlice';
 import { actionsTodos } from './dataTodosSLice';
-import { IThunkAPI } from '../interfaces';
 
-import { urls } from '../../../utils/constants';
+import { IThunkAPI } from '../interfaces';
 
 export interface ITodo {
   userId: number;
@@ -39,13 +40,14 @@ export const fetchTodos = createAsyncThunk<IResponse, IClientParams, IThunkAPI>(
       const { userIdsWithLoadedTodos } = state.dataTodos;
       const { method, values } = clientParams;
       const { userId } = state.dataUser;
+      const { TODOS: URLS_OF_TODOS } = URLS
 
       const url =
         userId && method === 'get'
-          ? urls.todos.byUserId(userId)
+          ? URLS_OF_TODOS.BY_USER_ID(userId)
           : values && values.id
-          ? urls.todos.byTodoId(values.id)
-          : urls.todos.all();
+          ? URLS_OF_TODOS.BY_TODO_ID(values.id)
+          : URLS_OF_TODOS.ALL();
 
       const { data } = await axios[method]<ITodo[] | ITodo>(url, values ? values : {});
       const preparedData = Array.isArray(data) ? data : [data];

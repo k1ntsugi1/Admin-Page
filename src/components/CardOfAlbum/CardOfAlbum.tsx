@@ -8,11 +8,12 @@ import { BackgroundGlass } from '../BackgroundGlass/BackgroundGlass';
 
 import { useAppDispatch } from '../../store/hooks';
 import { actionsAlbums } from '../../store/slices/dataAlbums/dataAlbumsSlice';
-import { IAlbum } from '../../store/slices/dataAlbums/fetchAlbums';
 
-import { sizesOfIcons } from '../../utils/constants';
+import { SizesOfIcons } from '../../constants/SizesOfIcons';
 
 import EditIcon from '../../assets/svg/edit.svg'
+
+import { IAlbum } from '../../store/slices/dataAlbums/fetchAlbums';
 
 interface IProps {
   album: IAlbum;
@@ -22,7 +23,7 @@ export const CardOfAlbum: React.FC<IProps> = ({ album }) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const {width, height } = sizesOfIcons.xs
+  const {width, height } = SizesOfIcons.xs
   const [isHovering, setIsHovering] = useState<boolean>(false);
   const id = album.id;
 

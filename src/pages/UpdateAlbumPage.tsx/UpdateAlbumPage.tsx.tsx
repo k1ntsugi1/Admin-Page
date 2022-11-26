@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { useFormik } from 'formik';
+import { useFormik, FormikProps } from 'formik';
 import { Form, Button } from 'react-bootstrap';
 import { Navigate, useNavigate, useParams } from 'react-router-dom';
 
@@ -10,12 +10,12 @@ import { actionsModalInfo } from '../../store/slices/uiModalinfo/uiModalInfoSlic
 import { actionsNotification } from '../../store/slices/uiNotification/uiNotificationSlice';
 import { fetchAlbums } from '../../store/slices/dataAlbums/fetchAlbums';
 
-import { LoadingStatuses } from '../../utils/constants';
+import { LoadingStatuses } from '../../constants/LoadingStatuses';
+
 import { selectPhotosByAlbumId } from '../../store/slices/dataPhotos/customSelectorsOfPhotos';
 import { fetchGetImageUrl } from '../../utils/fetchGetImageUrl';
 import { validationSchemaAlbumForm } from '../../utils/validationSchema';
 
-import type { FormikProps } from 'formik';
 import { IClientParams } from '../../store/slices/dataAlbums/fetchAlbums';
 
 type TNewPhoto = {
@@ -100,35 +100,41 @@ export const UpdateAlbumPage: React.FC = () => {
   };
 
   const loadNewPhotoHandler = async () => {
-    if (formik.values.titleOfPhoto.length === 0) {
-      dispatch(actionsNotification.show({ message: 'Введите заголовок фото', type: 'error' }));
-      return;
+    try {
+      formik.setSubmitting(true);
+      if (formik.values.titleOfPhoto.length === 0) {
+        dispatch(actionsNotification.show({ message: 'Введите заголовок фото', type: 'error' }));
+        return;
+      }
+      if (formik.values.photos.length > 0) {
+        dispatch(
+          actionsNotification.show({ message: 'интерфейс API только для 1 картинки', type: 'error' })
+        );
+        return;
+      }
+  
+      if (!uploadFileBtnRef.current?.files || !uploadFileBtnRef.current) {
+        return;
+      }
+  
+      dispatch(actionsNotification.show({ message: 'Подождите', type: 'success' }));
+  
+      const file = uploadFileBtnRef.current.files[0];
+  
+      const url = await fetchGetImageUrl(file);
+  
+      const photoData = {
+        title: formik.values.titleOfPhoto,
+        url,
+        thumbnailUrl: url
+      };
+  
+      formik.setFieldValue('photos', [...formik.values.photos, photoData], false);
+      dispatch(actionsNotification.show({ message: 'Добавлено', type: 'success' }));
+    } finally {
+      formik.setSubmitting(false);
     }
-    if (formik.values.photos.length > 0) {
-      dispatch(
-        actionsNotification.show({ message: 'интерфейс API только для 1 картинки', type: 'error' })
-      );
-      return;
-    }
-
-    if (!uploadFileBtnRef.current?.files || !uploadFileBtnRef.current) {
-      return;
-    }
-
-    dispatch(actionsNotification.show({ message: 'Подождите', type: 'success' }));
-
-    const file = uploadFileBtnRef.current.files[0];
-
-    const url = await fetchGetImageUrl(file);
-
-    const photoData = {
-      title: formik.values.titleOfPhoto,
-      url,
-      thumbnailUrl: url
-    };
-
-    formik.setFieldValue('photos', [...formik.values.photos, photoData], false);
-    dispatch(actionsNotification.show({ message: 'Добавлено', type: 'success' }));
+    
   };
 
   return (
@@ -184,9 +190,9 @@ export const UpdateAlbumPage: React.FC = () => {
           variant="light"
           type="submit"
           className="w-100 border rounded"
-          disabled={statusOfLoading === LoadingStatuses.pending}
+          disabled={formik.isSubmitting}
         >
-          {statusOfLoading === LoadingStatuses.pending ? (
+          {formik.isSubmitting ? (
             <span>Подождите</span>
           ) : (
             <span>Сохранить</span>

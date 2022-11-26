@@ -7,7 +7,7 @@ import { fetchPhotos, IPhoto } from './fetchPhotos';
 import { deleteAlbum } from '../dataAlbums/deleteAlbum';
 import { deletePhoto } from './deletePhoto';
 
-import { LoadingStatuses } from '../../../utils/constants';
+import { LoadingStatuses } from '../../../constants/LoadingStatuses';
 
 interface IInitialState {
   albumsIdsOfLoadedComments: number[];
@@ -73,8 +73,10 @@ const dataPhotosSlice = createSlice({
         photosEntityAdapter.removeOne(state, itemId);
       })
       .addCase(deletePhoto.rejected, (state, { payload }) => {
-        // state.statusOfLoading = LoadingStatuses.rejected;
-        // state.typeOfError = typeOfError;
+        if (!payload) return;
+        const { message } = payload;
+        state.statusOfLoading = LoadingStatuses.rejected;
+        state.errorMessage = message;
       });
   }
 });

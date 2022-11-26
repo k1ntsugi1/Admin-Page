@@ -13,7 +13,8 @@ import { fetchPhotos } from '../../store/slices/dataPhotos/fetchPhotos';
 import { selectorsAlbums, actionsAlbums } from '../../store/slices/dataAlbums/dataAlbumsSlice';
 import { actionsPhotos } from '../../store/slices/dataPhotos/dataPhotosSlice';
 import { selectPhotosByAlbumId } from '../../store/slices/dataPhotos/customSelectorsOfPhotos';
-import { LoadingStatuses } from '../../utils/constants';
+
+import { LoadingStatuses } from '../../constants/LoadingStatuses';
 
 export const AlbumPage: React.FC = () => {
   const dispatch = useAppDispatch();

@@ -7,7 +7,6 @@ import { useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { fetchComments, IClientParams } from '../../store/slices/dataComments/fetchComments';
 
-import { LoadingStatuses } from '../../utils/constants';
 import { validationSchemaCommentForm } from '../../utils/validationSchema';
 
 import type { FormikProps } from 'formik';
@@ -28,7 +27,9 @@ export const UpdateCommentElement: React.FC<IProps> = ({ id }) => {
   const dispatch = useAppDispatch();
   const { postId } = useParams();
 
-  const { entities, statusOfLoading, methodOfFetch } = useAppSelector((store) => store.dataComments);
+  const { entities } = useAppSelector(
+    (store) => store.dataComments
+  );
   const editingComment = id ? entities[id] : {};
 
   const classNamesOfFormItems = cn('border-0 rounded-0 border-bottom');
@@ -46,19 +47,27 @@ export const UpdateCommentElement: React.FC<IProps> = ({ id }) => {
     validationSchema: validationSchemaCommentForm,
     validateOnChange: false,
     validateOnBlur: false,
-    onSubmit: (values) => {
-      const clientParams: IClientParams = {
-        method: values.id ? 'patch' : 'post',
-        postId: Number(postId!),
-        values
-      };
-      dispatch(fetchComments(clientParams));
+    onSubmit: async (values, actions) => {
+      try {
+        const clientParams: IClientParams = {
+          method: values.id ? 'patch' : 'post',
+          postId: Number(postId!),
+          values
+        };
+        await dispatch(fetchComments(clientParams));
+      } finally {
+        actions.setSubmitting(false);
+      }
     }
   });
 
   return (
     <div className="m-0">
-      <Form noValidate onSubmit={formik.handleSubmit} className="m-0 p-1 h-100 d-flex flex-column gap-2 border">
+      <Form
+        noValidate
+        onSubmit={formik.handleSubmit}
+        className="m-0 p-1 h-100 d-flex flex-column gap-2 border"
+      >
         <Form.Control
           className={classNamesOfFormItems}
           type="text"
@@ -94,13 +103,9 @@ export const UpdateCommentElement: React.FC<IProps> = ({ id }) => {
           variant="light"
           type="submit"
           className="w-100 border rounded"
-          disabled={statusOfLoading === LoadingStatuses.pending && (methodOfFetch !== 'get')}
+          disabled={formik.isSubmitting}
         >
-          {statusOfLoading === LoadingStatuses.pending && (methodOfFetch !== 'get') ? (
-            <span>Подождите</span>
-          ) : (
-            <span>Сохранить</span>
-          )}
+          {formik.isSubmitting ? <span>Подождите</span> : <span>Сохранить</span>}
         </Button>
       </Form>
     </div>

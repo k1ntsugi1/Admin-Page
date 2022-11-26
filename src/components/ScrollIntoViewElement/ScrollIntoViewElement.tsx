@@ -1,6 +1,8 @@
 import React, { RefObject } from 'react';
+
+import { SizesOfIcons } from '../../constants/SizesOfIcons';
+
 import CaretIcon from '../../assets/svg/caret-up-fill.svg';
-import { sizesOfIcons } from '../../utils/constants';
 
 interface IProps {
   elementOfBreakPoint: RefObject<HTMLElement>;
@@ -8,7 +10,7 @@ interface IProps {
 
 export const ScrollIntoViewElement: React.FC<IProps> = (props) => {
   const { elementOfBreakPoint } = props;
-  const { width, height } = sizesOfIcons.s
+  const { width, height } = SizesOfIcons.s
   return (
     <div
       onClick={() => {

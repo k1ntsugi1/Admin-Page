@@ -9,7 +9,7 @@ import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { fetchAlbums } from '../../store/slices/dataAlbums/fetchAlbums';
 import { selectAlbumsByTitle } from '../../store/slices/dataAlbums/customSelectorsOfAlbums';
 
-import { LoadingStatuses } from '../../utils/constants';
+import { LoadingStatuses } from '../../constants/LoadingStatuses';
 
 export const AlbumsPage: React.FC = () => {
   const navigate = useNavigate();

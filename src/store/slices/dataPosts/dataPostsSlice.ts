@@ -4,7 +4,7 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 import { IPost, fetchPosts } from './fetchPosts';
 import { deletePost } from './deletePost';
 
-import { LoadingStatuses } from '../../../utils/constants';
+import { LoadingStatuses } from '../../../constants/LoadingStatuses';
 
 import { RootState } from '../../index';
 
@@ -69,8 +69,10 @@ const dataPostsSlice = createSlice({
         postsEntityAdapter.removeOne(state, itemId);
       })
       .addCase(deletePost.rejected, (state, { payload }) => {
-        // state.statusOfLoading = LoadingStatuses.rejected;
-        // state.typeOfError = typeOfError;
+        if (!payload) return;
+        const { message } = payload;
+        state.statusOfLoading = LoadingStatuses.rejected;
+        state.errorMessage = message;
       });
   }
 });

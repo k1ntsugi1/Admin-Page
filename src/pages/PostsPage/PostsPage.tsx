@@ -9,8 +9,7 @@ import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { selectPostsByTitle } from '../../store/slices/dataPosts/customSelectorsOfPosts';
 import { fetchPosts } from '../../store/slices/dataPosts/fetchPosts';
 
-import { LoadingStatuses } from '../../utils/constants';
-
+import { LoadingStatuses } from '../../constants/LoadingStatuses';
 
 export const PostsPage: React.FC = () => {
   const navigate = useNavigate(); 

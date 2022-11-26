@@ -7,7 +7,7 @@ import { fetchComments, IComment } from './fetchComments';
 import { deletePost } from '../dataPosts/deletePost';
 import { deleteComment } from './deleteComment';
 
-import { LoadingStatuses } from '../../../utils/constants';
+import { LoadingStatuses } from '../../../constants/LoadingStatuses';
 
 interface IInitialState {
   methodOfFetch: 'get' | 'post' | 'patch' | 'idl';
@@ -75,8 +75,10 @@ const dataCommentsSlice = createSlice({
         commentsEntityAdapter.removeOne(state, itemId);
       })
       .addCase(deleteComment.rejected, (state, { payload }) => {
-        // state.statusOfLoading = LoadingStatuses.rejected;
-        // state.typeOfError = typeOfError;
+        if (!payload) return;
+        const { message } = payload;
+        state.statusOfLoading = LoadingStatuses.rejected;
+        state.errorMessage = message;
       });
   }
 });
