@@ -4,26 +4,30 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 interface IInitialState {
   message: string;
   show: boolean;
+  pathOfNavigate: string | null;
 }
 
 const initialState: IInitialState = {
   message: '',
   show: false,
+  pathOfNavigate: null
 };
 
 const uiModalSlice = createSlice({
   name: 'modalInfo',
   initialState,
   reducers: {
-    show(state, action: PayloadAction<{message: string}>) {
+    show(state, action: PayloadAction<{ message: string; pathOfNavigate: string | null }>) {
       uiModalSlice.caseReducers.close(state);
-      const { message } = action.payload;
+      const { message, pathOfNavigate } = action.payload;
       state.message = message;
+      if (pathOfNavigate) state.pathOfNavigate = pathOfNavigate;
       state.show = true;
     },
     close(state) {
-        state.message = '';
-        state.show = false;
+      state.message = '';
+      state.pathOfNavigate = null;
+      state.show = false;
     }
   }
 });

@@ -65,10 +65,8 @@ export const UpdatePostPage: React.FC = () => {
     if (title !== newTitle || body !== newBody) {
       dispatch(
         actionsModalInfo.show({
-          message: 'Записанные данные не будут сохранены, вы уверены?'
-          // proceedHandler: () => {
-          //   moveToNewPagePage(path);
-          // }
+          message: 'Записанные данные не будут сохранены, вы уверены?',
+          pathOfNavigate: postId ? postId : '/posts'
         })
       );
       return;

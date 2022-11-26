@@ -65,9 +65,10 @@ const dataAlbumsSlice = createSlice({
         albumsEntityAdapter.removeOne(state, itemId);
       })
       .addCase(deleteAlbum.rejected, (state, { payload }) => {
-        //state.typeOfError = typeOfError;
-        state.statusOfLoading = LoadingStatuses.rejected;
-        
+        // if (!payload) return;
+        // const { message } = payload;
+        // state.statusOfLoading = LoadingStatuses.rejected;
+        // state.errorMessage = message;
       });
   }
 });

@@ -91,9 +91,7 @@ export const UpdateAlbumPage: React.FC = () => {
       dispatch(
         actionsModalInfo.show({
           message: 'Записанные данные не будут сохранены, вы уверены?',
-          // proceedHandler: () => {
-          //   moveToNewPagePage(path);
-          // }
+          pathOfNavigate: albumId ? albumId : '/albums'
         })
       );
       return;
