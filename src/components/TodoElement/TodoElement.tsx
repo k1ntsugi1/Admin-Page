@@ -18,7 +18,7 @@ export const TodoElement: React.FC<IProps> = ({ task }) => {
   const { width, height } = SizesOfIcons.xs;
   const [showStateOfEditForm, setShowStateOfEditForm] = useState<string>('hidden');
   return (
-    <div className="p-2 border rounded">
+    <div className="p-2 border rounded bg-white">
       <div className="d-flex flex-column">
         <div className="p-1 d-flex flex-nowrap justify-content-between gap-2 border-bottom">
           <p className="fw-bold m-0">Задача №{task.id}</p>
