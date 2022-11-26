@@ -4,6 +4,7 @@ import { Form, Button } from 'react-bootstrap';
 import { Navigate, useNavigate, useParams } from 'react-router-dom';
 
 import { HeaderOfPage } from '../../components/HeaderOfPage/HeaderOfPage';
+import { CardOfPhoto } from '../../components/CardOfPhoto/CardOfPhoto';
 
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { actionsModalInfo } from '../../store/slices/uiModalinfo/uiModalInfoSlice';
@@ -85,7 +86,7 @@ export const UpdateAlbumPage: React.FC = () => {
 
   const navigateHandler = (path: string) => () => {
     const { title: newTitle } = formik.values;
-    const { title} = initialValues;
+    const { title } = initialValues;
 
     if (title !== newTitle) {
       dispatch(
@@ -101,45 +102,35 @@ export const UpdateAlbumPage: React.FC = () => {
 
   const loadNewPhotoHandler = async () => {
     try {
+      dispatch(actionsNotification.show({ message: 'Подождите', type: 'wait' }));
       formik.setSubmitting(true);
-      if (formik.values.titleOfPhoto.length === 0) {
-        dispatch(actionsNotification.show({ message: 'Введите заголовок фото', type: 'error' }));
-        return;
-      }
-      if (formik.values.photos.length > 0) {
-        dispatch(
-          actionsNotification.show({ message: 'интерфейс API только для 1 картинки', type: 'error' })
-        );
-        return;
-      }
-  
+
       if (!uploadFileBtnRef.current?.files || !uploadFileBtnRef.current) {
         return;
       }
-  
-      dispatch(actionsNotification.show({ message: 'Подождите', type: 'success' }));
-  
+
       const file = uploadFileBtnRef.current.files[0];
-  
+
       const url = await fetchGetImageUrl(file);
-  
+
       const photoData = {
         title: formik.values.titleOfPhoto,
         url,
         thumbnailUrl: url
       };
-  
+
       formik.setFieldValue('photos', [...formik.values.photos, photoData], false);
-      dispatch(actionsNotification.show({ message: 'Добавлено', type: 'success' }));
+      dispatch(actionsNotification.show({ message: 'Выполнено', type: 'wait' }));
+    } catch {
+      dispatch(actionsNotification.show({ message: 'Не удалось загрузить', type: 'error' }));
     } finally {
       formik.setSubmitting(false);
     }
-    
   };
 
   return (
     <div className="contianer-page justify-content-center">
-       <HeaderOfPage
+      <HeaderOfPage
         title="Редактирование альбома"
         nameOfPage="updateAlbumPage"
         navigateParams={{ navigateHandler }}
@@ -180,6 +171,21 @@ export const UpdateAlbumPage: React.FC = () => {
           className="w-100"
           onClick={() => {
             if (!uploadFileBtnRef.current) return;
+            if (formik.values.titleOfPhoto.length === 0) {
+              dispatch(
+                actionsNotification.show({ message: 'Введите заголовок фото', type: 'error' })
+              );
+              return;
+            }
+            if (formik.values.photos.length > 0) {
+              dispatch(
+                actionsNotification.show({
+                  message: 'Интерфейс API только для 1 картинки',
+                  type: 'error'
+                })
+              );
+              return;
+            }
             uploadFileBtnRef.current.click();
           }}
         >
@@ -192,17 +198,13 @@ export const UpdateAlbumPage: React.FC = () => {
           className="w-100 border rounded"
           disabled={formik.isSubmitting}
         >
-          {formik.isSubmitting ? (
-            <span>Подождите</span>
-          ) : (
-            <span>Сохранить</span>
-          )}
+          {formik.isSubmitting ? <span>Подождите</span> : <span>Сохранить</span>}
         </Button>
       </Form>
 
-      <div className="mt-3 w-100 d-flex flex-wrap justify-content-center gap-1 overflow-auto">
+      <div className="h-100px mt-3 w-100 d-flex flex-wrap justify-content-center gap-2">
         {[...photos, ...formik.values.photos].map((photo, index) => {
-          return photo ? <img key={index} src={photo.url} width={150} height={150} /> : null;
+          return photo ? <CardOfPhoto key={index} photo={photo} /> : null;
         })}
       </div>
 

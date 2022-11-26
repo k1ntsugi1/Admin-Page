@@ -6,7 +6,7 @@ import { deletePost, TDeletePost } from '../../store/slices/dataPosts/deletePost
 import { deleteAlbum, TDeleteAlbum } from '../../store/slices/dataAlbums/deleteAlbum';
 import { deleteComment, TDeleteComment } from '../../store/slices/dataComments/deleteComment';
 import { deleteTask, TDeleteTask } from '../../store/slices/dataTodos/deleteTask';
-import { actionsNotification } from '../../store/slices/uiNotification/uiNotificationSlice';
+import { deletePhoto, TDeletePhoto } from '../../store/slices/dataPhotos/deletePhoto'; 
 
 import { SizesOfIcons } from '../../constants/SizesOfIcons';
 
@@ -14,20 +14,21 @@ import DeleteIcon from '../../assets/svg/delete.svg';
 
 interface IProps {
   itemId: number;
-  typeOfElement: 'album' | 'post' | 'comment' | 'task';
+  typeOfElement: 'album' | 'post' | 'comment' | 'task' | 'photo';
   pathToNextPage?: string;
   size?: 'xs'| 's' | 'm' | 'l';
 }
 
 interface IMappingThunk {
-  [index: string]: TDeletePost | TDeleteAlbum | TDeleteComment | TDeleteTask;
+  [index: string]: TDeletePost | TDeleteAlbum | TDeleteComment | TDeleteTask | TDeletePhoto;
 }
 
 const mappingThunk: IMappingThunk = {
   album: deleteAlbum,
   post: deletePost,
   comment: deleteComment,
-  task: deleteTask
+  task: deleteTask,
+  photo: deletePhoto
 };
 
 export const DeleteElement: React.FC<IProps> = (props) => {
@@ -38,7 +39,6 @@ export const DeleteElement: React.FC<IProps> = (props) => {
   const { width, height } = SizesOfIcons[size];
 
   const deletePostHandler = () => {
-    dispatch(actionsNotification.show({ message: 'Подождите...', type: 'success' }));
     const thunkOfDeleting = mappingThunk[typeOfElement];
     dispatch(thunkOfDeleting(itemId));
     if (pathToNextPage) navigate(pathToNextPage, { replace: true });

@@ -2,7 +2,6 @@ import axios, { AxiosError } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import { actionsAlbums } from './dataAlbumsSlice';
-import { actionsNotification } from '../uiNotification/uiNotificationSlice';
 import { fetchPhotos } from '../dataPhotos/fetchPhotos';
 
 import { errorOfAsyncThunkHandler } from '../../../utils/errorOfAsyncThunkHandler';
@@ -63,7 +62,6 @@ export const fetchAlbums = createAsyncThunk<IResponse, IClientParams, IThunkAPI>
       const preparedData = Array.isArray(data) ? data : [data];
 
       if (method !== 'get') {
-        dispatch(actionsNotification.show({ message: 'Альбом Сохранен', type: 'success' }));
 
         if (valuesOfPhotos === undefined) {
           return { albums: Array.isArray(data) ? data : [data], method };

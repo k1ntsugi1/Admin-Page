@@ -8,6 +8,7 @@ import { BackgroundGlass } from '../BackgroundGlass/BackgroundGlass';
 
 import { useAppDispatch } from '../../store/hooks';
 import { actionsAlbums } from '../../store/slices/dataAlbums/dataAlbumsSlice';
+import { actionsUser } from '../../store/slices/dataUser/dataUserSlice';
 
 import { SizesOfIcons } from '../../constants/SizesOfIcons';
 
@@ -27,8 +28,9 @@ export const CardOfAlbum: React.FC<IProps> = ({ album }) => {
   const [isHovering, setIsHovering] = useState<boolean>(false);
   const id = album.id;
 
-  const activeAlbumHandler = (albumId: number) => () => {
+  const activeAlbumHandler = (albumId: number, userId: number) => () => {
     dispatch(actionsAlbums.setActiveAlbumId({ id: albumId }));
+    dispatch(actionsUser.setUserId({id: userId}));
     navigate(`${id}`);
   };
 
@@ -38,7 +40,7 @@ export const CardOfAlbum: React.FC<IProps> = ({ album }) => {
       onMouseOver={() => setIsHovering(true)}
       onMouseOut={() => setIsHovering(false)}
     >
-      <Card className="CardOfPost overflow-hidden">
+      <Card className="default-card overflow-hidden">
       <div className="p-2 d-flex justify-content-end gap-2 border-bottom ">
           <DeleteElement itemId={id} pathToNextPage="/albums" typeOfElement="album" />
           <img
@@ -53,7 +55,7 @@ export const CardOfAlbum: React.FC<IProps> = ({ album }) => {
 
         <Card.Body className="centered-content-by-flex">
           <Card.Title>{album?.title}</Card.Title>
-          {isHovering && <ViewMoreElement onClick={activeAlbumHandler(id)} />}
+          {isHovering && <ViewMoreElement onClick={activeAlbumHandler(id, album.userId)} />}
         </Card.Body>
       </Card>
 

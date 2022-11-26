@@ -24,6 +24,9 @@ interface IURLS {
     BY_TODO_ID: (todoId: number) => string;
     BY_USER_ID: (userId: number) => string;
   };
+  USERS: {
+    BY_USER_ID: (userId: number) => string;
+  }
 }
 
 export const URLS: IURLS = {
@@ -51,5 +54,8 @@ export const URLS: IURLS = {
     ALL: () => 'https://jsonplaceholder.typicode.com/todos',
     BY_TODO_ID: (todoId: number) => `https://jsonplaceholder.typicode.com/todos/${todoId}`,
     BY_USER_ID: (userId: number) => `https://jsonplaceholder.typicode.com/users/${userId}/todos`
+  },
+  USERS: {
+    BY_USER_ID: (userId: number) => `https://jsonplaceholder.typicode.com/users/${userId}`
   }
 };

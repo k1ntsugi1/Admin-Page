@@ -12,7 +12,7 @@ import uiProgressbarReducer from './slices/uiProgressbar/uiProgressbarSlice';
 import uiNotificationReducer from './slices/uiNotification/uiNotificationSlice';
 import uiModalInfoReducer from './slices/uiModalinfo/uiModalInfoSlice';
 
-import { showErrorModal } from './middleWares/showErrorModal';
+import { showInfo } from './middleWares/showInfo';
 
 const store = configureStore({
   reducer: {
@@ -27,7 +27,7 @@ const store = configureStore({
     uiNotification: uiNotificationReducer,
     uiModalInfo: uiModalInfoReducer
   },
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(showErrorModal)
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(showInfo)
 });
 
 export type RootState = ReturnType<typeof store.getState>;

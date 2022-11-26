@@ -5,7 +5,6 @@ import { errorOfAsyncThunkHandler } from '../../../utils/errorOfAsyncThunkHandle
 
 import { URLS } from '../../../constants/URLS';
 
-import { actionsNotification } from '../uiNotification/uiNotificationSlice';
 
 import { TClientParamsForDeleteItem, IThunkAPI, ISuccessOfDeleteItem } from '../interfaces';
 
@@ -15,7 +14,6 @@ export const deleteTask = createAsyncThunk<ISuccessOfDeleteItem, TClientParamsFo
     try {
       const url = URLS.TODOS.BY_TODO_ID(itemId);
       await axios.delete(url);
-      thunkAPI.dispatch(actionsNotification.show({ message: 'Удалено', type: 'error' }));
       return { itemId };
     } catch (err) {
       const error = err as AxiosError | Error

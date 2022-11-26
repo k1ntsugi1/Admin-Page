@@ -5,7 +5,6 @@ import { errorOfAsyncThunkHandler } from '../../../utils/errorOfAsyncThunkHandle
 
 import { URLS } from '../../../constants/URLS';
 
-import { actionsNotification } from '../uiNotification/uiNotificationSlice';
 import { actionsTodos } from './dataTodosSLice';
 
 import { IThunkAPI } from '../interfaces';
@@ -51,10 +50,6 @@ export const fetchTodos = createAsyncThunk<IResponse, IClientParams, IThunkAPI>(
 
       const { data } = await axios[method]<ITodo[] | ITodo>(url, values ? values : {});
       const preparedData = Array.isArray(data) ? data : [data];
-
-      if (method !== 'get') {
-        dispatch(actionsNotification.show({ message: 'Сохранено', type: 'success' }));
-      }
 
       if (userId && method === 'get') {
         dispatch(actionsTodos.updateUserIdsWithLoadedTodos({ ids: [userId] }));

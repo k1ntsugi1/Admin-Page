@@ -15,14 +15,18 @@ import { selectCommentsByPostId } from '../../store/slices/dataComments/customSe
 import { actionsComments } from '../../store/slices/dataComments/dataCommentsSlice';
 import { fetchComments } from '../../store/slices/dataComments/fetchComments';
 import { fetchPosts } from '../../store/slices/dataPosts/fetchPosts';
+import { fetchUsers } from '../../store/slices/dataUser/fetchUsers';
 
 import { LoadingStatuses } from '../../constants/LoadingStatuses';
+
+
 
 export const PostPage: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { postId } = useParams();
 
+  const { statusOfLoading: statusOfLoadingUsers, ids: usersIds } = useAppSelector((store) => store.dataUser)
   const post = useAppSelector((store) => selectorsPosts.selectById(store, Number(postId)!));
   const comments = useAppSelector((store) => selectCommentsByPostId(store, Number(postId)!));
   const { statusOfLoading: statusOfPostLoading } = useAppSelector((store) => store.dataPosts);
@@ -39,7 +43,8 @@ export const PostPage: React.FC = () => {
 
   useEffect(() => {
     if (!postId || postIdsOfLoadedComments.includes(Number(postId))) return;
-    if (!post) dispatch(fetchPosts({ method: 'get', postId: Number(postId) }));
+    if (!post) dispatch(fetchPosts({ method: 'get', postId: Number(postId) })); // типо бага, нужно исправить upd - или нет, подумать надо
+    if (post && !usersIds.includes(post.userId)) dispatch(fetchUsers({method: 'get', userId: post.userId}));
     dispatch(fetchComments({ method: 'get', postId: Number(postId) }));
     dispatch(actionsComments.addPostId({ id: Number(postId) }));
   }, []);
@@ -67,7 +72,8 @@ export const PostPage: React.FC = () => {
 
         <div className="d-flex flex-column">
           <TitleOfPage title="Комментарии" className="h4" />
-          <UpdateCommentElement />
+          {statusOfLoadingUsers === LoadingStatuses.pending &&  <ThreeDotsSpinner />}
+          {statusOfLoadingUsers === LoadingStatuses.fulfilled && <UpdateCommentElement />}
           {statusOfCommentsLoading === LoadingStatuses.pending && methodOfFetch === 'get' && (
             <ThreeDotsSpinner />
           )}

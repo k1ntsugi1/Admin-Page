@@ -5,7 +5,6 @@ import { HeaderOfPage } from '../../components/HeaderOfPage/HeaderOfPage';
 import { DeleteElement } from '../../components/DeleteElement/DeleteElement';
 import { ThreeDotsSpinner } from '../../components/ThreeDotsSpinner/ThreeDotsSpinner';
 import { CustomSlider } from '../../components/CustomSlider/CustomSlider';
-import { BackgroundGlass } from '../../components/BackgroundGlass/BackgroundGlass';
 
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { fetchAlbums } from '../../store/slices/dataAlbums/fetchAlbums';

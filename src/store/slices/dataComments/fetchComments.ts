@@ -1,8 +1,6 @@
 import axios, {AxiosError} from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-import { actionsNotification } from '../uiNotification/uiNotificationSlice';
-
 import { URLS } from '../../../constants/URLS';
 
 import { errorOfAsyncThunkHandler } from '../../../utils/errorOfAsyncThunkHandler';
@@ -47,10 +45,6 @@ export const fetchComments = createAsyncThunk<IResponse, IClientParams, IThunkAP
           : URLS_OF_COMMENTS.BY_POST_ID(postId);
 
       const { data } = await axios[method]<IComment[] | IComment>(url, values);
-
-      if (method !== 'get') {
-        thunkAPI.dispatch(actionsNotification.show({ message: 'Сохранено', type: 'success' }));
-      }
 
       return { comments: Array.isArray(data) ? data : [data] };
     } catch (err) {

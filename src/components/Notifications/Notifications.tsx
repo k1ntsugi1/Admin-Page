@@ -10,9 +10,10 @@ export const Notification: React.FC = () => {
   const { message, statusOfVisibility, type } = useAppSelector((store) => store.uiNotification);
 
   const classnamesOfParentContainer = cn('notification bg-white', {
-    'notification-success': type === 'success' ? true : false,
-    'notification-error': type === 'error' ? true : false,
-    show: statusOfVisibility === 'visible' ? true : false
+    'notification-success': type === 'success',
+    'notification-error': type === 'error',
+    'notification-wait': type === 'wait',
+    show: statusOfVisibility === 'visible'
   });
 
   useEffect(() => {

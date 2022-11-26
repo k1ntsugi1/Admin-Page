@@ -17,7 +17,8 @@
     }
 
     &.notification-success,
-    &.notification-error {
+    &.notification-error,
+    &.notification-wait {
         .notification-content {
             padding: 16px 24px 16px 64px;
             font-size: 16px;
@@ -50,6 +51,13 @@
             background-size: 25px 25px;
         }
     }
+
+    &.notification-wait {
+      .notification-content::after {
+          background: url(../assets/svg/clock.svg) center no-repeat;
+          background-size: 25px 25px;
+      }
+  }
 }
 
 @-webkit-keyframes fadeOut {

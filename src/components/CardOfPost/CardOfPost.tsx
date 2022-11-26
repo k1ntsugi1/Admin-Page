@@ -8,6 +8,7 @@ import { ViewMoreElement } from '../ViewMoreElement/ViewMoreElement';
 
 import { useAppDispatch } from '../../store/hooks';
 import { actionsPosts } from '../../store/slices/dataPosts/dataPostsSlice';
+import { actionsUser } from '../../store/slices/dataUser/dataUserSlice';
 
 import { SizesOfIcons } from '../../constants/SizesOfIcons';
 
@@ -27,8 +28,9 @@ export const CardOfPost: React.FC<IProps> = ({ post }) => {
   const [isHovering, setIsHovering] = useState<boolean>(false);
   const id = post.id;
 
-  const activePostHandler = (postId: number) => () => {
+  const activePostHandler = (postId: number, userId: number) => () => {
     dispatch(actionsPosts.setActivePostId({ id: postId }));
+    dispatch(actionsUser.setUserId({id: userId}));
     navigate(`${id}`);
   };
 
@@ -38,7 +40,7 @@ export const CardOfPost: React.FC<IProps> = ({ post }) => {
       onMouseOver={() => setIsHovering(true)}
       onMouseOut={() => setIsHovering(false)}
     >
-      <Card className="CardOfPost overflow-hidden">
+      <Card className="default-card overflow-hidden">
         <div className="p-2 d-flex justify-content-end gap-2 border-bottom ">
           <DeleteElement itemId={id} pathToNextPage="/posts" typeOfElement="post" />
           <img
@@ -53,7 +55,7 @@ export const CardOfPost: React.FC<IProps> = ({ post }) => {
 
         <Card.Body className="centered-content-by-flex">
           <Card.Title>{post?.title}</Card.Title>
-          {isHovering && <ViewMoreElement onClick={activePostHandler(id)} />}
+          {isHovering && <ViewMoreElement onClick={activePostHandler(id, post.userId)} />}
         </Card.Body>
       </Card>
 

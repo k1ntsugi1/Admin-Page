@@ -5,8 +5,6 @@ import { URLS } from '../../../constants/URLS';
 
 import { errorOfAsyncThunkHandler } from '../../../utils/errorOfAsyncThunkHandler';
 
-import { actionsNotification } from '../uiNotification/uiNotificationSlice';
-
 import { IThunkAPI } from '../interfaces';
 
 interface IPostedPatchedPhoto {
@@ -57,10 +55,6 @@ export const fetchPhotos = createAsyncThunk<IResponse, IClientParams, IThunkAPI>
         url,
         values ? values : {}
       );
-
-      if (method !== 'get') {
-        thunkAPI.dispatch(actionsNotification.show({ message: 'Фото Сохранены', type: 'success' }));
-      }
 
       return { photos: Array.isArray(data) ? data : [{...data[0], id: data.id}] };
     } catch (err) {

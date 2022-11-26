@@ -43,7 +43,6 @@ const dataTodosSlice = createSlice({
       })
       .addCase(fetchTodos.fulfilled, (state, { payload }) => {
         const { todos } = payload;
-        console.log(todos);
         state.statusOfLoading = LoadingStatuses.fulfilled;
         todosEntityAdapter.upsertMany(state, todos);
       })

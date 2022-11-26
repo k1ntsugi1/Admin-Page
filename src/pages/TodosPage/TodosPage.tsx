@@ -12,7 +12,6 @@ import { UpdateTaskElement } from '../../components/UpdateTaskElement/UpdateTask
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { fetchTodos, ITodo } from '../../store/slices/dataTodos/fetchTodos';
 import { selectTodosByTitle } from '../../store/slices/dataTodos/customSelectorOfTodos';
-import { actionsNotification } from '../../store/slices/uiNotification/uiNotificationSlice';
 
 import { LoadingStatuses } from '../../constants/LoadingStatuses';
 
@@ -53,7 +52,6 @@ export const TodosPage: React.FC = () => {
         const nextValues = { ...value };
         nextValues.completed = !value.completed;
 
-        dispatch(actionsNotification.show({ message: 'Подождите', type: 'success' }));
         await dispatch(fetchTodos({ method: 'patch', values: nextValues }));
       }
     }

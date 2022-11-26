@@ -1,4 +1,6 @@
-import React from 'react';
+import React  from 'react';
+import type { FormikProps } from 'formik';
+
 import cn from 'classnames';
 import { useFormik } from 'formik';
 import { Form, Button } from 'react-bootstrap';
@@ -9,8 +11,6 @@ import { fetchComments, IClientParams } from '../../store/slices/dataComments/fe
 
 import { validationSchemaCommentForm } from '../../utils/validationSchema';
 
-import type { FormikProps } from 'formik';
-
 interface IInitialValueOfFormik {
   postId: number;
   name: string;
@@ -20,13 +20,15 @@ interface IInitialValueOfFormik {
 }
 
 interface IProps {
-  id?: string | number;
+  id?:  number;
 }
 
 export const UpdateCommentElement: React.FC<IProps> = ({ id }) => {
   const dispatch = useAppDispatch();
   const { postId } = useParams();
 
+  const { userId } = useAppSelector((store) => store.dataUser);
+  const { entities: entitiesOfUser } = useAppSelector((store) => store.dataUser)
   const { entities } = useAppSelector(
     (store) => store.dataComments
   );
@@ -36,8 +38,8 @@ export const UpdateCommentElement: React.FC<IProps> = ({ id }) => {
 
   const initialValues: IInitialValueOfFormik = {
     postId: Number(postId!),
-    name: '',
-    email: '',
+    name: userId ? entitiesOfUser[userId]?.name ?? '' : '',
+    email: userId ? entitiesOfUser[userId]?.email ?? '' : '',
     body: '',
     ...editingComment
   };
@@ -77,6 +79,7 @@ export const UpdateCommentElement: React.FC<IProps> = ({ id }) => {
           aria-label="name of user"
           placeholder="Введите имя"
           isInvalid={!!formik.errors.name}
+          disabled={initialValues.name.length > 0}
         />
         <Form.Control
           className={classNamesOfFormItems}
@@ -87,6 +90,7 @@ export const UpdateCommentElement: React.FC<IProps> = ({ id }) => {
           aria-label="email"
           placeholder="Введите email"
           isInvalid={!!formik.errors.email}
+          disabled={initialValues.email.length > 0}
         />
 
         <Form.Control

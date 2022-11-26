@@ -8,7 +8,6 @@ import { URLS } from '../../../constants/URLS';
 import { errorOfAsyncThunkHandler } from '../../../utils/errorOfAsyncThunkHandler';
 
 import { actionsPosts } from './dataPostsSlice';
-import { actionsNotification } from '../uiNotification/uiNotificationSlice';
 
 export interface IPost {
   userId: number;
@@ -44,7 +43,7 @@ export const fetchPosts = createAsyncThunk<IResponse, IClientParams, IThunkAPI>(
       const { method, postId, values } = clientParams;
       const { POSTS: URLS_OF_POSTS } = URLS;
 
-      const url = userId
+      const url = userId && method === 'get'
         ? URLS_OF_POSTS.BY_USER_ID(userId)
         : !postId
         ? URLS_OF_POSTS.ALL()
@@ -53,10 +52,6 @@ export const fetchPosts = createAsyncThunk<IResponse, IClientParams, IThunkAPI>(
       const { data } = await axios[method]<IPost[] | IPost>(url, values);
 
       const preparedData = Array.isArray(data) ? data : [data];
-
-      if (method !== 'get') {
-        dispatch(actionsNotification.show({ message: 'Сохранено', type: 'success' }));
-      }
 
       if (userId && method === 'get') {
         dispatch(actionsPosts.updateUserIdsWithLoadedPosts({ ids: [userId] }));
