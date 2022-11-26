@@ -43,7 +43,10 @@
 
 ---
 
-tasks/problems: 
+tasks/problems:
+  - disable формы при реквесте
+  - редактирование фото, удаление
+  - типизация fetchDelete (all)
   - HOT of webpack doesnt work (decrease version of webpack)
   - Добавить обработчик ошибок для тасок
   - ~~добавить перенавигацию полсе создания новго поста~~
