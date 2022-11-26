@@ -1,7 +1,7 @@
 # test-task
 👋 Данный проект реализован в рамках аттестационного задания.
 
-[**Versel**](https://test-task-peach-xi.vercel.app/todosp) - деплой проекта
+[**Versel**](https://test-task-peach-xi.vercel.app) - деплой проекта
 
 [**Мой Telegram**](https://t.me/bmasalimov) 
 
