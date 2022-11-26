@@ -13,7 +13,7 @@ interface IInitialState {
   userIdsWithLoadedPosts: number[],
   activePostId: number | null;
   statusOfLoading: string;
-  typeOfError: string;
+  errorMessage: string;
 }
 
 const initialState: IInitialState = {
@@ -21,7 +21,7 @@ const initialState: IInitialState = {
   userIdsWithLoadedPosts: [],
   activePostId: null,
   statusOfLoading: LoadingStatuses.idle,
-  typeOfError: ''
+  errorMessage: ''
 };
 
 const postsEntityAdapter = createEntityAdapter<IPost>();
@@ -47,7 +47,7 @@ const dataPostsSlice = createSlice({
     builder
       .addCase(fetchPosts.pending, (state) => {
         state.statusOfLoading = LoadingStatuses.pending;
-        state.typeOfError = '';
+        state.errorMessage = '';
       })
       .addCase(fetchPosts.fulfilled, (state, { payload }) => {
         const { posts, method } = payload;
@@ -59,8 +59,10 @@ const dataPostsSlice = createSlice({
         }
       })
       .addCase(fetchPosts.rejected, (state, { payload }) => {
+        if (!payload) return;
+        const { message } = payload;
         state.statusOfLoading = LoadingStatuses.rejected;
-        // state.typeOfError = typeOfError;
+        state.errorMessage = message;
       })
       .addCase(deletePost.fulfilled, (state, { payload }) => {
         const { itemId } = payload;

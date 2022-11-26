@@ -10,7 +10,7 @@ import { RootState } from '../../index';
 
 interface IInitialState {
   statusOfLoading: string;
-  typeOfError: string;
+  errorMessage: string;
   allTodosAreLoaded: boolean;
   userIdsWithLoadedTodos: number[];
 }
@@ -19,7 +19,7 @@ const initialState: IInitialState = {
   allTodosAreLoaded: false,
   userIdsWithLoadedTodos: [],
   statusOfLoading: LoadingStatuses.idle,
-  typeOfError: ''
+  errorMessage: ''
 };
 
 const todosEntityAdapter = createEntityAdapter<ITodo>();
@@ -39,7 +39,7 @@ const dataTodosSlice = createSlice({
     builder
       .addCase(fetchTodos.pending, (state, { meta }) => {
         if (meta.arg.method === 'get') state.statusOfLoading = LoadingStatuses.pending;
-        state.typeOfError = '';
+        state.errorMessage = '';
       })
       .addCase(fetchTodos.fulfilled, (state, { payload }) => {
         const { todos } = payload;
@@ -48,8 +48,10 @@ const dataTodosSlice = createSlice({
         todosEntityAdapter.upsertMany(state, todos);
       })
       .addCase(fetchTodos.rejected, (state, { payload }) => {
+        if (!payload) return;
+        const { message } = payload;
         state.statusOfLoading = LoadingStatuses.rejected;
-        // state.typeOfError = typeOfError;
+        state.errorMessage = message;
       })
       .addCase(deleteTask.fulfilled, (state, { payload }) => {
         const { itemId } = payload;

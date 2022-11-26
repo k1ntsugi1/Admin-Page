@@ -12,7 +12,7 @@ interface IInitialState {
   userIdsWithLoadedAlbums: number[];
   activeAlbumId: number | null;
   statusOfLoading: string;
-  typeOfError: string;
+  errorMessage: string;
 }
 
 const initialState: IInitialState = {
@@ -20,7 +20,7 @@ const initialState: IInitialState = {
   userIdsWithLoadedAlbums: [],
   activeAlbumId: null,
   statusOfLoading: LoadingStatuses.idle,
-  typeOfError: ''
+  errorMessage: ''
 };
 
 const albumsEntityAdapter = createEntityAdapter<IAlbum>();
@@ -43,7 +43,7 @@ const dataAlbumsSlice = createSlice({
     builder
       .addCase(fetchAlbums.pending, (state) => {
         state.statusOfLoading = LoadingStatuses.pending;
-        state.typeOfError = '';
+        state.errorMessage = '';
       })
       .addCase(fetchAlbums.fulfilled, (state, { payload }) => {
         const { albums, method } = payload;
@@ -55,16 +55,19 @@ const dataAlbumsSlice = createSlice({
         }
       })
       .addCase(fetchAlbums.rejected, (state, { payload }) => {
+        if (!payload) return;
+        const { message } = payload;
         state.statusOfLoading = LoadingStatuses.rejected;
-        // state.typeOfError = typeOfError;
+        state.errorMessage = message;
       })
       .addCase(deleteAlbum.fulfilled, (state, { payload }) => {
         const { itemId } = payload;
         albumsEntityAdapter.removeOne(state, itemId);
       })
       .addCase(deleteAlbum.rejected, (state, { payload }) => {
-        // state.statusOfLoading = LoadingStatuses.rejected;
-        // state.typeOfError = typeOfError;
+        //state.typeOfError = typeOfError;
+        state.statusOfLoading = LoadingStatuses.rejected;
+        
       });
   }
 });

@@ -1,9 +1,11 @@
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import { actionsAlbums } from './dataAlbumsSlice';
 import { actionsNotification } from '../uiNotification/uiNotificationSlice';
 import { fetchPhotos } from '../dataPhotos/fetchPhotos';
+
+import { errorOfAsyncThunkHandler } from '../../../utils/errorOfAsyncThunkHandler';
 
 import { IThunkAPI } from '../interfaces';
 
@@ -67,17 +69,15 @@ export const fetchAlbums = createAsyncThunk<IResponse, IClientParams, IThunkAPI>
           return { albums: Array.isArray(data) ? data : [data], method };
         }
 
-        const albumId = preparedData[0].id
+        const albumId = preparedData[0].id;
 
         const photosWithAlbumId = valuesOfPhotos.map((photo) => ({
           title: photo.title,
           url: photo.url,
           thumbnailUrl: photo.thumbnailUrl,
-          albumId,
+          albumId
         }));
-        await dispatch(
-          fetchPhotos({ method: 'post', albumId, values: photosWithAlbumId })
-        );
+        await dispatch(fetchPhotos({ method: 'post', albumId, values: photosWithAlbumId }));
       }
 
       if (userId && method === 'get') {
@@ -93,8 +93,9 @@ export const fetchAlbums = createAsyncThunk<IResponse, IClientParams, IThunkAPI>
       }
 
       return { albums: preparedData, method };
-    } catch (error) {
-      return thunkAPI.rejectWithValue({ error: 'serverError' });
+    } catch (err) {
+      const error = err as AxiosError | Error
+      return thunkAPI.rejectWithValue(errorOfAsyncThunkHandler(error));
     }
   }
 );

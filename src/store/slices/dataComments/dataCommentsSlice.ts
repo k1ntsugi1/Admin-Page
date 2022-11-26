@@ -13,14 +13,14 @@ interface IInitialState {
   methodOfFetch: 'get' | 'post' | 'patch' | 'idl';
   postIdsOfLoadedComments: (string | number)[];
   statusOfLoading: string;
-  typeOfError: string;
+  errorMessage: string;
 }
 
 const initialState: IInitialState = {
   methodOfFetch: 'idl',
   postIdsOfLoadedComments: [],
   statusOfLoading: LoadingStatuses.idle,
-  typeOfError: ''
+  errorMessage: ''
 };
 
 const commentsEntityAdapter = createEntityAdapter<IComment>();
@@ -38,7 +38,7 @@ const dataCommentsSlice = createSlice({
       .addCase(fetchComments.pending, (state, { meta }) => {
         state.methodOfFetch = meta.arg.method;
         state.statusOfLoading = LoadingStatuses.pending;
-        state.typeOfError = '';
+        state.errorMessage = '';
       })
       .addCase(fetchComments.fulfilled, (state, { payload }) => {
         const { comments } = payload;
@@ -46,8 +46,10 @@ const dataCommentsSlice = createSlice({
         commentsEntityAdapter.upsertMany(state, comments);
       })
       .addCase(fetchComments.rejected, (state, { payload }) => {
+        if (!payload) return;
+        const { message } = payload;
         state.statusOfLoading = LoadingStatuses.rejected;
-        // state.typeOfError = typeOfError;
+        state.errorMessage = message;
       })
       .addCase(deletePost.fulfilled, (state, { payload }) => {
         const { itemId } = payload;

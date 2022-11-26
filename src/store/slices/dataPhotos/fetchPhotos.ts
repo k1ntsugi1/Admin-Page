@@ -1,7 +1,9 @@
-import axios from 'axios';
+import axios, {AxiosError} from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import { urls } from '../../../utils/constants';
+import { errorOfAsyncThunkHandler } from '../../../utils/errorOfAsyncThunkHandler';
+
 import { actionsNotification } from '../uiNotification/uiNotificationSlice';
 
 import { IThunkAPI } from '../interfaces';
@@ -60,8 +62,9 @@ export const fetchPhotos = createAsyncThunk<IResponse, IClientParams, IThunkAPI>
       }
 
       return { photos: Array.isArray(data) ? data : [{...data[0], id: data.id}] };
-    } catch (error) {
-      return thunkAPI.rejectWithValue({ error: 'serverError' });
+    } catch (err) {
+      const error = err as AxiosError | Error
+      return thunkAPI.rejectWithValue(errorOfAsyncThunkHandler(error));
     }
   }
 );

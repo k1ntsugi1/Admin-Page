@@ -1,9 +1,12 @@
-import axios from 'axios';
+import axios, {AxiosError} from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import { IThunkAPI } from '../interfaces';
 
 import { urls } from '../../../utils/constants';
+
+import { errorOfAsyncThunkHandler } from '../../../utils/errorOfAsyncThunkHandler';
+
 import { actionsPosts } from './dataPostsSlice';
 import { actionsNotification } from '../uiNotification/uiNotificationSlice';
 
@@ -68,8 +71,9 @@ export const fetchPosts = createAsyncThunk<IResponse, IClientParams, IThunkAPI>(
       }
 
       return { posts: preparedData, method };
-    } catch (error) {
-      return thunkAPI.rejectWithValue({ error: 'serverError' });
+    } catch (err) {
+      const error = err as AxiosError | Error
+      return thunkAPI.rejectWithValue(errorOfAsyncThunkHandler(error));
     }
   }
 );

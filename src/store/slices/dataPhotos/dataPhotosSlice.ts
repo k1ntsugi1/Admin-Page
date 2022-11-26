@@ -12,13 +12,13 @@ import { LoadingStatuses } from '../../../utils/constants';
 interface IInitialState {
   albumsIdsOfLoadedComments: number[];
   statusOfLoading: string;
-  typeOfError: string;
+  errorMessage: string;
 }
 
 const initialState: IInitialState = {
   albumsIdsOfLoadedComments: [],
   statusOfLoading: LoadingStatuses.idle,
-  typeOfError: ''
+  errorMessage: ''
 };
 
 const photosEntityAdapter = createEntityAdapter<IPhoto>();
@@ -35,7 +35,7 @@ const dataPhotosSlice = createSlice({
     builder
       .addCase(fetchPhotos.pending, (state, { meta }) => {
         state.statusOfLoading = LoadingStatuses.pending;
-        state.typeOfError = '';
+        state.errorMessage = '';
       })
       .addCase(fetchPhotos.fulfilled, (state, { payload }) => {
         const { photos } = payload;
@@ -43,8 +43,10 @@ const dataPhotosSlice = createSlice({
         photosEntityAdapter.upsertMany(state, photos);
       })
       .addCase(fetchPhotos.rejected, (state, { payload }) => {
+        if (!payload) return;
+        const { message } = payload;
         state.statusOfLoading = LoadingStatuses.rejected;
-        // state.typeOfError = typeOfError;
+        state.errorMessage = message;
       })
       .addCase(deleteAlbum.fulfilled, (state, { payload }) => {
         const { itemId } = payload;
