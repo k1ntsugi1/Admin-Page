@@ -11,12 +11,14 @@ interface IInitialState {
   statusOfLoading: string;
   errorMessage: string;
   userId: number | null;
+  previouesUserId: number | null;
 }
 
 const initialState: IInitialState = {
   statusOfLoading: LoadingStatuses.idle,
   errorMessage: '',
-  userId: null
+  userId: null,
+  previouesUserId: null
 };
 
 const userEntityAdapter = createEntityAdapter<IUser>();
@@ -26,6 +28,7 @@ const dataUserSlice = createSlice({
   initialState: userEntityAdapter.getInitialState(initialState),
   reducers: {
     setUserId(state, action: PayloadAction<{ id: number | null }>) {
+      state.previouesUserId = state.userId;
       state.userId = action.payload.id;
     }
   },
